@@ -4,9 +4,7 @@ namespace App\EndpointControllers;
 
 /**
  * 
- * An endpoint that returns info about the content of the conference from the content table.
- * option to limit the number of results by "page" (20 results per page)
- * can also filter by the content type.
+ * Use this as an example of how to create a new endpoint.
  * 
  * @author James Sowerby
  * @studentID w21023500
