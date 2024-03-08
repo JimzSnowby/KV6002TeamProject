@@ -25,7 +25,7 @@ class Volunteer extends Endpoint
             case 'GET':
                 $this->checkAllowedParams();
                 $this->buildSQL();
-                $dbConn = new \App\Database(CHI2023_DATABASE);
+                $dbConn = new \App\Database(MAIN_DATABASE);
                 $data = $dbConn->executeSQL($this->sql, $this->sqlParams);
                 break;
             default:
