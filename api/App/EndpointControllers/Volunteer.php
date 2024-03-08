@@ -11,7 +11,7 @@ namespace App\EndpointControllers;
  */
 class Volunteer extends Endpoint
 {
-    protected $allowedParams = ["page", "type"];
+    protected $allowedParams = ["name"];
 
     private $sql = "SELECT volunteer.id, volunteer.name, volunteer.dob, volunteer.email, volunteer.phone
                     FROM volunteer";
@@ -36,13 +36,13 @@ class Volunteer extends Endpoint
 
     private function buildSQL()
     {
-        if (isset(\App\Request::params()['type'])) 
+        if (isset(\App\Request::params()['name'])) 
         {
             if (count(\App\Request::params()) > 2) {
                 throw new \App\ClientError(422);
             } 
-            $this->sql .= " WHERE type.name = :type COLLATE NOCASE";
-            $this->sqlParams[":type"] = \App\Request::params()['type'];
+            $this->sql .= " WHERE volunteer.name = :name COLLATE NOCASE";
+            $this->sqlParams[":name"] = \App\Request::params()['name'];
         }
 
         if (isset(\App\Request::params()['page'])) 
