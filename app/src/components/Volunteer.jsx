@@ -9,14 +9,18 @@ function Volunteer() {
     const [details, setDetails] = useState([])
 
     useEffect(() => {
-        fetch('/api/App/EndpointControllers/Volunteer.php')
+        fetch('https://w21023500.nuwebspace.co.uk/KV6002/volunteer')
         .then(response => response.json())
         .then(data => setDetails(data))
         .catch(error => console.error(error))
-    })
+    }, [])
 
     const detailsJSX = details.map((detail, index) => 
-        <h2 key={index}>{detail.name}</h2>)
+        <>
+        <h2 key={index}>{detail.name}</h2>
+        <p key={index}>{detail.email}</p>
+        </>
+        )
 
 
     return (
