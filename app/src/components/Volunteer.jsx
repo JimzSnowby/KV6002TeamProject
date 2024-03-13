@@ -16,10 +16,10 @@ function Volunteer() {
     }, [])
 
     const detailsJSX = details.map((detail, index) => 
-        <>
-        <h2 key={index}>{detail.name}</h2>
-        <p key={index}>{detail.email}</p>
-        </>
+        <li key = {index}>
+            <h2>{detail.name}</h2>
+            <p>{detail.email}</p>
+        </li>
         )
 
 
