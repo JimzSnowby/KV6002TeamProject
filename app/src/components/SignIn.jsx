@@ -53,26 +53,26 @@ function SignIn(props){
     }
 
     return (
-        <div>
+        <div className="bg-blue-800 p-2 text-md text-right rounded-md">
             { !props.signedIn && <div>
                 <input
                     type="text"
                     placeholder="Username"
-                    className={'p-1 max-2 rounded-md' + errorColour}
+                    className={'p-1 mx-2 rounded-md' + errorColour}
                     value={username}
                     onChange={(e) => setUserName(e.target.value)}
                 />
                 <input
                     type="password"
                     placeholder="Password"
-                    className={'p-1 max-2 rounded-md' + errorColour}
+                    className={'p-1 mx-2 rounded-md' + errorColour}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                 />
                 <input
                     type="submit"
                     value="Sign In"
-                    className="py-1 px-2 mx-2 rounded-md bg-slate-200"
+                    className="py-1 px-2 mx-2 bg-blue-100 hover:bg-blue-500 rounded-md"
                     onClick={signIn}
                 />
             </div>
@@ -81,7 +81,7 @@ function SignIn(props){
                 <input
                     type="submit"
                     value="Sign Out"
-                    className="py-1 px-2 mx-2 rounded-md bg-slate-200"
+                    className="py-1 px-2 mx-2 bg-blue-100 hover:bg-blue-500 rounded-md"
                     onClick={signOut}
                 />
             </div>

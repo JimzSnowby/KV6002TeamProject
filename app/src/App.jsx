@@ -1,6 +1,5 @@
 import { Routes, Route } from "react-router-dom"
 import { useState } from 'react'
-import './App.css'
 import HomePage from "./pages/HomePage"
 import Menu from "./components/Menu"
 import Footer from "./components/Footer"
@@ -14,7 +13,7 @@ function App() {
 
   return (
     <>
-    <div>
+    <div className="p-10">
       <SignIn
         signedIn={signedIn}
         setSignedIn={setSignedIn}
