@@ -4,6 +4,7 @@ import './App.css'
 import HomePage from "./pages/HomePage"
 import Menu from "./components/Menu"
 import Footer from "./components/Footer"
+import VolunteerPage from "./pages/VolunteerPage"
 
 function App() {
   const [count, setCount] = useState(0)
@@ -15,6 +16,7 @@ function App() {
     </nav>
     <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/volunteer" element={<VolunteerPage />} />
     </Routes>
     <div>
         <Footer />

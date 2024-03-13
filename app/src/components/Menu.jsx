@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
  */
 function Menu() {
     return (
-        <ul>
+        <ul className='container'>
             <li>
                 <Link to="/">Home</Link>
             </li>
@@ -16,6 +16,9 @@ function Menu() {
             </li>
             <li>
                 <Link to="/profile">Profile</Link>
+            </li>
+            <li>
+                <Link to="/volunteer">Volunteer</Link>
             </li>
         </ul>
     )
