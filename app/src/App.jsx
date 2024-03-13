@@ -27,7 +27,8 @@ function App() {
     </nav>
     <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/volunteer" element={<VolunteerPage />} />
+        {/* Put If statement for the profile, checking for logged in user account type */}
+          <Route path="/volunteer" element={<VolunteerPage />} />
     </Routes>
     <div>
         <Footer />

@@ -14,7 +14,6 @@ function VolunteerPage() {
                 <p>Welcome to your profile</p>
                 <Volunteer />
             </div>
-            <p>Volunteer Page</p>
         </>
     )
 }

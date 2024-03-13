@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
 /**
- * The Volunteer component for displaying and managing the volunteer profile.
+ * The Volunteer component for retrieving the logged in volunteers data from the database.
  * 
  * @author James Sowerby w21023500
  */
