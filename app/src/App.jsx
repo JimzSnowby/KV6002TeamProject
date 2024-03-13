@@ -21,7 +21,7 @@ function App() {
         tableID="volunteerID"
       />
     </div>
-    <nav>
+    <nav className="px-5">
       <Menu />
     </nav>
     <Routes>
