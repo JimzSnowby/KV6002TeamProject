@@ -6,8 +6,6 @@ namespace App\EndpointControllers;
  * 
  * Use this as an example of how to create a new endpoint.
  * 
- * @author James Sowerby
- * @studentID w21023500
  */
 class Content extends Endpoint
 {

@@ -8,8 +8,8 @@ import { BrowserRouter } from 'react-router-dom'
 /**
  * The main entry point for the application.
  * 
- * @author James Sowerby w21023500
  */
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter basename=''>

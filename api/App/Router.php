@@ -6,8 +6,6 @@ namespace App;
  * An abstract class that handles routing requests to the correct endpoint controller.
  * Throws a 404 error if the endpoint is not found.
  * 
- * @author James Sowerby
- * @studentID w21023500
  */
 abstract class Router
 {
@@ -30,6 +28,10 @@ abstract class Router
                 case '/token/':
                     $endpoint = new EndpointControllers\Token();
                     break;
+                case '/register':
+                case '/register/':
+                    $endpoint = new EndpointControllers\Register();
+                        break;    
                 default:
                     throw new ClientError(404);
             }

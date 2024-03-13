@@ -3,8 +3,8 @@ import { useState, useEffect } from 'react'
 /**
  * Home page for the application.
  * 
- * @author James Sowerby w21023500
  */
+
 function HomePage() {
     return (
         <div>

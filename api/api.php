@@ -3,9 +3,8 @@
 /**
  * The main entry point for the API.
  * 
- * @author James Sowerby
- * @studentID w21023500
  */
+
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
