@@ -29,7 +29,7 @@ function App() {
         {/* Put If statement for the profile, checking for logged in user account type */}
           <Route path="/volunteer" element={<VolunteerPage />} />
     </Routes>
-    <div>
+    <div className="px-5">
         <Footer />
     </div>
     </>
