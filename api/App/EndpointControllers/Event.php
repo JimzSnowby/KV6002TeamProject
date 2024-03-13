@@ -4,6 +4,26 @@ namespace App\EndpointControllers;
 
 class Events extends Endpoint {
 
+    public function __construct(){
+        $ths-> autoDeleteEvent();
+        switch(Request::method()) 
+        {
+            case 'GET':
+                $data = $this->getEvent();
+                break;
+            case 'POST':
+                $data = $this->postEvent();
+                break;
+            case 'DELETE':
+                $data = $this->deleteEvent();
+                break;
+            default:
+                throw new ClientError(405);
+                break;
+        }
+        parent::__construct($data);
+    }
+
     private function name() 
     {
         if (!isset(REQUEST::params()['name']))
@@ -76,6 +96,18 @@ class Events extends Endpoint {
         return $data;
     }
 
-
+    private function autoDeleteEvent() {
+        $dbConn = new \App\Database(MAIN_DATABASE);
+    
+        // Calculate the date 5 days 
+        $fiveDaysAgo = date('Y-m-d H:i:s', strtotime('-5 days'));
+    
+        // sql query to delete events older than 5 days
+        $sql = "DELETE FROM event WHERE CONCAT(date, ' ', time) <= :fiveDaysAgo";
+        $sqlParameters = ['fiveDaysAgo' => $fiveDaysAgo];
+        $data = $dbConn->executeSQL($sql, $sqlParameters);
+    
+        return true; 
+    }
 
  }
