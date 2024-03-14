@@ -56,24 +56,39 @@ class ParticipantEvent extends Endpoint {
 
     private function joinEvent($id) {
         $eventID = REQUEST::params()['eventID'];
-
+    
         $dbConn = new \App\Database(MAIN_DATABASE);
-
+    
+        // Check if there's space available
+        $sql = "SELECT space FROM event WHERE eventID = :eventID";
         $sqlParameters = ['eventID' => $eventID];
-        $sql = "SELECT * FROM participantEvent WHERE eventID = :eventID AND participantID = :id";
         $data = $dbConn->executeSQL($sql, $sqlParameters);
-
+    
         if (count($data) === 0) {
-            $sql = "INSERT INTO participantEvent (eventID, participantID) VALUES (:eventID, :id)";
-        } else {
-            throw new ClienrError(401);
+            throw new ClienrError(404); // Event not found
         }
-
+    
+        $space = $data[0]['space'];
+    
+        if ($space <= 0) {
+            throw new ClienrError(409); // No space available
+        }
+    
+        // Insert participantEvent
+        $sql = "INSERT INTO participantEvent (eventID, participantID) VALUES (:eventID, :id)";
         $sqlParameters = ['eventID' => $eventID, 'participantID' => $id];
         $dbConn->executeSQL($sql, $sqlParameters);
+    
+        // Remove 1 from space 
+        $sql = "UPDATE event SET space = space - 1 WHERE eventID = :eventID";
+        $dbConn->executeSQL($sql, $sqlParameters);
 
+        //$sql = "UPDATE participant SET ticket = ticket - 1";
+       // $dbConn->executeSQL($sql, $sqlParameters);
+    
         return [];
     }
+    
 
     private function cancelEvent($id) {
         if (!isset(REQUEST::params()['eventID']))
