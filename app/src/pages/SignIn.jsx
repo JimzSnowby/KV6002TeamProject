@@ -115,76 +115,7 @@ function SignIn(props) {
 
     return (
         <div className='bg-slate-700 p-2 text-md text-right'>
-            {/* Hamburger menu icon */}
-            {!props.signedIn && (
-                <div className='md:hidden'>
-                    <button
-                        onClick={toggleMobileMenu}
-                        className='text-white focus:outline-none'
-                    >
-                        <svg
-                            className='w-12 h-12 text-purple-300'
-                            fill='none'
-                            stroke='currentColor'
-                            viewBox='0 0 24 24'
-                            xmlns='http://www.w3.org/2000/svg'
-                        >
-                            <path
-                                strokeLinecap='round'
-                                strokeLinejoin='round'
-                                strokeWidth='4'
-                                d='M4 6h16M4 12h16M4 18h16'
-                            ></path>
-                        </svg>
-                    </button>
-                </div>
-            )}
-            {/* Mobile Sign-in/Register */}
-            {isMobileMenuOpen && (
-                <div className='md:hidden flex flex-col items-center w-full p-4 bg-gray-900 text-white'>
-                    <div className={`p-2 mx-2 ${bColour} w-full mb-2`}>
-                        <div className='flex justify-between items-center mb-1'>
-                            <label htmlFor='email' className='text-black font-semibold'>Email:</label>
-                        </div>
-                        <input
-                            id='email'
-                            type='text'
-                            value={username}
-                            onChange={handleUsername}
-                            className='w-full p-1 rounded-md bg-gray-300 text-black'
-                        />
-                    </div>
-                    <div className={`p-2 mx-2 ${bColour} w-full mb-2`}>
-                        <div className='flex justify-between items-center mb-1'>
-                            <label htmlFor='password' className='text-black font-semibold'>Password:</label>
-                        </div>
-                        <input
-                            id='password'
-                            type='password'
-                            value={password}
-                            onChange={handlePassword}
-                            className='w-full p-1 rounded-md bg-gray-300 text-black'
-                        />
-                    </div>
-                    <button
-                        type='submit'
-                        className='font-semibold w-full py-2 px-4 bg-green-400 hover:bg-green-500 rounded-md text-black border-2 border-green-500'
-                        onClick={signIn}
-                    >
-                        Sign In
-                    </button>
-                    <button
-                        onClick={() => {
-                            setIsRegistrationPage(true)
-                            window.location.href = 'registration'
-                        }}
-                        className='font-semibold w-full mt-2 py-2 px-4 bg-orange-400 hover:bg-orange-500 rounded-md text-black border-2 border-orange-500'
-                    >
-                        Register
-                    </button>
-                </div>
-            )}
-            {/* Desktop Sign-in/Register */}
+            {/* Desktop Sign-in */}
             {!props.signedIn && !isRegistrationPage && (
                 <div className='hidden md:block'>
                     <input
@@ -207,15 +138,6 @@ function SignIn(props) {
                         className='font-semibold py-1 px-2 mx-2 bg-green-400 hover:bg-green-500 rounded-md cursor-pointer border-2 border-green-500'
                         onClick={signIn}
                     />
-                    <button
-                        onClick={() => {
-                            setIsRegistrationPage(true)
-                            window.location.href = 'registration'
-                        }}
-                        className='font-semibold py-1 px-2 mx-2 bg-orange-400 hover:bg-orange-500 rounded-md border-solid border-2 border-orange-500'
-                    >
-                        Register
-                    </button>
                 </div>
             )}
 

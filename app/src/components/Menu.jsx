@@ -18,6 +18,9 @@ function Menu() {
                 <Link to="/profile">Profile</Link>
             </li>
             <li>
+                <Link to="/signin">Log in</Link>
+            </li>
+            <li>
                 <Link to="/register">Register</Link>
             </li>
         </ul>
