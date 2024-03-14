@@ -42,6 +42,10 @@ abstract class Router
                 case '/waiting/':
                     $endpoint = new EndpointControllers\WaitingList();
                     break;
+                case '/attend':
+                case '/attend/':
+                    $endpoint = new EndpointControllers\ParticipantEvent();
+                    break;
                 default:
                     throw new ClientError(404);
             }
