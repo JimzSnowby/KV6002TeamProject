@@ -2,6 +2,13 @@
 
 namespace App\EndpointControllers;
 
+ /**
+ * 
+ *
+ * @author Antonio Gorgan
+ * This endpoint is used to create, view and delete events in the database 
+ */ 
+
 class Events extends Endpoint {
 
     public function __construct(){

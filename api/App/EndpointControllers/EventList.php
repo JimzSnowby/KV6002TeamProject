@@ -1,20 +1,21 @@
 <?php
 
 namespace App\EndpointControllers;
+
  /**
  * 
  *
  * @author Antonio Gorgan
- *
- */
+ * This endpoint is used to retrieve participants name and numbers for each event 
+ */ 
 
 class EventList extends Endpoint
 {
     public function __construct() {
         $sql = "SELECT event.eventID, 
                        event.name AS event_name, 
-                       COUNT(participantEvent.participantID) AS num_participants,
-                       GROUP_CONCAT(participant.name) AS participant_names
+                       COUNT(participantEvent.participantID) AS participantNum,
+                       GROUP_CONCAT(participant.name) AS participantName
                 FROM event
                 LEFT JOIN participantEvent ON event.eventID = participantEvent.eventID
                 LEFT JOIN participant ON participant.participantID = participantEvent.participantID
