@@ -1,11 +1,21 @@
 <?php
 
+/**
+ * 
+ *
+ * @author Antonio Gorgan
+ * This endpoint is used to make participants attend an event. participantID is linked to the eventID. 
+ * When a participant is inserted into the list an available space is deducted from the space field. 
+ * 
+ */ 
+
 namespace App\EndpointControllers;
 
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
 class ParticipantEvent extends Endpoint {
+
     public function __construct(){
         $id = $this->validateToken();
         $this->checkUserExists($id);
@@ -82,14 +92,10 @@ class ParticipantEvent extends Endpoint {
         // Remove 1 from space 
         $sql = "UPDATE event SET space = space - 1 WHERE eventID = :eventID";
         $dbConn->executeSQL($sql, $sqlParameters);
-
-        //$sql = "UPDATE participant SET ticket = ticket - 1";
-       // $dbConn->executeSQL($sql, $sqlParameters);
     
         return [];
     }
     
-
     private function cancelEvent($id) {
         if (!isset(REQUEST::params()['eventID']))
         {
