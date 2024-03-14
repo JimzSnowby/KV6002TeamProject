@@ -13,7 +13,7 @@ class Volunteer extends Endpoint
 {
     protected $allowedParams = ["name"];
 
-    private $sql = "SELECT volunteer.id, volunteer.name, volunteer.dob, volunteer.email, volunteer.phone
+    private $sql = "SELECT volunteer.volunteerID, volunteer.name, volunteer.dob, volunteer.email, volunteer.phone
                     FROM volunteer";
 
     private $sqlParams = [];
@@ -43,22 +43,6 @@ class Volunteer extends Endpoint
             } 
             $this->sql .= " WHERE volunteer.name = :name COLLATE NOCASE";
             $this->sqlParams[":name"] = \App\Request::params()['name'];
-        }
-
-        if (isset(\App\Request::params()['page'])) 
-        {
-            if (!is_numeric(\App\REQUEST::params()['page'])) {
-                throw new \App\ClientError(422);
-            }
-            if (count(\App\Request::params()) > 2) {
-                throw new \App\ClientError(422);
-            } 
-            if (\App\Request::params()['page'] == 1) {
-                $this->sql .= " LIMIT 20";
-            } elseif (\App\Request::params()['page'] > 1){
-                $this->sql .= " LIMIT 20 OFFSET :offset";
-                $this->sqlParams[":offset"] = (\App\Request::params()['page']) * 10;
-            }
         }
     }
 }

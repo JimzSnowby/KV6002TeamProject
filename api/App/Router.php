@@ -30,9 +30,6 @@ abstract class Router
                 case '/token/':
                     $endpoint = new EndpointControllers\Token();
                     break;
-                case '/admintoken':
-                case '/admintoken/':
-                    $endpoint = new EndpointControllers\AdminToken();
                     break;
                 default:
                     throw new ClientError(404);

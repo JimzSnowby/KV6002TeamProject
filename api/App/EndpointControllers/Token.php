@@ -13,9 +13,8 @@ namespace App\EndpointControllers;
  */
 class Token extends Endpoint
 {
-    private $sql = "SELECT id, password 
-                    FROM account 
-                    WHERE email = :email";
+    protected $allowedParams = ["table, tableID"];
+    private $sql = "";
     private $sqlParams = [];
 
     public function __construct(){
@@ -25,7 +24,8 @@ class Token extends Endpoint
             case 'GET':
             case 'POST':
                 $this->checkAllowedParams();
-                $dbConn = new \App\Database(USERS_DATABASE);
+                $this->buildSQL();
+                $dbConn = new \App\Database(MAIN_DATABASE);
         
                 if (!isset($_SERVER['PHP_AUTH_USER']) || !isset($_SERVER['PHP_AUTH_PW'])) {
                     throw new \App\ClientError(401);
@@ -52,6 +52,15 @@ class Token extends Endpoint
                 break;
             default:
                 throw new \App\ClientError(405);
+        }
+    }
+
+    private function buildSQL(){
+        if (isset(\App\Request::params()['table']) && isset(\App\Request::params()['tableID']))
+        {
+            $this->sql = "SELECT :tableID, password 
+                        FROM :table
+                        WHERE email = :email";
         }
     }
     
