@@ -17,6 +17,7 @@ function RegistrationForm({ onRegistration }) {
     const [phone, setPhone] = useState('')
     const [ticket, setTicket] = useState('3') // Ticket set to always be 3
     const [evidence, setEvidence] = useState('')
+    const [confirmPassword, setConfirmPassword] = useState('')
     const [token, setToken] = useState('')
     const salt = bcrypt.genSaltSync(10) // Generate salt for password hashing
     const [passwordStrength, setPasswordStrength] = useState('')
@@ -73,6 +74,14 @@ function RegistrationForm({ onRegistration }) {
         setPasswordStrength(checkPasswordStrength(newPassword))
     }
 
+
+    // Handle confirm password input changes
+    const handleConfirmPasswordChange = (e) => {
+        const newPassword = e.target.value
+        setConfirmPassword(newPassword)
+    }
+
+
     // Handle evidence file input changes
     const handleEvidenceChange = (e) => {
         const files = e.target.files;
@@ -89,6 +98,11 @@ function RegistrationForm({ onRegistration }) {
         console.log('Evidence:', evidence);
         console.log('Phone number:', phone);
         console.log('Ticket:', ticket);
+
+        if (password !== confirmPassword) {
+            setErrorMessage('Passwords do not match.')
+            return;
+        }
 
 
         if (name.trim() !== '' && dob.trim() !== '' && email.trim() !== '' && phone.trim() !== '' && password.trim() !== '' && evidence && ticket.trim() !== '') {
@@ -177,7 +191,7 @@ function RegistrationForm({ onRegistration }) {
                         <td className='p-2'>
                             <input
                                 type='tel'
-                                placeholder='Please enter your phone number ...'
+                                placeholder='Please enter your phone number...'
                                 value={phone}
                                 onChange={e => setPhone(e.target.value)}
                                 className='border border-gray-300 px-3 py-2 rounded-md w-full'
@@ -204,6 +218,18 @@ function RegistrationForm({ onRegistration }) {
                                 placeholder='Password'
                                 value={password}
                                 onChange={handlePasswordChange}
+                                className='border border-gray-300 px-3 py-2 rounded-md w-full'
+                            />
+                        </td>
+                    </tr>
+                    <tr className='bg-gray-200'>
+                        <td className='p-2'>Confirm Password:</td>
+                        <td className='p-2'>
+                            <input
+                                type='password'
+                                placeholder='Confirm Password'
+                                value={confirmPassword}
+                                onChange={handleConfirmPasswordChange}
                                 className='border border-gray-300 px-3 py-2 rounded-md w-full'
                             />
                             <div className='font-semibold'>Password strength <span className={getPasswordStrengthTextClass()}>{passwordStrength}</span></div>
