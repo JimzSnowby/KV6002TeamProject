@@ -140,7 +140,7 @@ function RegistrationForm({ onRegistration }) {
 
     return (
         <div className='bg-gray-100 p-6 rounded-lg shadow-lg max-w-xl mx-auto mt-12'>
-            <h2 className='text-xl mb-4 bg-gray-800 text-white py-2 rounded-t-md text-center uppercase font-semibold'>Registration</h2>
+            <h2 className='text-xl mb-4 bg-gray-800 text-white py-2 rounded-t-md text-center font-semibold'>Sign up</h2>
             {errorMessage && (
                 <div className='bg-red-500 text-white p-2 mb-4 text-center'>
                     {errorMessage}
@@ -149,11 +149,11 @@ function RegistrationForm({ onRegistration }) {
             <table className='w-full'>
                 <tbody>
                     <tr className='bg-gray-200'>
-                        <td className='p-2'>Full Name:</td>
+                        <td className='p-2'>Full Name</td>
                         <td className='p-2'>
                             <input
                                 type='text'
-                                placeholder='Full Name'
+                                placeholder='Please enter your full name...'
                                 value={name}
                                 onChange={e => setName(e.target.value)}
                                 className='border border-gray-300 px-3 py-2 rounded-md w-full'
@@ -161,11 +161,11 @@ function RegistrationForm({ onRegistration }) {
                         </td>
                     </tr>
                     <tr className='bg-gray-200'>
-                        <td className='p-2'>E-mail:</td>
+                        <td className='p-2'>E-mail</td>
                         <td className='p-2'>
                             <input
                                 type='text'
-                                placeholder='E-mail'
+                                placeholder='Please enter your e-mail...'
                                 value={email}
                                 onChange={e => setEmail(e.target.value)}
                                 className='border border-gray-300 px-3 py-2 rounded-md w-full'
@@ -173,11 +173,11 @@ function RegistrationForm({ onRegistration }) {
                         </td>
                     </tr>
                     <tr className='bg-gray-200'>
-                        <td className='p-2'>Phone number:</td>
+                        <td className='p-2'>Phone number</td>
                         <td className='p-2'>
                             <input
                                 type='tel'
-                                placeholder='Phone number'
+                                placeholder='Please enter your phone number ...'
                                 value={phone}
                                 onChange={e => setPhone(e.target.value)}
                                 className='border border-gray-300 px-3 py-2 rounded-md w-full'
@@ -185,7 +185,7 @@ function RegistrationForm({ onRegistration }) {
                         </td>
                     </tr>
                     <tr className='bg-gray-200'>
-                        <td className='p-2'>Date of birth:</td>
+                        <td className='p-2'>Date of birth</td>
                         <td className='p-2'>
                             <input
                                 type='date'
@@ -206,11 +206,11 @@ function RegistrationForm({ onRegistration }) {
                                 onChange={handlePasswordChange}
                                 className='border border-gray-300 px-3 py-2 rounded-md w-full'
                             />
-                            <div className='font-semibold'>Password strength: <span className={getPasswordStrengthTextClass()}>{passwordStrength}</span></div>
+                            <div className='font-semibold'>Password strength <span className={getPasswordStrengthTextClass()}>{passwordStrength}</span></div>
                         </td>
                     </tr>
                     <tr className='bg-gray-200'>
-                        <td className='p-2'>Evidence:</td>
+                        <td className='p-2'>Income evidence</td>
                         <td className='p-2'>
                             <input
                                 type="file"
@@ -219,17 +219,17 @@ function RegistrationForm({ onRegistration }) {
                                 accept="image/png, image/jpeg, image/jpg"
                                 className="border border-gray-300 px-3 py-2 rounded-md w-full"
                                 onChange={handleEvidenceChange}
-                            />
-                        </td>
+                            />To successfully participate in the charity events you will need to attach a proof of your income which will be reviewied by the member of staff. For more information please head to our FAQ. 
+                        </td> 
                     </tr>
                 </tbody>
             </table>
             <div className='mt-4 font-semibold'>
                 <button
                     onClick={handleRegistration}
-                    className='bg-purple-400 text-white px-4 py-2 rounded-b-md hover:bg-purple-500 focus:outline-none focus:ring-2 focus:ring-blue-300 w-full'
+                    className='bg-gray-800 text-white px-4 py-2 rounded-b-md hover:bg-purple-500 focus:outline-none focus:ring-2 focus:ring-blue-300 w-full'
                 >
-                    Register
+                    Sign up
                 </button>
             </div>
         </div>

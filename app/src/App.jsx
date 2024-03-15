@@ -29,7 +29,6 @@ function App() {
       </div>
       <nav className="px-5">
         <Menu />
-        <Chatbot config={config} actionProvider={ActionProvider} messageParser={MessageParser} />
       </nav>
       <Routes>
         <Route path="/" element={<HomePage />} />
@@ -41,6 +40,7 @@ function App() {
       <div>
 
         <Footer />
+        {/*<Chatbot config={config} actionProvider={ActionProvider} messageParser={MessageParser} />*/}
       </div>
     </>
   )
