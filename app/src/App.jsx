@@ -12,6 +12,9 @@ import ParticipantPage from "./pages/ParticipantPage"
 function App() {
   const [count, setCount] = useState(0)
   const [signedIn, setSignedIn] = useState(false)
+  const [roletype,setRoletype ] = useState('')
+
+
 
   return (
     <>
@@ -19,12 +22,12 @@ function App() {
       <SignIn
         signedIn={signedIn}
         setSignedIn={setSignedIn}
-        table="volunteer"
-        tableID="volunteerID"
+        roletype = {roletype}
+        setRoletype ={setRoletype}
       />
     </div>
     <nav className="px-5">
-      <Menu />
+      <Menu roletype={roletype} />
     </nav>
     <Routes>
         <Route path="/" element={<HomePage />} />
