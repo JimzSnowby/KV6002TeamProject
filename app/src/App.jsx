@@ -12,32 +12,38 @@ import ParticipantPage from "./pages/ParticipantPage"
 function App() {
   const [count, setCount] = useState(0)
   const [signedIn, setSignedIn] = useState(false)
-  const [roletype,setRoletype ] = useState('')
+  const [roletype, setRoletype] = useState('')
+
+  console.log("Final Role type:", roletype);
 
 
 
   return (
     <>
-    <div className="p-10">
-      <SignIn
-        signedIn={signedIn}
-        setSignedIn={setSignedIn}
-        roletype = {roletype}
-        setRoletype ={setRoletype}
-      />
-    </div>
-    <nav className="px-5">
-      <Menu roletype={roletype} />
-    </nav>
-    <Routes>
+      <div className="p-10">
+        <SignIn
+          signedIn={signedIn}
+          setSignedIn={setSignedIn}
+          roletype={roletype}
+          setRoletype={setRoletype}
+        />
+      </div>
+      <nav className="px-5">
+        <Menu roletype={roletype} signedIn={signedIn}  />
+      </nav>
+      <Routes>
         <Route path="/" element={<HomePage />} />
         {/* Put If statement for the profile, checking for logged in user account type */}
+       
           <Route path="/volunteer" element={<VolunteerPage />} />
+        
+
+       
           <Route path="/participant" element={<ParticipantPage />} />
-    </Routes>
-    <div className="px-5">
+      </Routes>
+      <div className="px-5">
         <Footer />
-    </div>
+      </div>
     </>
   )
 }
