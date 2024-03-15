@@ -6,7 +6,12 @@ import Footer from "./components/Footer"
 import Register from "./pages/Register"
 import SignIn from "./pages/SignIn"
 import VolunteerPage from "./pages/VolunteerPage"
+<<<<<<< HEAD
 import Chatbot from 'react-chatbot-kit'
+=======
+import ParticipantPage from "./pages/ParticipantPage"
+
+>>>>>>> main
 
 import ActionProvider from "./config/ActionProvider"
 import MessageParser from "./config/MessageParser"
@@ -16,9 +21,13 @@ import 'react-chatbot-kit/build/main.css'
 function App() {
   const [count, setCount] = useState(0)
   const [signedIn, setSignedIn] = useState(false)
+  const [roletype,setRoletype ] = useState('')
+
+
 
   return (
     <>
+<<<<<<< HEAD
       <div className="p-10">
         <SignIn
           signedIn={signedIn}
@@ -31,14 +40,35 @@ function App() {
         <Menu />
       </nav>
       <Routes>
+=======
+    <div className="p-10">
+      <SignIn
+        signedIn={signedIn}
+        setSignedIn={setSignedIn}
+        roletype = {roletype}
+        setRoletype ={setRoletype}
+      />
+    </div>
+    <nav className="px-5">
+      <Menu roletype={roletype} />
+    </nav>
+    <Routes>
+>>>>>>> main
         <Route path="/" element={<HomePage />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/register" element={<Register />} />
         {/* Put If statement for the profile, checking for logged in user account type */}
+<<<<<<< HEAD
         <Route path="/volunteer" element={<VolunteerPage />} />
       </Routes>
       <div>
 
+=======
+          <Route path="/volunteer" element={<VolunteerPage />} />
+          <Route path="/participant" element={<ParticipantPage />} />
+    </Routes>
+    <div className="px-5">
+>>>>>>> main
         <Footer />
         {/*<Chatbot config={config} actionProvider={ActionProvider} messageParser={MessageParser} />*/}
       </div>

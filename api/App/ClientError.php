@@ -40,9 +40,19 @@ class ClientError extends \Exception
                 http_response_code(405);
                 $message = 'Method Not Allowed';
                 break;
+<<<<<<< HEAD
             case 444:
                 http_response_code(444);
                 $message = 'Unprocessable name';
+=======
+            case 409:
+                http_response_code(405);
+                $message = 'No space available';
+                break;
+            case 422:
+                http_response_code(422);
+                $message = 'Unprocessable Entity';
+>>>>>>> main
                 break;
             case 445:
                 http_response_code(445);
