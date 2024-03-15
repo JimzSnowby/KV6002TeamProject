@@ -1,48 +1,77 @@
 import { useState, useEffect } from "react"
+import { jwtDecode } from "jwt-decode";
 
 /**
  * The SignIn component for the application.
  */
-function SignIn(props){
+function SignIn(props) {
     const [username, setUserName] = useState("")
     const [password, setPassword] = useState("")
     const [signInError, setSignInError] = useState(false)
     const errorColour = signInError ? "bg-red-200" : "bg-slate-100"
 
-    useEffect(() => {
-        const token = localStorage.getItem("token")
-        if(token){
-            props.setSignedIn(true)
-        }
-        if(!props.signedIn){
-            setUserName("")
-            setPassword("")
-        }
-    }, [props.signedIn])
+   
+   const parseJwtP1 = (token) => {
+    try {
+      return JSON.parse(atob(token.split('.')[1]));
+    } catch (e) {
+      return null;
+    }
+  };
+
+
+   const parseJwt = (token) => {
+    try {
+      return JSON.parse(atob(token.split('.')[1]));
+    } catch (e) {
+      return null;
+    }
+  };
+
+ 
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+        const decodedToken = parseJwt(token);
+        console.log(decodedToken); // Check the structure of the decoded token
+        const role = decodedToken.role; // Access the role field
+        console.log(role); // Log the role
+    }
+    if (token && !props.signedIn) {
+        setUserName("");
+        setPassword("");
+    }
+    if (token) {
+        props.setSignedIn(true);
+    }
+}, [props.signedIn]);
+
+
 
     const signIn = () => {
         const encodedString = btoa(username + ':' + password)
 
-        fetch('https://w21023500.nuwebspace.co.uk/KV6002/token?table=' + props.table + '&tableID=' + props.tableID, 
-        {
-            method: 'GET',
-            headers: new Headers({"Authorization" : "Basic " + encodedString})
-        })
-        .then(response => {
-            if (response.status === 200 || response.status === 204){
-                props.setSignedIn(true)
-                setSignInError(false)
-            } else {
-                setSignInError(true)
-            }
-            return response.json()
-        })
-        .then(data => {
-            if(data.token){
-                localStorage.setItem("token", data.token)
-            }
-        })
-        .catch(error => console.log(error))
+        fetch('https://w20021570.nuwebspace.co.uk/assessment/api/token',
+            {
+                method: 'GET',
+                headers: new Headers({ "Authorization": "Basic " + encodedString })
+            })
+            .then(response => {
+                if (response.status === 200 || response.status === 204) {
+                    props.setSignedIn(true)
+                    setSignInError(false)
+                } else {
+                    setSignInError(true)
+                }
+                return response.json()
+            })
+            .then(data => {
+                if (data.token) {
+                    localStorage.setItem("token", data.token)
+                }
+            })
+            .catch(error => console.log(error))
     }
 
     const signOut = () => {
@@ -54,7 +83,7 @@ function SignIn(props){
 
     return (
         <div className="bg-blue-800 p-2 text-md text-right rounded-md">
-            { !props.signedIn && <div>
+            {!props.signedIn && <div>
                 <input
                     type="text"
                     placeholder="Username"
@@ -77,7 +106,7 @@ function SignIn(props){
                 />
             </div>
             }
-            { props.signedIn && <div>
+            {props.signedIn && <div>
                 <input
                     type="submit"
                     value="Sign Out"
@@ -86,7 +115,7 @@ function SignIn(props){
                 />
             </div>
             }
-            { signInError }
+            {signInError}
         </div>
     )
 }
