@@ -12,6 +12,7 @@ import bcrypt from 'bcryptjs'
 function RegistrationForm({ onRegistration }) {
     const [name, setName] = useState('')
     const [password, setPassword] = useState('')
+    const [dob, setDob] = useState('')
     const [email, setEmail] = useState('')
     const [token, setToken] = useState('')
     const salt = bcrypt.genSaltSync(10) // Generate salt for password hashing
@@ -79,6 +80,7 @@ function RegistrationForm({ onRegistration }) {
             formData.append('name', name)
             formData.append('password', hashedPassword)
             formData.append('email', email)
+            formData.append('dob', dob)
 
             // Send a POST request to register the user
             fetch('https://w20037161.nuwebspace.co.uk/project/api/register', {
@@ -123,11 +125,11 @@ function RegistrationForm({ onRegistration }) {
             <table className='w-full'>
                 <tbody>
                     <tr className='bg-gray-200'>
-                        <td className='p-2'>Name:</td>
+                        <td className='p-2'>Full Name:</td>
                         <td className='p-2'>
                             <input
                                 type='text'
-                                placeholder='Name'
+                                placeholder='Full Name'
                                 value={name}
                                 onChange={e => setName(e.target.value)}
                                 className='border border-gray-300 px-3 py-2 rounded-md w-full'
@@ -142,6 +144,18 @@ function RegistrationForm({ onRegistration }) {
                                 placeholder='E-mail'
                                 value={email}
                                 onChange={e => setEmail(e.target.value)}
+                                className='border border-gray-300 px-3 py-2 rounded-md w-full'
+                            />
+                        </td>
+                    </tr>
+                    <tr className='bg-gray-200'>
+                        <td className='p-2'>Date of birth:</td>
+                        <td className='p-2'>
+                            <input
+                                type='date'
+                                placeholder='Date of birth'
+                                value={dob}
+                                onChange={e => setDob(e.target.value)}
                                 className='border border-gray-300 px-3 py-2 rounded-md w-full'
                             />
                         </td>
