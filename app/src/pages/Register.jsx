@@ -263,3 +263,4 @@ function RegistrationForm({ onRegistration }) {
 }
 
 export default RegistrationForm
+
