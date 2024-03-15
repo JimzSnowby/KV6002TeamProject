@@ -9,16 +9,7 @@ function SignIn(props) {
     const [password, setPassword] = useState("")
     const [signInError, setSignInError] = useState(false)
     const errorColour = signInError ? "bg-red-200" : "bg-slate-100"
-
-   
-   const parseJwtP1 = (token) => {
-    try {
-      return JSON.parse(atob(token.split('.')[1]));
-    } catch (e) {
-      return null;
-    }
-  };
-
+    const [roletype, setRoletype] = useState("")
 
    const parseJwt = (token) => {
     try {
@@ -28,8 +19,6 @@ function SignIn(props) {
     }
   };
 
- 
-
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -37,17 +26,21 @@ function SignIn(props) {
         console.log(decodedToken); // Check the structure of the decoded token
         const role = decodedToken.role; // Access the role field
         console.log(role); // Log the role
+        setRoletype(role)
+
+        // Now you can use the role as needed
+        // For example, you might want to set some state based on the role
+        // Or perform different actions based on different roles
+
+        if (role === "participant") {
+            // Do something specific for participants
+        } else if (role === "admin") {
+            // Do something specific for admins
+        }
     }
-    if (token && !props.signedIn) {
-        setUserName("");
-        setPassword("");
-    }
-    if (token) {
-        props.setSignedIn(true);
-    }
+
+    // Rest of your useEffect code...
 }, [props.signedIn]);
-
-
 
     const signIn = () => {
         const encodedString = btoa(username + ':' + password)
