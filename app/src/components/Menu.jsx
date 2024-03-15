@@ -14,17 +14,11 @@ function Menu(props) {
             </li>
             
                 <li>
-                    <Link to="/participant" className="px-8 hover:text-blue-500 transition duration-300">Participant</Link>
+                    <Link to="/register" className="px-8 hover:text-blue-500 transition duration-300">Participant</Link>
                 </li>
            
             <li>
                 <Link to="/volunteer" className="px-8 hover:text-blue-500 transition duration-300">Volunteer</Link>
-            </li>
-            <li>
-                <Link to="/signin">Log in</Link>
-            </li>
-            <li>
-                <Link to="/register">Register</Link>
             </li>
         </ul>
     );
