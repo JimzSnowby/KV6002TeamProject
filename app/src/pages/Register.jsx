@@ -14,6 +14,9 @@ function RegistrationForm({ onRegistration }) {
     const [password, setPassword] = useState('')
     const [dob, setDob] = useState('')
     const [email, setEmail] = useState('')
+    const [phone, setPhone] = useState('')
+    const [ticket, setTicket] = useState('3') // Ticket set to always be 3
+    const [evidence, setEvidence] = useState('')
     const [token, setToken] = useState('')
     const salt = bcrypt.genSaltSync(10) // Generate salt for password hashing
     const [passwordStrength, setPasswordStrength] = useState('')
@@ -70,30 +73,51 @@ function RegistrationForm({ onRegistration }) {
         setPasswordStrength(checkPasswordStrength(newPassword))
     }
 
+    // Handle evidence file input changes
+    const handleEvidenceChange = (e) => {
+        const files = e.target.files;
+        setEvidence(files);
+    };
+
+
     // Handle registration form submission
     const handleRegistration = () => {
+        console.log('Name:', name);
+        console.log('Date of Birth:', dob);
+        console.log('Email:', email);
+        console.log('Password:', password);
+        console.log('Evidence:', evidence);
+        console.log('Phone number:', phone);
+        console.log('Ticket:', ticket);
 
-        if (name && email && password) {
+
+        if (name.trim() !== '' && dob.trim() !== '' && email.trim() !== '' && phone.trim() !== '' && password.trim() !== '' && evidence && ticket.trim() !== '') {
             const hashedPassword = bcrypt.hashSync(password, salt) // Hash the password
 
             let formData = new FormData()
             formData.append('name', name)
-            formData.append('password', hashedPassword)
-            formData.append('email', email)
             formData.append('dob', dob)
+            formData.append('email', email)
+            formData.append('phone', phone)
+            formData.append('password', hashedPassword)
+
+
+            // Append evidence files to formData
+            for (let i = 0; i < evidence.length; i++) {
+                formData.append('evidence', evidence[i]);
+            }
+    
+            // Append ticket amount
+            formData.append('ticket', ticket)
 
             // Send a POST request to register the user
-            fetch('https://w20037161.nuwebspace.co.uk/project/api/register', {
+            fetch('https://w20037161.nuwebspace.co.uk/assessment/api/register', {
                 method: 'POST',
                 body: formData,
             })
                 .then(response => {
                     // Successful registration
                     if (response.status === 200 || response.status === 204) {
-                        // Clear the fields
-                        setName('')
-                        setEmail('')
-                        setPassword('')
                         window.alert('You were registered successfully! You can log in now.')
                         // Redirect to homepage
                         window.location.href = '/project/app/home'
@@ -149,6 +173,18 @@ function RegistrationForm({ onRegistration }) {
                         </td>
                     </tr>
                     <tr className='bg-gray-200'>
+                        <td className='p-2'>Phone number:</td>
+                        <td className='p-2'>
+                            <input
+                                type='tel'
+                                placeholder='Phone number'
+                                value={phone}
+                                onChange={e => setPhone(e.target.value)}
+                                className='border border-gray-300 px-3 py-2 rounded-md w-full'
+                            />
+                        </td>
+                    </tr>
+                    <tr className='bg-gray-200'>
                         <td className='p-2'>Date of birth:</td>
                         <td className='p-2'>
                             <input
@@ -171,6 +207,19 @@ function RegistrationForm({ onRegistration }) {
                                 className='border border-gray-300 px-3 py-2 rounded-md w-full'
                             />
                             <div className='font-semibold'>Password strength: <span className={getPasswordStrengthTextClass()}>{passwordStrength}</span></div>
+                        </td>
+                    </tr>
+                    <tr className='bg-gray-200'>
+                        <td className='p-2'>Evidence:</td>
+                        <td className='p-2'>
+                            <input
+                                type="file"
+                                id="evidence"
+                                name="evidence"
+                                accept="image/png, image/jpeg, image/jpg"
+                                className="border border-gray-300 px-3 py-2 rounded-md w-full"
+                                onChange={handleEvidenceChange}
+                            />
                         </td>
                     </tr>
                 </tbody>
