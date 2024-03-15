@@ -242,7 +242,7 @@ function RegistrationForm({ onRegistration }) {
                                 type="file"
                                 id="evidence"
                                 name="evidence"
-                                accept="image/png, image/jpeg, image/jpg"
+                                accept="image/png, image/jpeg, image/jpg, application/pdf,application/vnd.ms-excel"
                                 className="border border-gray-300 px-3 py-2 rounded-md w-full"
                                 onChange={handleEvidenceChange}
                             />To successfully participate in the charity events you will need to attach a proof of your income which will be reviewied by the member of staff. For more information please head to our FAQ. 
