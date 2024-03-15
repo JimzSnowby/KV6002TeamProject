@@ -28,10 +28,17 @@ abstract class Router
                 case '/token/':
                     $endpoint = new EndpointControllers\Token();
                     break;
+<<<<<<< HEAD
                 case '/register':
                 case '/register/':
                     $endpoint = new EndpointControllers\Register();
                         break;    
+=======
+                case '/volunteer':
+                case '/volunteer/':
+                    $endpoint = new EndpointControllers\Volunteer();
+                    break;
+>>>>>>> main
                 default:
                     throw new ClientError(404);
             }
