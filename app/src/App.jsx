@@ -16,6 +16,7 @@ import 'react-chatbot-kit/build/main.css'
 function App() {
   const [count, setCount] = useState(0)
   const [signedIn, setSignedIn] = useState(false)
+<<<<<<< HEAD
 
   return (
     <>
@@ -32,15 +33,47 @@ function App() {
       {/*<Chatbot config={config} actionProvider={ActionProvider} 	    messageParser={MessageParser} />*/}
     </nav>
     <Routes>
+=======
+  const [roletype, setRoletype] = useState('')
+
+  console.log("Final Role type:", roletype);
+
+
+
+  return (
+    <>
+      <div className="p-10">
+        <SignIn
+          signedIn={signedIn}
+          setSignedIn={setSignedIn}
+          roletype={roletype}
+          setRoletype={setRoletype}
+        />
+      </div>
+      <nav className="px-5">
+        <Menu roletype={roletype} signedIn={signedIn}  />
+      </nav>
+      <Routes>
+>>>>>>> main
         <Route path="/" element={<HomePage />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/register" element={<Register />} />
         {/* Put If statement for the profile, checking for logged in user account type */}
+       
           <Route path="/volunteer" element={<VolunteerPage />} />
+<<<<<<< HEAD
     </Routes>
     <div>
+=======
+        
+
+       
+          <Route path="/participant" element={<ParticipantPage />} />
+      </Routes>
+      <div className="px-5">
+>>>>>>> main
         <Footer />
-    </div>
+      </div>
     </>
   )
 }
