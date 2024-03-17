@@ -5,6 +5,7 @@ import Menu from "./components/Menu"
 import Footer from "./components/Footer"
 import SignIn from "./components/SignIn"
 import VolunteerPage from "./pages/VolunteerPage"
+import VolunteerSignUp from "./pages/VolunteerSignUp"
 import ParticipantPage from "./pages/ParticipantPage"
 
 
@@ -33,13 +34,9 @@ function App() {
       </nav>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        {/* Put If statement for the profile, checking for logged in user account type */}
-       
-          <Route path="/volunteer" element={<VolunteerPage />} />
-        
-
-       
-          <Route path="/participant" element={<ParticipantPage />} />
+        <Route path="/volunteer-sign-up" element={<VolunteerSignUp />} />
+        <Route path="/volunteer" element={<VolunteerPage />} />
+        <Route path="/participant" element={<ParticipantPage />} />   
       </Routes>
       <div className="px-5">
         <Footer />
