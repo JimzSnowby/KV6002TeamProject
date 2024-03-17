@@ -19,6 +19,8 @@ function SignIn(props) {
     }
   };
 
+ 
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -26,7 +28,7 @@ function SignIn(props) {
         console.log(decodedToken); // Check the structure of the decoded token
         const role = decodedToken.role; // Access the role field
         console.log(role); // Log the role
-        setRoletype(role)
+        props.setRoletype(decodedToken.role)
 
         // Now you can use the role as needed
         // For example, you might want to set some state based on the role
@@ -44,6 +46,8 @@ function SignIn(props) {
 
     const signIn = () => {
         const encodedString = btoa(username + ':' + password)
+        
+
 
         fetch('https://w20021570.nuwebspace.co.uk/assessment/api/token',
             {
@@ -61,10 +65,16 @@ function SignIn(props) {
             })
             .then(data => {
                 if (data.token) {
-                    localStorage.setItem("token", data.token)
+                    localStorage.setItem("token", data.token);
                 }
             })
+            
             .catch(error => console.log(error))
+            
+
+            
+        
+            
     }
 
     const signOut = () => {
