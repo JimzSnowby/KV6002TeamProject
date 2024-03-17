@@ -1,13 +1,20 @@
+import React from 'react'
+
+import Share from './Share'
+
 /**
  * 
  * Footer Component
  */
+
 function Footer() {
+
   return (
     <footer className="bg-blue-800 text-white text-center">
-      <p>Footer</p>
+      <Share />
     </footer>
   )
+
 }
 
 export default Footer
