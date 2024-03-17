@@ -8,6 +8,7 @@ namespace App;
  * @author James Sowerby
  * @studentID w21023500
  */
+
 class ClientError extends \Exception
 {
     public function __construct($code)

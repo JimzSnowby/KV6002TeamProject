@@ -8,6 +8,7 @@ namespace App;
  * @author James Sowerby
  * @studentID w21023500
  */
+
 abstract class Request 
 {
     public static function method()
@@ -57,7 +58,7 @@ abstract class Request
 
     public static function checkUserExists($id)
     {
-        $dbConn = new \App\Database(USERS_DATABASE);
+        $dbConn = new \App\Database(MAIN_DATABASE);
         $sql = "SELECT id FROM account WHERE id = :id";
         $sqlParams = [':id' => $id];
         $data = $dbConn->executeSQL($sql, $sqlParams);
