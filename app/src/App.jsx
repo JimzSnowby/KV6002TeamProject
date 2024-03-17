@@ -12,9 +12,8 @@ import Header from "./components/Header"
 import Menu from "./components/Menu"
 import Footer from "./components/Footer"
 import SignIn from "./components/SignIn"
-import VolunteerPage from "./pages/VolunteerPage"
 import VolunteerSignUp from "./pages/VolunteerSignUp"
-import ParticipantPage from "./pages/ParticipantPage"
+
 
 
 
@@ -48,13 +47,11 @@ function App() {
 
       <Routes>
         <Route path="/" element={<HomePage />} />
-        {/* Put If statement for the profile, checking for logged in user account type */}
-       
           <Route path="/volunteer" element={<VolunteerPage />} />
-        
-
-       
+          <Route path="/volunteer-sign-up" element={<VolunteerSignUp />} />
           <Route path="/participant" element={<ParticipantPage />} />
+          <Route path="/register" element={<RegistrationForm />} />
+          <Route path="*" element={<NotFound />} />
       </Routes>
 
       <footer className="px-5">
