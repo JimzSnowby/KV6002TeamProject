@@ -8,6 +8,7 @@ namespace App;
  * @author James Sowerby
  * @studentID w21023500
  */
+
 class Database 
 {
     private $dbConnection;

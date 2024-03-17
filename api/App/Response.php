@@ -9,6 +9,7 @@ namespace App;
  * @author James Sowerby
  * @studentID w21023500
  */
+
 class Response
 {
     public function __construct()
@@ -30,6 +31,9 @@ class Response
 
     public function outputJSON($data)
     {
+        if (empty($data)) {
+            http_response_code(204);
+        }
         echo json_encode($data);
     }
 
