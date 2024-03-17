@@ -19,6 +19,7 @@ abstract class Router
         {
             switch ($requestedEndpoint) {
                 case '':
+                case '/':
                 case '/developer':
                 case '/developer/':
                     $endpoint = new EndpointControllers\Developer();

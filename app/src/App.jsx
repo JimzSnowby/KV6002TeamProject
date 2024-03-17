@@ -24,7 +24,8 @@ function App() {
   console.log("Final Role type:", roletype);
 
   return (
-    <>
+    <div>
+
       <div className="p-10">
         <SignIn
           signedIn={signedIn}
@@ -56,7 +57,8 @@ function App() {
       <footer className="px-5">
         <Footer />
       </footer>
-    </>
+      
+    </div>
   )
 }
 

@@ -10,7 +10,6 @@ import { BrowserRouter } from 'react-router-dom'
  * @author James Sowerby w21023500
  */
 
-// Do we need to define the basename?
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
