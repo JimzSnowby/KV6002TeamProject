@@ -48,15 +48,8 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
           <Route path="/volunteer" element={<VolunteerPage />} />
-<<<<<<< HEAD
        
           <Route path="/register" element={<RegistrationForm />} />
-=======
-          <Route path="/volunteer-sign-up" element={<VolunteerSignUp />} />
-          <Route path="/participant" element={<ParticipantPage />} />
-          <Route path="/register" element={<RegistrationForm />} />
-          <Route path="*" element={<NotFound />} />
->>>>>>> main
       </Routes>
 
       <footer className="px-5">
