@@ -6,6 +6,7 @@ namespace App;
  * A class that provides a database connection and methods to execute SQL.
  * 
  */
+
 class Database 
 {
     private $dbConnection;

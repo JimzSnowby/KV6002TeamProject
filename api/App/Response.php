@@ -7,6 +7,7 @@ namespace App;
  * as well as controlling access to the API.
  * 
  */
+
 class Response
 {
     public function __construct()
@@ -28,6 +29,9 @@ class Response
 
     public function outputJSON($data)
     {
+        if (empty($data)) {
+            http_response_code(204);
+        }
         echo json_encode($data);
     }
 

@@ -1,49 +1,74 @@
+import React from 'react'
 import { Routes, Route } from "react-router-dom"
 import { useState } from 'react'
+
 import HomePage from "./pages/HomePage"
-import Menu from "./components/Menu"
-import Footer from "./components/Footer"
-import SignIn from "./components/SignIn"
 import VolunteerPage from "./pages/VolunteerPage"
 import ParticipantPage from "./pages/ParticipantPage"
 import RegistrationForm from "./pages/Register"
+import NotFound from "./pages/NotFound"
+
+import Header from "./components/Header"
+import Menu from "./components/Menu"
+import Footer from "./components/Footer"
+import SignIn from "./components/SignIn"
+<<<<<<< HEAD
+import VolunteerPage from "./pages/VolunteerPage"
+import ParticipantPage from "./pages/ParticipantPage"
+import RegistrationForm from "./pages/Register"
+=======
+import VolunteerSignUp from "./pages/VolunteerSignUp"
+
+>>>>>>> main
 
 
 
 function App() {
-  const [count, setCount] = useState(0)
+
   const [signedIn, setSignedIn] = useState(false)
-  const [roletype, setRoletype] = useState('')
+  const [roleType, setRoleType] = useState('')
 
-  console.log("Final Role type:", roletype);
-
-
+  console.log("Final Role type:", roleType);
 
   return (
-    <>
+    <div>
+
       <div className="p-10">
         <SignIn
           signedIn={signedIn}
           setSignedIn={setSignedIn}
-          roletype={roletype}
-          setRoletype={setRoletype}
+          roleType={roleType}
+          setRoleType={setRoleType}
         />
       </div>
+
+      <header>
+          <Header/>
+      </header>
+
       <nav className="px-5">
-        <Menu roletype={roletype} signedIn={signedIn}  />
+        <Menu roletype={roleType} signedIn={signedIn}  />
       </nav>
+
       <Routes>
         <Route path="/" element={<HomePage />} />
-        {/* Put If statement for the profile, checking for logged in user account type */}
-       
           <Route path="/volunteer" element={<VolunteerPage />} />
+<<<<<<< HEAD
        
           <Route path="/register" element={<RegistrationForm />} />
+=======
+          <Route path="/volunteer-sign-up" element={<VolunteerSignUp />} />
+          <Route path="/participant" element={<ParticipantPage />} />
+          <Route path="/register" element={<RegistrationForm />} />
+          <Route path="*" element={<NotFound />} />
+>>>>>>> main
       </Routes>
-      <div className="px-5">
+
+      <footer className="px-5">
         <Footer />
-      </div>
-    </>
+      </footer>
+      
+    </div>
   )
 }
 

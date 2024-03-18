@@ -6,6 +6,7 @@ namespace App;
  * A custom error response for handling client errors.
  * 
  */
+
 class ClientError extends \Exception
 {
     public function __construct($code)

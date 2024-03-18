@@ -7,6 +7,7 @@ namespace App;
  * Throws a 404 error if the endpoint is not found.
  * 
  */
+
 abstract class Router
 {
     public static function routeRequest()
@@ -16,6 +17,7 @@ abstract class Router
         {
             switch ($requestedEndpoint) {
                 case '':
+                case '/':
                 case '/developer':
                 case '/developer/':
                     $endpoint = new EndpointControllers\Developer();
@@ -52,7 +54,18 @@ abstract class Router
                 case '/eventlist/':
                     $endpoint = new EndpointControllers\EventList();
                     break;
-                
+                case '/newsletter':
+                case '/newsletter/':
+                case '/newsletters':
+                case '/newsletters/':
+                    $endpoint = new EndpointControllers\Newsletter();
+                    break;
+                case '/sponsor':
+                case '/sponsor/':
+                case '/sponsors':
+                case '/sponsors/':
+                    $endpoint = new EndpointControllers\Sponsor();
+                    break; 
                 default:
                     throw new ClientError(404);
             }

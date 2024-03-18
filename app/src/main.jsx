@@ -4,15 +4,18 @@ import App from './App.jsx'
 import './index.css'
 import { BrowserRouter } from 'react-router-dom'
 
-
 /**
  * The main entry point for the application.
  * 
  */
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> main
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <BrowserRouter basename=''>
+    <BrowserRouter > 
       <App />
     </BrowserRouter>
   </React.StrictMode>,
