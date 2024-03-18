@@ -9,7 +9,7 @@ function Volunteer() {
     const [details, setDetails] = useState([])
 
     useEffect(() => {
-        fetch('https://w21023500.nuwebspace.co.uk/KV6002/volunteer')
+        fetch('https://w21023500.nuwebspace.co.uk/KV6002/api/volunteer')
         .then(response => response.json())
         .then(data => setDetails(data))
         .catch(error => console.error(error))
