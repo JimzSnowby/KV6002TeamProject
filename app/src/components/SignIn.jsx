@@ -34,22 +34,24 @@ function SignIn(props) {
         // For example, you might want to set some state based on the role
         // Or perform different actions based on different roles
 
-        if (role === "participant") {
-            // Do something specific for participants
-        } else if (role === "admin") {
-            // Do something specific for admins
-        }
+        switch (role) {
+            case "participant":
+                break;
+            case "admin":
+                break;
+            case "volunteer":
+                break;
+            default:
+                break;
     }
 
     // Rest of your useEffect code...
-}, [props.signedIn]);
+    } [props.signedIn]});
 
     const signIn = () => {
         const encodedString = btoa(username + ':' + password)
         
-
-
-        fetch('https://w21023500.nuwebspace.co.uk/KV6002/api/token',
+        fetch('https://w21023500.nuwebspace.co.uk/assessment/api/token',
             {
                 method: 'GET',
                 headers: new Headers({ "Authorization": "Basic " + encodedString })

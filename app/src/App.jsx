@@ -19,7 +19,6 @@ import VolunteerSignUp from "./pages/VolunteerSignUp"
 
 function App() {
 
-  const [count, setCount] = useState(0) // Do we need?
   const [signedIn, setSignedIn] = useState(false)
   const [roletype, setRoletype] = useState('')
 
