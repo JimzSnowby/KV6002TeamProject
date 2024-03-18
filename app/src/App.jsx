@@ -8,7 +8,6 @@ import Header from "./components/Header"
 import Menu from "./components/Menu"
 import Footer from "./components/Footer"
 import SignIn from "./components/SignIn"
-import VolunteerPage from "./pages/VolunteerPage"
 import ParticipantPage from "./pages/ParticipantPage"
 import RegistrationForm from "./pages/Register"
 
