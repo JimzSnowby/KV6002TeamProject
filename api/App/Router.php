@@ -44,6 +44,10 @@ abstract class Router
                 case '/waiting/':
                     $endpoint = new EndpointControllers\WaitingList();
                     break;
+                case '/register':
+                case '/register/':
+                    $endpoint = new EndpointControllers\Register();
+                    break;
                 case '/attend':
                 case '/attend/':
                     $endpoint = new EndpointControllers\ParticipantEvent();

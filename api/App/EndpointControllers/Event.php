@@ -32,8 +32,7 @@ class Event extends Endpoint {
         parent::__construct($data);
     }
 
-    private function name() 
-    {
+    private function name() {
         if (!isset(\App\REQUEST::params()['name']))
         {
             throw new \App\ClientError(422);
@@ -48,8 +47,7 @@ class Event extends Endpoint {
        return htmlspecialchars($name);
     }
 
-    private function description() 
-    {
+    private function description() {
         if (!isset(\App\REQUEST::params()['description']))
         {
             throw new \App\ClientError(422);
@@ -142,7 +140,13 @@ class Event extends Endpoint {
     private function postEvent($id) {
 
         $eventID = \App\REQUEST::params()['eventID'];
-        $event = $this->event();
+        $name = $this->name();
+        $description = $this->description();
+        $date = $this->name();
+        $time = $this->time();
+        $location = $this->location();
+        $space = $this->space();
+
  
         $dbConn = new \App\Database(MAIN_DATABASE);
  
@@ -151,15 +155,13 @@ class Event extends Endpoint {
         $data = $dbConn->executeSQL($sql, $sqlParameters);
 
         if (count($data) === 0) {
-            $sql = "INSERT INTO event (eventID, name, description, date, time, location, space) VALUES ( :eventID, :name)";
+            $sql = "INSERT INTO event (eventID, name, description, date, time, location, space) 
+            VALUES ( :eventID, :name)";
         } else {
             $sql = "UPDATE event SET name = :name, eventID = :eventID";
         }
  
-        $sqlParameters = ['eventID' => $eventID, 'name' => $name];
-        $data = $dbConn->executeSQL($sql, $sqlParameters);
-     
-        return [];
+
     }
 
     private function deleteEvent() {
@@ -195,5 +197,4 @@ class Event extends Endpoint {
     
         return true; 
     }*/
-
- }
+}
