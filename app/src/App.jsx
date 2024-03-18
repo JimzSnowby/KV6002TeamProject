@@ -5,7 +5,6 @@ import { useState } from 'react'
 import HomePage from "./pages/HomePage"
 import VolunteerPage from "./pages/VolunteerPage"
 import ParticipantPage from "./pages/ParticipantPage"
-import RegistrationForm from "./pages/Register"
 import NotFound from "./pages/NotFound"
 
 import Header from "./components/Header"
