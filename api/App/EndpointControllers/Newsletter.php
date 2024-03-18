@@ -34,14 +34,14 @@ namespace App\EndpointControllers;
      }
 
      private function getnewsletter(){
-        $email = \App\Request::params()['email'];
 
         $dbConn = new \App\Database(MAIN_DATABASE);
 
-        $sqlParams = [':email' => $email];
-        $sql = "SELECT newsletter.email FROM newsletter WHERE email = :email";
-        $data = $dbConn->executeSQL($sql, $sqlParams);
+        $sql = "SELECT newsletter.email FROM newsletter ORDER BY email";
+        $data = $dbConn->executeSQL($sql);
+
         return $data;
+
     }
 
     private function postnewsletter()

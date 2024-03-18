@@ -2,16 +2,34 @@ import React from 'react'
 import { useState } from 'react'
 
 function Sponsor() {
-  const [sponsorEmail, setSponsor] = useState('');
+  
+  const [sponsorEmail, setSponsorEmail] = useState('');
+
+  const handleResponse = (response) => {
+    if (response.status === 200) {
+        return response.json()
+    } else {
+        throw new Error("invalid response: " + response.status)
+    }
+  }
+  
+  const handleJSON = (json) => {
+      if (json.constructor === Array) {
+        setSponsorEmail(json)
+      } else {
+          throw new Error("invalid JSON: " + json)
+      }
+  }
 
   const handleSubmit = (e) => {
-    setSponsor(e)
+    setSponsorEmail(e)
     e.preventDefault();
     alert('You have submitted');
     
     return fetch('https://w20012367.nuwebspace.co.uk/KV6002TeamProject/api/Newsletter.php' + sponsorEmail)
-    .then(response => response.json())
-    .catch(error => console.error(error));
+    .then( response => handleResponse(response) )
+    .then( json => handleJSON(json) )
+    .catch( err => { console.log(err.message) })
   }
 
   return (
