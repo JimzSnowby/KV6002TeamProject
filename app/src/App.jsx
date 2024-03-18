@@ -20,9 +20,9 @@ import VolunteerSignUp from "./pages/VolunteerSignUp"
 function App() {
 
   const [signedIn, setSignedIn] = useState(false)
-  const [roletype, setRoletype] = useState('')
+  const [roleType, setRoleType] = useState('')
 
-  console.log("Final Role type:", roletype);
+  console.log("Final Role type:", roleType);
 
   return (
     <div>
@@ -31,8 +31,8 @@ function App() {
         <SignIn
           signedIn={signedIn}
           setSignedIn={setSignedIn}
-          roletype={roletype}
-          setRoletype={setRoletype}
+          roleType={roleType}
+          setRoleType={setRoleType}
         />
       </div>
 
@@ -41,7 +41,7 @@ function App() {
       </header>
 
       <nav className="px-5">
-        <Menu roletype={roletype} signedIn={signedIn}  />
+        <Menu roletype={roleType} signedIn={signedIn}  />
       </nav>
 
       <Routes>

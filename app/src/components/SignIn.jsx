@@ -9,7 +9,6 @@ function SignIn(props) {
     const [password, setPassword] = useState("")
     const [signInError, setSignInError] = useState(false)
     const errorColour = signInError ? "bg-red-200" : "bg-slate-100"
-    const [roletype, setRoletype] = useState("")
 
    const parseJwt = (token) => {
     try {
@@ -25,32 +24,17 @@ function SignIn(props) {
     const token = localStorage.getItem("token");
     if (token) {
         const decodedToken = parseJwt(token);
-        console.log(decodedToken); // Check the structure of the decoded token
         const role = decodedToken.role; // Access the role field
-        console.log(role); // Log the role
-        props.setRoletype(decodedToken.role)
+        props.setRoleType(decodedToken.role)
 
-        // Now you can use the role as needed
-        // For example, you might want to set some state based on the role
-        // Or perform different actions based on different roles
-
-        switch (role) {
-            case "participant":
-                break;
-            case "admin":
-                break;
-            case "volunteer":
-                break;
-            default:
-                break;
+        if(role){
+            props.setRoleType(role)
+        }
     }
-
-    // Rest of your useEffect code...
-    } [props.signedIn]});
+}, [props.signedIn]);
 
     const signIn = () => {
         const encodedString = btoa(username + ':' + password)
-        
         fetch('https://w21023500.nuwebspace.co.uk/assessment/api/token',
             {
                 method: 'GET',
@@ -68,15 +52,15 @@ function SignIn(props) {
             .then(data => {
                 if (data.token) {
                     localStorage.setItem("token", data.token);
+                    const decodedToken = parseJwt(data.token);
+                    const role = decodedToken.role; // Access the role field
+                    if(role){
+                        props.setRoleType(role)
+                    }
                 }
+                console.log('logged in:', )
             })
-            
-            .catch(error => console.log(error))
-            
-
-            
-        
-            
+            .catch(error => console.log(error))   
     }
 
     const signOut = () => {
