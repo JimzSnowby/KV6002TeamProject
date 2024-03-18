@@ -10,7 +10,7 @@ function ParticipantPage() {
     return (
         <>
             <div>
-                <h1>Participant</h1>
+                <h1>My profile</h1>
                 <p>Welcome to your profile</p>
                 <Participant />
             </div>
