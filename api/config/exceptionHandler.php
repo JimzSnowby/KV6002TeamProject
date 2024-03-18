@@ -4,7 +4,6 @@
  * An exception handler that outputs a JSON message
  * when an error occurs.
  * 
- * @author James Sowerby w21023500
  */
 
 function exceptionHandler($e) {
