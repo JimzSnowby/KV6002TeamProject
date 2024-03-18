@@ -17,7 +17,7 @@ function Menu(props) {
             </li>
 
             <li>
-                <Link to="/register" className="px-8 hover:text-blue-500 transition duration-300">Become a Participant</Link>
+                <Link to="/becomeparticipant" className="px-8 hover:text-blue-500 transition duration-300">Become a Participant</Link>
                 {props.signedIn && props.roletype === 'participant' && <Link to="/participant" className="px-8 hover:text-blue-500 transition duration-300">My Profile</Link>}
             </li>
 

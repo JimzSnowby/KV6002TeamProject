@@ -10,7 +10,7 @@ import Footer from "./components/Footer"
 import SignIn from "./components/SignIn"
 import ParticipantPage from "./pages/ParticipantPage"
 import RegistrationForm from "./pages/Register"
-
+import BecomeParticipant from './pages/BecomeParticipant'
 
 
 function App() {
@@ -39,12 +39,12 @@ function App() {
       <nav className="px-5">
         <Menu roletype={roleType} signedIn={signedIn}  />
       </nav>
-
       <Routes>
         <Route path="/" element={<HomePage />} />
           <Route path="/volunteer" element={<VolunteerPage />} />
-       
-          <Route path="/register" element={<RegistrationForm />} />
+          <Route path="/register" element={<RegistrationForm />} /> {/* Route for the registration form */}
+          <Route path="/becomeparticipant" element={<BecomeParticipant />} />
+
       </Routes>
 
       <footer className="px-5">
