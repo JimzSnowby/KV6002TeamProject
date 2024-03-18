@@ -1,12 +1,9 @@
 import React from 'react'
 import { Routes, Route } from "react-router-dom"
 import { useState } from 'react'
-
 import HomePage from "./pages/HomePage"
 import VolunteerPage from "./pages/VolunteerPage"
-import ParticipantPage from "./pages/ParticipantPage"
 import NotFound from "./pages/NotFound"
-
 import Header from "./components/Header"
 import Menu from "./components/Menu"
 import Footer from "./components/Footer"
