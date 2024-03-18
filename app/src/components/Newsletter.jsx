@@ -55,7 +55,6 @@ function Newsletter() {
       </form>
     </div>
   )
-
 }
 
 export default Newsletter
