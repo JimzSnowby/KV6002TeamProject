@@ -3,7 +3,6 @@
 /**
  * A config file that contains global settings for the API.
  * 
- * @author James Sowerby w21023500
  */
 
 define('BASEPATH', '/assessment/api');

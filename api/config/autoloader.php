@@ -3,7 +3,6 @@
 /**
  * An autoload function that loads the correct class file based on filename.
  * 
- * @author James Sowerby w21023500
  */
 
 function autoloader($className) {
