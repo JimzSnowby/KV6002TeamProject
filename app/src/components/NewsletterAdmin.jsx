@@ -8,6 +8,10 @@ function NewsletterAdmin() {
     const [newsletter, setNewsletter] = useState([])
     const [search, setSearch] = useState("")
 
+    useEffect( () => {
+        fetchData()
+    }, [])
+
     const handleResponse = (response) => {
         if (response.status === 200) {
             return response.json()
@@ -25,13 +29,11 @@ function NewsletterAdmin() {
     }
 
     const fetchData = () => { 
-        fetch("https://w21023500.nuwebspace.co.uk/KV6002/newsletter")
+        fetch("https://w21023500.nuwebspace.co.uk/assessment/api/newsletter")
         .then( response => handleResponse(response) )
         .then( json => handleJSON(json) )
         .catch( err => { console.log(err.message) })
     }
- 
-    useEffect( fetchData, [])
 
     const handleSearch = (event) => {
         setSearch(event.target.value)
@@ -48,7 +50,12 @@ function NewsletterAdmin() {
   return (
     <div className="container">
         <h1>Newsletter</h1>
-        <input value={search} onChange={handleSearch} type="text" placeholder="Search For Email" name="email" />
+        <input 
+        value={search} 
+        onChange={handleSearch} 
+        type="text" 
+        placeholder="Search For Email" 
+        name="email" />
         {listOfNewsletter}
     </div>
   )

@@ -31,12 +31,14 @@ namespace App\EndpointControllers;
          }
          parent::__construct($data);
      }
-
+     
      private function getSponsor(){
     
         $dbConn = new \App\Database(MAIN_DATABASE);
+        
         $sql = "SELECT sponsor.email FROM sponsor ORDER BY email";
         $data = $dbConn->executeSQL($sql);
+
         return $data;
     }
 
