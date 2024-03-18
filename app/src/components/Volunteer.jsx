@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 
+
 /**
  * The Volunteer component for retrieving the logged in volunteers data from the database.
  * 
@@ -9,7 +10,7 @@ function Volunteer() {
     const [details, setDetails] = useState([])
 
     useEffect(() => {
-        fetch('https://w21023500.nuwebspace.co.uk/KV6002/api/volunteer')
+        fetch('https://w21023500.nuwebspace.co.uk/assessment/api/volunteer')
         .then(response => response.json())
         .then(data => setDetails(data))
         .catch(error => console.error(error))
