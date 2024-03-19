@@ -8,36 +8,26 @@ import Header from "./components/Header"
 import Menu from "./components/Menu"
 import Footer from "./components/Footer"
 import SignIn from "./components/SignIn"
-<<<<<<< Updated upstream
-<<<<<<< HEAD
 import ParticipantPage from "./pages/ParticipantPage"
-=======
->>>>>>> Stashed changes
 import RegistrationForm from "./pages/Register"
 import BecomeParticipant from './pages/BecomeParticipant'
-=======
 import VolunteerSignUp from "./pages/VolunteerSignUp"
 import Search from './components/Search'
 import Event from './components/Event'
->>>>>>> main
 
 import Chatbot from 'react-chatbot-kit'
 import ActionProvider from "./config/ActionProvider"
 import MessageParser from "./config/MessageParser"
 import config from "./config/config"
 import 'react-chatbot-kit/build/main.css'
-import ParticipantPage from './pages/ParticipantPage'
 
 
 function App() {
 
   const [signedIn, setSignedIn] = useState(false)
   const [roleType, setRoleType] = useState('')
-<<<<<<< HEAD
   const [showChatbot, setShowChatbot] = useState(false);
-=======
   const [userID, setUserID] = useState('')
->>>>>>> main
 
   console.log("Final Role type:", roleType);
 
@@ -85,19 +75,13 @@ function App() {
       </nav>
       <Routes>
         <Route path="/" element={<HomePage />} />
-<<<<<<< HEAD
-        <Route path="/volunteer" element={<VolunteerPage />} />
         <Route path="/register" element={<RegistrationForm />} /> {/* Route for the registration form */}
         <Route path="/becomeparticipant" element={<BecomeParticipant />} />
-        <Route path="/participant" element={<ParticipantPage/>} />
-
-=======
-          <Route path="/volunteer" element={<VolunteerPage userID={userID}/>} />
-          <Route path="/volunteer-sign-up" element={<VolunteerSignUp />} />
-          <Route path="/participant" element={<ParticipantPage />} />
-          <Route path="/register" element={<RegistrationForm />} />
-          <Route path="*" element={<NotFound />} />
->>>>>>> main
+        <Route path="/participant" element={<ParticipantPage />} />
+        <Route path="/volunteer" element={<VolunteerPage userID={userID} />} />
+        <Route path="/volunteer-sign-up" element={<VolunteerSignUp />} />
+        <Route path="/register" element={<RegistrationForm />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
 
       <footer className="px-5">

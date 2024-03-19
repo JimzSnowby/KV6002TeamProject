@@ -1,8 +1,4 @@
-<<<<<<< Updated upstream
-import { useState, useEffect } from 'react'
-=======
 import React, { useState, useEffect } from 'react';
->>>>>>> Stashed changes
 
 /**
  * ParticipantPage Component
@@ -15,6 +11,7 @@ function ParticipantPage(props) {
     const [name, setName] = useState(props.name || '') // Initialize with props.note or an empty string
     const [phone, setPhone] = useState(props.phone || '') // Initialize with props.note or an empty string
     const [email, setEmail] = useState(props.email || '') // Initialize with props.note or an empty string
+    const [evidence, setEvidence] = useState(props.evidence || '') // Initialize with props.note or an empty string
 
     useEffect(() => {
         // Fetch the note associated with the content_id
@@ -26,7 +23,6 @@ function ParticipantPage(props) {
                 if (response.status === 200) {
                     console.log(response)
                     return response.json()
-
                 }
             })
             .then(data => {
@@ -34,40 +30,15 @@ function ParticipantPage(props) {
                     setName(data[0].name)
                     setPhone(data[0].phone)
                     setEmail(data[0].email)
-
-                    console.log(name)
-                    console.log(phone)
-                    console.log(email)
+                    setEvidence(data[0].evidence)
                 }
-
-
-
             })
             .catch(error => {
                 console.error('Error fetching participant:', error)
             })
 
-    }, []) // Add props.content_id to the dependency array
+    }, []) 
 
-    /* useEffect(() => {
-         if (name !== null && name !== undefined) {
-             setName(name)
-         }
-     }, [name])
- 
-     useEffect(() => {
-         if (phone !== null && phone !== undefined) {
-             setPhone(phone)
-         }
-     }, [phone])
- 
-     useEffect(() => {
-         if (email !== null && email !== undefined) {
-             setEmail(email)
-         }
-     }, [email]) */
-
-    // Handle update participant 
     // Handle update participant 
     const updateParticipant = (event) => {
         event.preventDefault(); // Prevent the default form submission behavior
@@ -75,7 +46,9 @@ function ParticipantPage(props) {
         let formData = new FormData();
         formData.append('name', name);
         formData.append('email', email);
-        formData.append('phone', phone);
+        formData.append('phone', phone);        
+        formData.append('evidence', evidence); // Append evidence file to form data
+
 
         // Send a POST request to save the participant data
         fetch('https://w20037161.nuwebspace.co.uk/assessment/api/participant', {
@@ -94,8 +67,9 @@ function ParticipantPage(props) {
                 // Update the participant data locally with the updated values
                 setName(data.name);
                 setEmail(data.email);
-                setPhone(data.phone);
-                window.alert('You have updated your profile sucessfully!');
+                setPhone(data.phone);                
+                setEvidence(data.evidence);
+                window.alert('You have updated your profile sucessfully! The evidence income will be reveiewed by the member of our staff.');
             })
             .catch(error => {
                 console.error('Error updating the profile:', error);
@@ -141,6 +115,17 @@ function ParticipantPage(props) {
                             onChange={(e) => setPhone(e.target.value)}
                             className='border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:border-blue-500'
                         />
+                    </div>
+                    <div>
+                        <label htmlFor='evidence' className='block text-gray-700'>Evidence</label>
+                        <input
+                            id='evidence'
+                            type="file"
+                            onChange={(e) => setEvidence(e.target.files[0])} // Update evidence state with selected file
+                            accept="image/png, image/jpeg, image/jpg, application/pdf,application/vnd.ms-excel"
+                            className="border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:border-blue-500"
+                        />
+                            <p className='text-sm text-gray-600 mt-1'>To successfully participate in the charity events you will need to attach a proof of your income which will be reviewed by the member of staff. For more information please head to our FAQ.</p>
                     </div>
                 </div>
                 <div className='mt-4'>

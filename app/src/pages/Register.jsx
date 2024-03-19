@@ -261,7 +261,7 @@ function RegistrationForm({ onRegistration }) {
                     <div className='mt-1 text-sm text-gray-600'>Password strength <span className={getPasswordStrengthTextClass()}>{passwordStrength}</span></div>
                 </div>
                 <div>
-                    <label htmlFor='evi dence' className='block text-gray-700'>Income evidence</label>
+                    <label htmlFor='evidence' className='block text-gray-700'>Income evidence</label>
                     <input
                         id='evidence'
                         type="file"

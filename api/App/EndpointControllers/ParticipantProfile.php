@@ -122,16 +122,20 @@ class ParticipantProfile extends Endpoint {
        return htmlspecialchars($password);
     }
 
-    private function evidence() 
+    private function evidence()
     {
-        if (!isset(\App\REQUEST::params()['evidence']))
+        if (!isset($_FILES['evidence']['tmp_name'])) // Check if evidence file is uploaded
         {
-            throw new \App\ClientError(450);
+            throw new \App\ClientError(450); // Throw error if evidence is not provided
         }
- 
-       $evidence = \App\REQUEST::params()['evidence'];
-       return htmlspecialchars($evidence);
+    
+        // Move uploaded file to desired directory and return its path
+        $evidence_path = '/path/to/evidence_directory/' . $_FILES['evidence']['name'];
+        move_uploaded_file($_FILES['evidence']['tmp_name'], $evidence_path);
+        
+        return htmlspecialchars($evidence_path); // Return path to evidence file
     }
+    
 
     private function getParticipant($id) { 
         $sqlParameters = ['id' => $id];
@@ -148,10 +152,18 @@ class ParticipantProfile extends Endpoint {
        $phone = $this->phone(); 
        $email = $this->email(); 
        $name = $this->name(); 
+        
+       // Check if file was uploaded successfully
+        if(isset($_FILES['evidence']) && $_FILES['evidence']['error'] === UPLOAD_ERR_OK) {
+            // Read the file content
+            $evidenceContent = file_get_contents($_FILES['evidence']['tmp_name']);
+        } else {
+            throw new \App\ClientError(450); // File upload error
+        }
 
-       $sql = "UPDATE participant SET phone = :phone, email = :email, name = :name WHERE participantID = :id";
-       $sqlParameters = ['phone' => $phone, 'email' => $email, 'name' => $name, 'id' => $id];
-       
+       $sql = "UPDATE participant SET phone = :phone, email = :email, name = :name, evidence = :evidence WHERE participantID = :id";
+       $sqlParameters = ['phone' => $phone, 'email' => $email, 'name' => $name, 'evidence' => $evidenceContent, 'id' => $id];
+              
        $dbConn = new \App\Database(MAIN_DATABASE);
        $data = $dbConn->executeSQL($sql, $sqlParameters);
     
