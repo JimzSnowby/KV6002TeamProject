@@ -22,5 +22,6 @@ class WaitingList extends Endpoint
         $dbConn = new \App\Database(MAIN_DATABASE);
         $data = $dbConn->executeSQL($sql);
         parent::__construct($data);
-    }    
+    }  
+    
 }

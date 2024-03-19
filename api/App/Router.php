@@ -56,6 +56,10 @@ abstract class Router
                 case '/eventlist/':
                     $endpoint = new EndpointControllers\EventList();
                     break;
+                case '/volunteerlist':
+                case '/volunteerlist/':
+                    $endpoint = new EndpointControllers\VolunteerEventList();
+                    break;
                 case '/newsletter':
                 case '/newsletter/':
                 case '/newsletters':

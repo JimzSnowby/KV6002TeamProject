@@ -85,7 +85,7 @@ class Event extends Endpoint {
             throw new \App\ClientError(422);
         }
  
-        if (mb_strlen(\App\REQUEST::params()['time']) > 50)
+        if (!is_numeric(\App\REQUEST::params()['time']))
         {
             throw new \App\ClientError(402);
         }
@@ -118,7 +118,7 @@ class Event extends Endpoint {
             throw new \App\ClientError(422);
         }
  
-        if (mb_strlen(\App\REQUEST::params()['space']) > 50)
+        if (!is_numeric(\App\REQUEST::params()['space']) )
         {
             throw new \App\ClientError(402);
         }
@@ -130,23 +130,21 @@ class Event extends Endpoint {
 
     private function getEvent() { 
         $where = false; 
-        $sql = "SELECT event.name, event.description, event.date, event.time, event.location, event.space 
-        FROM event";   
+        $sql = "SELECT event.eventID, event.name, event.description, 
+                event.date, event.time, event.location, event.space FROM event";   
         $dbConn = new \App\Database(MAIN_DATABASE);
         $data = $dbConn->executeSQL($sql);
         return $data;
     }
 
-    private function postEvent($id) {
+    private function postEvent() {
 
-        $eventID = \App\REQUEST::params()['eventID'];
         $name = $this->name();
         $description = $this->description();
-        $date = $this->name();
+        $date = $this->date();
         $time = $this->time();
         $location = $this->location();
         $space = $this->space();
-
  
         $dbConn = new \App\Database(MAIN_DATABASE);
  
@@ -155,13 +153,19 @@ class Event extends Endpoint {
         $data = $dbConn->executeSQL($sql, $sqlParameters);
 
         if (count($data) === 0) {
-            $sql = "INSERT INTO event (eventID, name, description, date, time, location, space) 
-            VALUES ( :eventID, :name)";
+            $sql = "INSERT INTO event (name, description, date, time, location, space) 
+                    VALUES (:name, :description, :date, :time, :location, :space)";
         } else {
-            $sql = "UPDATE event SET name = :name, eventID = :eventID";
+            $sql = "UPDATE event SET name = :name, description = :description, 
+                    date = :date, time = :time, location = :location, space = :space 
+                    WHERE eventID = :eventID";
         }
- 
 
+        $sqlParameters = ['name' => $name, 'description' => $description, 'time' => $time, 
+                         'location' => $location, 'space' => $space, 'date'=>$date];
+        $data = $dbConn->executeSQL($sql, $sqlParameters);
+     
+        return [];
     }
 
     private function deleteEvent() {
