@@ -89,21 +89,44 @@ function RegistrationForm({ onRegistration }) {
     };
 
 
+
     // Handle registration form submission
     const handleRegistration = () => {
-        console.log('Name:', name);
-        console.log('Date of Birth:', dob);
-        console.log('Email:', email);
-        console.log('Password:', password);
-        console.log('Evidence:', evidence);
-        console.log('Phone number:', phone);
-        console.log('Ticket:', ticket);
+        const currentDate = new Date()
+        const selectedDate = new Date(dob)
+        const nameRegex = /^[a-zA-Z\s]*$/
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (selectedDate > currentDate) {
+            setErrorMessage('Please enter a valid date of birth.');
+            return
+        }
+
+        // Check if name is valid
+        if (!name.match(nameRegex)) {
+            setErrorMessage('Please enter a valid name with no special characters or numbers.');
+            return
+        }
 
         if (password !== confirmPassword) {
             setErrorMessage('Passwords do not match.')
+            return
+        }
+
+        // Phone number validation regex for UK format
+        const phoneRegex = /^(?:(?:\+|00)44|0)7(?:[45789]\d{2}|624)\d{6}$/;
+
+        // Check if phone number is valid
+        if (!phone.match(phoneRegex)) {
+            setErrorMessage('Please enter a valid UK phone number.');
             return;
         }
 
+        // Check if email is valid
+        if (!email.match(emailRegex)) {
+            setErrorMessage('Please enter a valid email address.');
+            return;
+        }
 
         if (name.trim() !== '' && dob.trim() !== '' && email.trim() !== '' && phone.trim() !== '' && password.trim() !== '' && evidence && ticket.trim() !== '') {
             const hashedPassword = bcrypt.hashSync(password, salt) // Hash the password
@@ -120,7 +143,7 @@ function RegistrationForm({ onRegistration }) {
             for (let i = 0; i < evidence.length; i++) {
                 formData.append('evidence', evidence[i]);
             }
-    
+
             // Append ticket amount
             formData.append('ticket', ticket)
 
@@ -170,6 +193,13 @@ function RegistrationForm({ onRegistration }) {
                             placeholder='Please enter your full name...'
                             value={name}
                             onChange={e => setName(e.target.value)}
+                            onKeyDown={e => {
+                                const key = e.key;
+                                // Allow letters (a-z, A-Z), backspace, and space
+                                if (!/[a-zA-Z\s]/.test(key) && key !== 'Backspace') {
+                                    e.preventDefault();
+                                }
+                            }}
                             className='border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:border-blue-500'
                         />
                     </div>
@@ -231,7 +261,7 @@ function RegistrationForm({ onRegistration }) {
                     <div className='mt-1 text-sm text-gray-600'>Password strength <span className={getPasswordStrengthTextClass()}>{passwordStrength}</span></div>
                 </div>
                 <div>
-                    <label htmlFor='evidence' className='block text-gray-700'>Income evidence</label>
+                    <label htmlFor='evi dence' className='block text-gray-700'>Income evidence</label>
                     <input
                         id='evidence'
                         type="file"
@@ -253,7 +283,7 @@ function RegistrationForm({ onRegistration }) {
             </div>
         </div>
     )
-    
+
 }
 
 export default RegistrationForm
