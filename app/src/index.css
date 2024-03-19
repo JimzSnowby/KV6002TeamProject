@@ -1,3 +1,29 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+h1 {
+    font-size: 3.2em;
+    line-height: 1.1;
+  }
+ 
+  h2 {
+  
+     font-size: 20px;
+     font-weight: bold;
+     cursor: pointer;
+     background: -webkit-linear-gradient(left, #3b82f6, #10b981);
+     -webkit-background-clip: text;
+     -webkit-text-fill-color: transparent;
+     padding: 0.4em;
+  }
+ 
+  h3{
+   font-size: 18px;
+   font-weight: bold;
+   background: -webkit-linear-gradient(left, #3b82f6, #10b981);
+   -webkit-background-clip: text;
+   -webkit-text-fill-color: transparent;
+   padding: 0.2em;
+  }

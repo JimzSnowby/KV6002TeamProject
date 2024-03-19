@@ -12,13 +12,11 @@ namespace App\EndpointControllers;
 class EventList extends Endpoint
 {
     public function __construct() {
-        $sql = "SELECT event.eventID, 
-                       event.name AS event_name, 
-                       COUNT(participantEvent.participantID) AS participantNum,
-                       GROUP_CONCAT(participant.name) AS participantName
-                FROM event
-                LEFT JOIN participantEvent ON participantEvent.eventID = event.eventID
-                LEFT JOIN participant ON participant.participantID = participantEvent.participantID
+        $sql = "SELECT event.eventID, event.name AS event_name, 
+                COUNT(participantEvent.participantID) AS numberOfPa,
+                GROUP_CONCAT(participant.name) AS participantsNames
+                FROM event JOIN participantEvent ON participantEvent.eventID = event.eventID
+                JOIN participant ON participant.participantID = participantEvent.participantID
                 GROUP BY event.eventID, event.name";
         $dbConn = new \App\Database(MAIN_DATABASE);
         $data = $dbConn->executeSQL($sql);

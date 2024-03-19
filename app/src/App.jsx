@@ -13,6 +13,8 @@ import Menu from "./components/Menu"
 import Footer from "./components/Footer"
 import SignIn from "./components/SignIn"
 import VolunteerSignUp from "./pages/VolunteerSignUp"
+import Search from './components/Search'
+import Event from './components/Event'
 
 
 
