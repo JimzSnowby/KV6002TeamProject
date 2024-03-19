@@ -18,13 +18,13 @@ namespace App\EndpointControllers;
          switch(\App\Request::method()) 
          {
              case 'GET':
-                $data = $this->getnewsletter();
+                $data = $this->getNewsletter();
                  break;
              case 'POST':
-                $data = $this->postnewsletter();
+                $data = $this->addNewsletter();
                  break;
              case 'DELETE':
-                $data = $this->deletenewsletter();
+                $data = $this->deleteNewsletter();
                  break;
              default:
                  throw new \App\ClientError(405);
@@ -33,18 +33,18 @@ namespace App\EndpointControllers;
          parent::__construct($data);
      }
 
-     private function getnewsletter(){
-        $email = \App\Request::params()['email'];
+     private function getNewsletter(){
 
         $dbConn = new \App\Database(MAIN_DATABASE);
 
-        $sqlParams = [':email' => $email];
-        $sql = "SELECT newsletter.email FROM newsletter WHERE email = :email";
-        $data = $dbConn->executeSQL($sql, $sqlParams);
+        $sql = "SELECT newsletter.email FROM newsletter ORDER BY email";
+        $data = $dbConn->executeSQL($sql);
+
         return $data;
+
     }
 
-    private function postnewsletter()
+    private function addNewsletter()
     {
         if (!isset(\App\REQUEST::params()['email']))
         {
@@ -68,7 +68,7 @@ namespace App\EndpointControllers;
  
  
     }
-    private function deletenewsletter() {
+    private function deleteNewsletter() {
 
         if (!isset(\App\REQUEST::params()['email']))
         {

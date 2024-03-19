@@ -20,7 +20,7 @@ namespace App\EndpointControllers;
                 $data = $this->getSponsor();
                  break;
              case 'POST':
-                $data = $this->postSponsor();
+                $data = $this->addSponsor();
                  break;
              case 'DELETE':
                 $data = $this->deleteSponsor();
@@ -31,16 +31,18 @@ namespace App\EndpointControllers;
          }
          parent::__construct($data);
      }
-
+     
      private function getSponsor(){
     
         $dbConn = new \App\Database(MAIN_DATABASE);
+        
         $sql = "SELECT sponsor.email FROM sponsor ORDER BY email";
         $data = $dbConn->executeSQL($sql);
+
         return $data;
     }
 
-    private function postSponsor() {
+    private function addSponsor() {
 
         if (!isset(\App\REQUEST::params()['email']))
         {

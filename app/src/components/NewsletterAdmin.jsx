@@ -8,6 +8,10 @@ function NewsletterAdmin() {
     const [newsletter, setNewsletter] = useState([])
     const [search, setSearch] = useState("")
 
+    useEffect( () => {
+        fetchData()
+    }, [])
+
     const handleResponse = (response) => {
         if (response.status === 200) {
             return response.json()
@@ -25,13 +29,11 @@ function NewsletterAdmin() {
     }
 
     const fetchData = () => { 
-        fetch("https://w21023500.nuwebspace.co.uk/KV6002/newsletter")
+        fetch("https://w21023500.nuwebspace.co.uk/assessment/api/newsletter")
         .then( response => handleResponse(response) )
         .then( json => handleJSON(json) )
         .catch( err => { console.log(err.message) })
     }
- 
-    useEffect( fetchData, [])
 
     const handleSearch = (event) => {
         setSearch(event.target.value)
@@ -45,11 +47,41 @@ function NewsletterAdmin() {
         (newsletter, index) => <NewsletterContent key={index} newsletter={newsletter}/>
     )
 
+    const removeReader = () => {
+        fetch('https://w123.nuwebspace.co.uk/api/favourites?film_id='+props.email,
+          {
+           method: 'DELETE',
+          }
+         )
+         .then(res => {
+            if ((res.status === 200) || (res.status === 204)) {
+                // Use the filter method to remove the film_id(s) from the favourites array
+                props.setFavourites(props.favourites.filter(
+                  fav => fav !== props.film.film_id
+                ))
+            }
+         })
+    }
+
   return (
     <div className="container">
+
         <h1>Newsletter</h1>
-        <input value={search} onChange={handleSearch} type="text" placeholder="Search For Email" name="email" />
+
+        <input 
+        value={search} 
+        onChange={handleSearch} 
+        type="text" 
+        placeholder="Search For Email" 
+        name="email" />
+
         {listOfNewsletter}
+
+        <button
+            type="submit" 
+            onClick={removeReader}>
+            Delete Reader
+        </button>
     </div>
   )
 
