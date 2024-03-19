@@ -25,8 +25,9 @@ function SignIn(props) {
     if (token) {
         const decodedToken = parseJwt(token);
         const role = decodedToken.role; // Access the role field
+        const userID = decodedToken.id; // Access the userID field
         props.setRoleType(decodedToken.role)
-
+        props.setUserID(decodedToken.id)
         if(role){
             props.setRoleType(role)
         }

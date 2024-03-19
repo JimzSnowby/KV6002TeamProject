@@ -50,7 +50,7 @@ class Volunteer extends Endpoint
             if (count(\App\Request::params()) > 2) {
                 throw new \App\ClientError(422);
             }
-            $this->sql .= " WHERE volunteer.volunteerID = :volunteerid  ";
+            $this->sql .= " WHERE volunteer.volunteerID = :volunteerid";
             $this->sqlParams[":volunteerid"] = \App\Request::params()['volunteerid'];
         }
 

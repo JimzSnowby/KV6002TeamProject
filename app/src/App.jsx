@@ -21,6 +21,7 @@ function App() {
 
   const [signedIn, setSignedIn] = useState(false)
   const [roleType, setRoleType] = useState('')
+  const [userID, setUserID] = useState('')
 
   console.log("Final Role type:", roleType);
 
@@ -33,6 +34,8 @@ function App() {
           setSignedIn={setSignedIn}
           roleType={roleType}
           setRoleType={setRoleType}
+          userID={userID}
+          setUserID={setUserID}
         />
       </div>
 
@@ -46,7 +49,7 @@ function App() {
 
       <Routes>
         <Route path="/" element={<HomePage />} />
-          <Route path="/volunteer" element={<VolunteerPage />} />
+          <Route path="/volunteer" element={<VolunteerPage userID={userID}/>} />
           <Route path="/volunteer-sign-up" element={<VolunteerSignUp />} />
           <Route path="/participant" element={<ParticipantPage />} />
           <Route path="/register" element={<RegistrationForm />} />
