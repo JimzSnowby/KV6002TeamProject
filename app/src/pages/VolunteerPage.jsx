@@ -18,15 +18,16 @@ function VolunteerPage(props) {
 
     const detailsJSX = details.map((details, index) => 
         <section key = {index} className='p-5 bg-blue-200'>
-            <h2 className='text-2xl'>{details.name}</h2>
-            <p>{details.volunteerID}</p>
-            <p>{details.dob}</p>
-            <p>{details.email}</p>
+            <h2 className='text-2xl text-center'>{details.name}</h2>
+            <p className='text-center'>Volunteer ID: {details.volunteerID}</p>
+            <p className='text-center'>Date of Birth: {details.dob}</p>
+            <p className='text-center'>Email: {details.email}</p>
         </section>
         )
 
     return (
         <section className='p-5'>
+            <h1 className='text-4xl text-center'>Profile</h1>
             {detailsJSX}
         </section>
     )
