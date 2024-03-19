@@ -10,7 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+<<<<<<< HEAD
     "bcrypt": "^5.1.1",
+=======
+>>>>>>> main
     "bcryptjs": "^2.4.3",
     "jwt-decode": "^4.0.0",
     "react": "^18.2.0",

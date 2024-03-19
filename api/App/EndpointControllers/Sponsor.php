@@ -20,7 +20,7 @@ namespace App\EndpointControllers;
                 $data = $this->getSponsor();
                  break;
              case 'POST':
-                $data = $this->postSponsor();
+                $data = $this->addSponsor();
                  break;
              case 'DELETE':
                 $data = $this->deleteSponsor();
@@ -42,7 +42,7 @@ namespace App\EndpointControllers;
         return $data;
     }
 
-    private function postSponsor() {
+    private function addSponsor() {
 
         if (!isset(\App\REQUEST::params()['email']))
         {
