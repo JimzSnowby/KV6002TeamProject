@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react"
+import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 
 /**
@@ -9,30 +10,38 @@ function SignIn(props) {
     const [password, setPassword] = useState("")
     const [signInError, setSignInError] = useState(false)
     const errorColour = signInError ? "bg-red-200" : "bg-slate-100"
+    const navigate = useNavigate()
 
    const parseJwt = (token) => {
-    try {
-      return JSON.parse(atob(token.split('.')[1]));
-    } catch (e) {
-      return null;
-    }
-  };
+        try {
+            return JSON.parse(atob(token.split('.')[1]));
+        } catch (e) {
+            return null;
+        }
+    };
 
  
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-        const decodedToken = parseJwt(token);
-        const role = decodedToken.role; // Access the role field
-        const userID = decodedToken.id; // Access the userID field
-        props.setRoleType(decodedToken.role)
-        props.setUserID(decodedToken.id)
-        if(role){
-            props.setRoleType(role)
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (token) {
+            const decodedToken = parseJwt(token);
+            const role = decodedToken.role; // Access the role field
+            const currentTime = Date.now() / 1000;
+            if (decodedToken.exp < currentTime) {
+                signOut()
+            }
+            props.setRoleType(decodedToken.role)
+            props.setUserID(decodedToken.id)
+            if(role){
+                props.setRoleType(role)
+            }
         }
-    }
-}, [props.signedIn]);
+        if (!props.signedIn){
+            setUserName("")
+            setPassword("")
+        }
+        }, [props.signedIn]);
 
     const signIn = () => {
         const encodedString = btoa(username + ':' + password)
@@ -68,6 +77,7 @@ function SignIn(props) {
         setUserName("")
         setPassword("")
         props.setSignedIn(false)
+        navigate("/")
     }
 
     return (
