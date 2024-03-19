@@ -65,18 +65,22 @@ function SponsorAdmin() {
 
     return (
         <div className="container">
+            
             <h1>Sponsor</h1>
+
             <input 
             value={search} 
             onChange={handleSearch} 
             type="text" 
             placeholder="Search For Email" 
             name="email" />
+
             {listOfSponsor}
+
             <button 
                 type="submit" 
                 onClick={removeSponsor}>
-                Delete
+                Delete Sponsor
             </button>
         </div>
     )

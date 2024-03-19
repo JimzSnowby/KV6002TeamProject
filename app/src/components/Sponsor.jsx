@@ -34,25 +34,27 @@ function Sponsor() {
 
   return (
     <div className="container">
-    <h1>Sponsor</h1>
-    <p>Sign up to sponsor our event</p>
 
-    <form>
-      <label>
-        Sign Up Here:
-        <input 
-        type="text" 
-        placeholder="Enter Your Email" 
-        maxLength="50"
-        name="email" />
-      </label>
+      <h1>Sponsor</h1>
+      
+      <p>Sign up to sponsor our event</p>
 
-      <button 
-        type="submit" 
-        onClick={(e) => handleSubmit(e.target.value)}>
-        Submit
-      </button>
-    </form>
+      <form>
+        <label>
+          Sign Up Here:
+          <input 
+          type="text" 
+          placeholder="Enter Your Email" 
+          maxLength="50"
+          name="email" />
+        </label>
+
+        <button 
+          type="submit" 
+          onClick={(e) => handleSubmit(e.target.value)}>
+          Submit
+        </button>
+      </form>
   </div>
   )
 

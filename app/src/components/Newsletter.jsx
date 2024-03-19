@@ -34,7 +34,9 @@ function Newsletter() {
 
   return (
     <div className="container">
+
       <h1>Newsletter</h1>
+
       <p>Sign up for our newsletter to receive the latest news and updates</p>
 
       <form>
@@ -55,6 +57,7 @@ function Newsletter() {
       </form>
     </div>
   )
+  
 }
 
 export default Newsletter
