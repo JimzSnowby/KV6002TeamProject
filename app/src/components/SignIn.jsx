@@ -58,7 +58,6 @@ function SignIn(props) {
                         props.setRoleType(role)
                     }
                 }
-                console.log('logged in:', )
             })
             .catch(error => console.log(error))   
     }

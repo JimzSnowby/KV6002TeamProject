@@ -11,7 +11,7 @@ namespace App\EndpointControllers;
  */
 class Volunteer extends Endpoint
 {
-    protected $allowedParams = ["name", "dob", "email", "phone", "password"];
+    protected $allowedParams = ["volunteerid", "name", "dob", "email", "phone", "password"];
 
     private $sql = "SELECT volunteer.volunteerID, volunteer.name, volunteer.dob, volunteer.email, volunteer.phone
                     FROM volunteer";
@@ -42,14 +42,19 @@ class Volunteer extends Endpoint
 
     private function buildSQL()
     {
-        if (isset(\App\Request::params()['name'])) 
+        if (isset(\App\Request::params()['volunteerid'])) 
         {
+            if (!is_numeric(\App\REQUEST::params()['volunteerid'])) {
+                throw new \App\ClientError(422);
+            }
             if (count(\App\Request::params()) > 2) {
                 throw new \App\ClientError(422);
-            } 
-            $this->sql .= " WHERE volunteer.name = :name COLLATE NOCASE";
-            $this->sqlParams[":name"] = \App\Request::params()['name'];
+            }
+            $this->sql .= " WHERE volunteer.volunteerID = :volunteerid  ";
+            $this->sqlParams[":volunteerid"] = \App\Request::params()['volunteerid'];
         }
+
+        
     }
 
     private function addUser()
@@ -71,7 +76,7 @@ class Volunteer extends Endpoint
                 ":dob" => \App\Request::params()["dob"],
                 ":email" => \App\Request::params()["email"],
                 ":phone" => \App\Request::params()["phone"],
-                "password"=> \App\Request::params()["password"]
+                ":password"=> \App\Request::params()["password"]
             ];
         }
     }
