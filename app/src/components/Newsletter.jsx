@@ -12,23 +12,14 @@ function Newsletter() {
         throw new Error("invalid response: " + response.status)
     }
   }
-  
-  const handleJSON = (json) => {
-      if (json.constructor === Array) {
-        setNewsEmail(json)
-      } else {
-          throw new Error("invalid JSON: " + json)
-      }
-  }
 
-  const handleSubmit = (e) => {
-    setNewsEmail(e)
-    e.preventDefault();
+  const handleSubmit = () => {
     alert('You have submitted');
     
-    return fetch('https://w20012367.nuwebspace.co.uk/KV6002TeamProject/api/Newsletter.php' + newsEmail)
+    return fetch(
+      'https://w20012367.nuwebspace.co.uk/assessment/api/newsletter?email=' + newsEmail,
+      { method: 'POST' })
     .then( response => handleResponse(response) )
-    .then( json => handleJSON(json) )
     .catch( err => { console.log(err.message) })
   }
 
@@ -45,13 +36,15 @@ function Newsletter() {
           <input 
           type="text" 
           placeholder="Enter Your Email" 
+          value={newsEmail}
+          onChange={e => setNewsEmail(e.target.value)}
           maxLength="50"
           name="email" />
         </label>
 
         <button 
-          type="submit" 
-          onClick={(e) => handleSubmit(e.target.value)}>
+          type="submit"
+          onClick={(e) => { e.preventDefault(); handleSubmit()} }>
           Submit
         </button>
       </form>
