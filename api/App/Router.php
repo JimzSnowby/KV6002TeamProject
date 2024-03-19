@@ -6,8 +6,9 @@ namespace App;
  * An abstract class that handles routing requests to the correct endpoint controller.
  * Throws a 404 error if the endpoint is not found.
  * 
+ * @author James Sowerby
+ * @studentID w21023500
  */
-
 abstract class Router
 {
     public static function routeRequest()
@@ -17,7 +18,6 @@ abstract class Router
         {
             switch ($requestedEndpoint) {
                 case '':
-                case '/':
                 case '/developer':
                 case '/developer/':
                     $endpoint = new EndpointControllers\Developer();
@@ -30,10 +30,6 @@ abstract class Router
                 case '/token/':
                     $endpoint = new EndpointControllers\Token();
                     break;
-                case '/register':
-                case '/register/':
-                    $endpoint = new EndpointControllers\Register();
-                        break;    
                 case '/volunteer':
                 case '/volunteer/':
                     $endpoint = new EndpointControllers\Volunteer();
@@ -58,6 +54,7 @@ abstract class Router
                 case '/eventlist/':
                     $endpoint = new EndpointControllers\EventList();
                     break;
+<<<<<<< Updated upstream
                 case '/volunteerlist':
                 case '/volunteerlist/':
                     $endpoint = new EndpointControllers\VolunteerEventList();
@@ -74,6 +71,17 @@ abstract class Router
                 case '/sponsors/':
                     $endpoint = new EndpointControllers\Sponsor();
                     break; 
+=======
+                case '/register':
+                case '/register/':
+                        $endpoint = new EndpointControllers\Register();
+                        break;
+                
+                case '/participant':
+                case '/participant/':
+                        $endpoint = new EndpointControllers\ParticipantProfile();
+                        break;
+>>>>>>> Stashed changes
                 default:
                     throw new ClientError(404);
             }

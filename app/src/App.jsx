@@ -8,8 +8,11 @@ import Header from "./components/Header"
 import Menu from "./components/Menu"
 import Footer from "./components/Footer"
 import SignIn from "./components/SignIn"
+<<<<<<< Updated upstream
 <<<<<<< HEAD
 import ParticipantPage from "./pages/ParticipantPage"
+=======
+>>>>>>> Stashed changes
 import RegistrationForm from "./pages/Register"
 import BecomeParticipant from './pages/BecomeParticipant'
 =======
@@ -23,7 +26,7 @@ import ActionProvider from "./config/ActionProvider"
 import MessageParser from "./config/MessageParser"
 import config from "./config/config"
 import 'react-chatbot-kit/build/main.css'
-
+import ParticipantPage from './pages/ParticipantPage'
 
 
 function App() {
@@ -86,6 +89,7 @@ function App() {
         <Route path="/volunteer" element={<VolunteerPage />} />
         <Route path="/register" element={<RegistrationForm />} /> {/* Route for the registration form */}
         <Route path="/becomeparticipant" element={<BecomeParticipant />} />
+        <Route path="/participant" element={<ParticipantPage/>} />
 
 =======
           <Route path="/volunteer" element={<VolunteerPage userID={userID}/>} />
