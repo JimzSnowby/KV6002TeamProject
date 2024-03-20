@@ -95,7 +95,6 @@ function RegistrationForm({ onRegistration }) {
         const selectedDate = new Date(dob)
         const nameRegex = /^[a-zA-Z\s]*$/
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
         // Calculate age based on date of birth
         const ageDifferenceMs = currentDate - selectedDate;
         const ageDate = new Date(ageDifferenceMs);
@@ -117,12 +116,14 @@ function RegistrationForm({ onRegistration }) {
             return
         }
 
-        // Phone number validation regex for Malaysian format
-        const phoneRegex = /^(?:\+?6?01)[0-46-9]-*[0-9]{7,8}$/;
+
+        // Phone number validation regex for numeric format only
+        const phoneRegex = /^[0-9]+$/;
+
 
         // Check if phone number is valid
         if (!phone.match(phoneRegex)) {
-            setErrorMessage('Please enter a valid Malaysian phone number.');
+            setErrorMessage('Please enter a valid phone number.');
             return;
         }
 
@@ -163,27 +164,31 @@ function RegistrationForm({ onRegistration }) {
                 body: formData,
             })
                 .then(response => {
-                    // Successful registration
+                    // Check if registration was successful
                     if (response.status === 200 || response.status === 204) {
-                        window.alert('You have sucessfully created an account.')
+                        window.alert('You have successfully created an account.');
                         // Redirect to homepage
-                        window.location.href = '/project/app/home'
-                    } else {
-                        // Registration failed, handle errors
+                        window.location.href = '/project/app/home';
+                    } else if (response.status === 450) { // Check if email already exists
                         response.json().then(data => {
-                            setErrorMessage(data.error || 'Registration failed. Please try again later.')
-                        })
+                            // Show an alert to the user
+                            setErrorMessage(data.error || 'Email already exists.');
+                        });
+                    } else {
+                        // Registration failed, handle other errors
+                        response.json().then(data => {
+                            setErrorMessage(data.error || 'Registration failed. Please try again later.');
+                        });
                     }
                 })
                 .catch(error => {
-                    console.error('Error registering:', error)
-                    setErrorMessage('Registration failed. Please try again later.')
-                })
+                    console.error('Error registering:', error);
+                    setErrorMessage('Registration failed. Please try again later.');
+                });
         } else {
-            setErrorMessage('Please fill in all fields.')
+            setErrorMessage('Please fill in all fields.');
         }
-    }
-
+    };
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-100">
@@ -239,16 +244,16 @@ function RegistrationForm({ onRegistration }) {
                         />
                     </div>
                     <div>
-                    <label htmlFor="dob" className="block text-gray-700">Date of birth</label>
-                    <input
-                        id="dob"
-                        type="date"
-                        placeholder="Date of birth"
-                        value={dob}
-                        onChange={(e) => setDob(e.target.value)}
-                        className="border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:border-blue-500"
-                    />
-                </div>
+                        <label htmlFor="dob" className="block text-gray-700">Date of birth</label>
+                        <input
+                            id="dob"
+                            type="date"
+                            placeholder="Date of birth"
+                            value={dob}
+                            onChange={(e) => setDob(e.target.value)}
+                            className="border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:border-blue-500"
+                        />
+                    </div>
                 </div>
                 <div>
                     <label htmlFor="password" className="block text-gray-700">Password</label>

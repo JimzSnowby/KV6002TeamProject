@@ -104,6 +104,17 @@ class Register extends Endpoint {
        return htmlspecialchars($evidence);
     }
     */
+
+    //Check if email exists
+    private function emailExists($email) 
+    {
+        $dbConn = new \App\Database(MAIN_DATABASE);
+        $sql = "SELECT COUNT(*) AS count FROM participant WHERE email = :email";
+        $sqlParams = [':email' => $email];
+        $result = $dbConn->executeSQL($sql, $sqlParams); // Execute the SQL query
+        $count = $result[0]['count']; // Get the count from the result
+        return $count > 0; // Return true if count is greater than 0
+    }
     
     private function addUser()
     { 
@@ -114,6 +125,12 @@ class Register extends Endpoint {
         $password = $this->password();
         $ticket = $this->ticket();
         $dbConn = new \App\Database(MAIN_DATABASE);
+        
+        // Check if email already exists
+        if ($this->emailExists($email)) {
+            throw new \App\ClientError(450, "Email already exists");
+        }
+
 
         // Prepare SQL query with parameters
         $sql = "INSERT INTO participant (name, dob, email, phone, password, ticket) VALUES (:name, :dob, :email, :phone, :password, :ticket)";
