@@ -6,8 +6,7 @@ namespace App;
  * An abstract class that handles routing requests to the correct endpoint controller.
  * Throws a 404 error if the endpoint is not found.
  * 
- * @author James Sowerby
- * @studentID w21023500
+ * @author Team
  */
 
 abstract class Router

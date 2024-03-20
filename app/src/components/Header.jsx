@@ -3,9 +3,7 @@ import React from 'react'
 /**
  * Header
  *
- * Header with some information.
- *
- * @author Aiden Anderson
+ * @author Aiden Anderson W21047714
  */
 
 function Header () {

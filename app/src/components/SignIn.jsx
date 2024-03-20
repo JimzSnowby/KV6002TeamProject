@@ -4,7 +4,10 @@ import { jwtDecode } from "jwt-decode";
 
 /**
  * The SignIn component for the application.
+ * 
+ * @author ???
  */
+
 function SignIn(props) {
     const [username, setUserName] = useState("")
     const [password, setPassword] = useState("")

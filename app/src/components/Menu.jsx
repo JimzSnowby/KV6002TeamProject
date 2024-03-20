@@ -1,5 +1,11 @@
 import { Link } from 'react-router-dom';
 
+/**
+ * The SignIn component for the application.
+ * 
+ * @author Yoyo
+ */
+
 function Menu(props) {
     return (
         <ul className="flex flex-col md:flex-row justify-evenly text-lg font-semibold bg-blue-200">

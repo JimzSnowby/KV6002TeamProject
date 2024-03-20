@@ -5,8 +5,7 @@ namespace App;
 /**
  * A custom error response for handling client errors.
  * 
- * @author James Sowerby
- * @studentID w21023500
+ * @author Team
  */
 
 class ClientError extends \Exception
