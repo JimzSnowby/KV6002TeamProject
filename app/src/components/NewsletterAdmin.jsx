@@ -41,7 +41,7 @@ function NewsletterAdmin() {
         newsletter.email.toLowerCase().includes(search.toLowerCase())
     }
 
-    const listOfNewsletter = details.filter(searchEmail).map((newsletter, index) => 
+    const listOfNewsletter = newsletter.filter(searchEmail).map((newsletter, index) => 
         <section key = {index}>
             <p>{newsletter.email}</p>
         </section>

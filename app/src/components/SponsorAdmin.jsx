@@ -41,7 +41,7 @@ function SponsorAdmin() {
         sponsor.email.toLowerCase().includes(search.toLowerCase())
     }
 
-    const listOfSponsor = details.filter(searchEmail).map((sponsor, index) => 
+    const listOfSponsor = sponsor.filter(searchEmail).map((sponsor, index) => 
         <section key = {index}>
             <p>{sponsor.email}</p>
         </section>
