@@ -11,6 +11,7 @@ function VolunteerPage(props) {
     const [event, setEvent] = useState([])
     const [page, setPage] = useState(1)
     const [extendEvent, setextendEvent] = useState(null)
+    const [id, setID] = useState('')
 
     const itemsPerPage = 10
     const startOfPage = (page - 1) * itemsPerPage
@@ -26,14 +27,38 @@ function VolunteerPage(props) {
         Sunday: false,
     })
 
+    const parseJwt = (token) => {
+        try {
+            return JSON.parse(atob(token.split('.')[1]));
+        } catch (e) {
+            return null;
+        }
+    };
+
+
     useEffect(() => {
-        console.log("Volunteer ID: ", props.userID)
-        fetchDetails()
-        fetchEvents()
-    }, [])
+        // Effect to decode token and set ID
+        const token = localStorage.getItem("token");
+        if (token) {
+            const decodedToken = parseJwt(token);
+            const tokenID = decodedToken.id; // Access the id
+            setID(tokenID); // This will trigger the second useEffect when the id state updates
+        }
+    }, []);
+
+    useEffect(() => {
+        // Effect to fetch details and events when id changes
+        if (id) {
+            console.log("Volunteer ID: ", id);
+            setEvent([]); // Consider if you need to reset these every time id changes
+            setDetails([]);
+            fetchDetails();
+            fetchEvents();
+        }
+    }, [id]);
     
     const fetchDetails = () => {
-        fetch('https://w21023500.nuwebspace.co.uk/assessment/api/volunteer?volunteerID=' + props.userID)
+        fetch('https://w21023500.nuwebspace.co.uk/assessment/api/volunteer?volunteerID=' + id)
         .then(response => response.json())
         .then(data => setDetails(data))
         .catch(error => console.error("Error fetching details: ", error))
@@ -59,8 +84,7 @@ function VolunteerPage(props) {
         </section>
     )
 
-    const eventsJSX = event.slice(startOfPage, endOfPage)    
-                            .map((item) =>(
+    const eventsJSX = event.slice(startOfPage, endOfPage).map((item) =>(
         <section 
             key = {item.eventID}
             className={`p-4 m-2 rounded-lg border border-gray-300 ${extendEvent === item.eventID ? 'md:col-span-2' : 'col-span-1'
