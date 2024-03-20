@@ -23,7 +23,7 @@ function Menu(props) {
                 {props.signedIn && props.roletype === 'volunteer' && <Link to="/volunteer" className="px-8 hover:text-blue-500 transition duration-300">Volunteer</Link>}
             </li>
             <li>
-                <Link to="/admin-sign-up" className="px-8 hover:text-blue-500 transition duration-300">Add New Admin</Link>
+            {props.signedIn && props.roletype === 'admin' && props.position ==="head" && <Link to="/admin-sign-up" className="px-8 hover:text-blue-500 transition duration-300">Add New Admin</Link>}
             </li>
 
         </ul>

@@ -24,9 +24,11 @@ function App() {
 
   const [signedIn, setSignedIn] = useState(false)
   const [roleType, setRoleType] = useState('')
+  const [position, setPosition] = useState('')
   const [userID, setUserID] = useState('')
 
   console.log("Final Role type:", roleType);
+  console.log("Final Position:", position);
 
   return (
     <div>
@@ -39,6 +41,8 @@ function App() {
           setRoleType={setRoleType}
           userID={userID}
           setUserID={setUserID}
+          position={position}
+          setPosition={setPosition}
         />
       </div>
 
@@ -47,7 +51,9 @@ function App() {
       </header>
 
       <nav className="px-5">
-        <Menu roletype={roleType} signedIn={signedIn}  />
+        <Menu roletype={roleType} 
+        position={position}
+        signedIn={signedIn}  />
       </nav>
 
       <Routes>

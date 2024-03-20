@@ -27,14 +27,19 @@ function SignIn(props) {
         if (token) {
             const decodedToken = parseJwt(token);
             const role = decodedToken.role; // Access the role field
+            const position = decodedToken.position; // Access the position field
             const currentTime = Date.now() / 1000;
             if (decodedToken.exp < currentTime) {
                 signOut()
             }
             props.setRoleType(decodedToken.role)
+            props.setPosition(decodedToken.position)
             props.setUserID(decodedToken.id)
             if(role){
                 props.setRoleType(role)
+            }
+            if(position){
+                props.Position(position)
             }
         }
         if (!props.signedIn){
@@ -45,7 +50,7 @@ function SignIn(props) {
 
     const signIn = () => {
         const encodedString = btoa(username + ':' + password)
-        fetch('https://w21023500.nuwebspace.co.uk/assessment/api/token',
+        fetch('https://w20012367.nuwebspace.co.uk/assessment/api/token',
             {
                 method: 'GET',
                 headers: new Headers({ "Authorization": "Basic " + encodedString })
@@ -64,8 +69,12 @@ function SignIn(props) {
                     localStorage.setItem("token", data.token);
                     const decodedToken = parseJwt(data.token);
                     const role = decodedToken.role; // Access the role field
+                    const position = decodedToken.position; // Access the position field
                     if(role){
                         props.setRoleType(role)
+                    }
+                    if(position){
+                        props.setPosition(position)
                     }
                 }
             })
