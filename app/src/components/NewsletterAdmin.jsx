@@ -6,10 +6,6 @@ function NewsletterAdmin() {
     const [newsletter, setNewsletter] = useState([])
     const [search, setSearch] = useState("")
 
-    useEffect( () => {
-        fetchData()
-    }, [])
-
     const handleResponse = (response) => {
         if (response.status === 200) {
             return response.json()
@@ -26,12 +22,12 @@ function NewsletterAdmin() {
         }
     }
 
-    const fetchData = () => {
+    useEffect(() => {
         fetch("https://w21023500.nuwebspace.co.uk/assessment/api/newsletter")
         .then( response => handleResponse(response))
         .then( json => handleJSON(json))
         .catch( err => { console.log(err.message) })
-    }
+    }, [])
 
     const handleSearch = (event) => {
         setSearch(event.target.value)
