@@ -33,6 +33,7 @@ namespace App\EndpointControllers;
         parent::__construct($data);
     }
 
+    // Retrieves all email addresses subscribed to the sponsor from the sponsor table.
     private function getSponsor() {
 
         $dbConn = new \App\Database(MAIN_DATABASE);
@@ -44,6 +45,7 @@ namespace App\EndpointControllers;
 
     }
 
+    // Adds a new email address to the sponsor table.
     private function addSponsor() {
 
         if (!isset(\App\REQUEST::params()['email'])) {
@@ -70,6 +72,7 @@ namespace App\EndpointControllers;
 
     }
 
+    // Deletes an email address from the sponsor table.
     private function deleteSponsor() {
 
         if (!isset(\App\REQUEST::params()['email'])) {

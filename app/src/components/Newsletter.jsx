@@ -13,6 +13,13 @@ function Newsletter() {
 
   const [newsEmail, setNewsEmail] = useState('');
 
+  /**
+   * Handles the response from the server.
+   * 
+   * @param {object} response - The response object from the server.
+   * @returns {Promise} Promise resolving to JSON data if response is successful, else throws an error.
+   * @throws {Error} If the response status is not 200.
+   */
   const handleResponse = (response) => {
     if (response.status === 200) {
         return response.json()
@@ -21,6 +28,7 @@ function Newsletter() {
     }
   }
 
+  // Handle the form submission.
   const handleSubmit = () => {
     alert('You have submitted');
 

@@ -14,6 +14,7 @@ function SponsorAdmin() {
     const [sponsor, setSponsor] = useState([])
     const [search, setSearch] = useState("")
 
+    // Handles the response from the server.
     const handleResponse = (response) => {
         if (response.status === 200) {
             return response.json()
@@ -22,6 +23,7 @@ function SponsorAdmin() {
         }
     }
 
+    // Handles the JSON response from the server.
     const handleJSON = (json) => {
         if (json.constructor === Array) {
             setSponsor(json)
@@ -30,6 +32,7 @@ function SponsorAdmin() {
         }
     }
 
+    // Fetch the sponsor list from the server.
     useEffect(() => {
         fetch("https://w21023500.nuwebspace.co.uk/assessment/api/sponsor")
         .then( response => handleResponse(response))
@@ -37,20 +40,24 @@ function SponsorAdmin() {
         .catch( err => { console.log(err.message) })
     }, [])
 
+    // Handle the search input.
     const handleSearch = (event) => {
         setSearch(event.target.value)
     }
 
+    // Filter the sponsor list based on the search input.
     const searchEmail = (sponsor) => {
         sponsor.email.toLowerCase().includes(search.toLowerCase())
     }
 
+    // Display the sponsor list.
     const listOfSponsor = sponsor.filter(searchEmail).map((sponsor, index) => 
         <section key = {index}>
             <p>{sponsor.email}</p>
         </section>
     )
 
+    // Remove a sponsor from the sponsor list.
     const removeSponsor = () => {
         alert('Deleted Sponsor');
 

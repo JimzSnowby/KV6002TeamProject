@@ -10,10 +10,10 @@ import linkedinLogo from './../assets/logo-black.png'
  * 
  * Social media links to their respective websites.
  * 
- * https://about.meta.com/uk/brand/resources/facebook/logo/
- * https://about.meta.com/uk/brand/resources/instagram/instagram-brand/
- * https://about.x.com/en/who-we-are/brand-toolkit
- * https://brand.linkedin.com/downloads
+ * Facebook logo sourced from: https://about.meta.com/uk/brand/resources/facebook/logo/
+ * Instagram logo sourced from: https://about.meta.com/uk/brand/resources/instagram/instagram-brand/
+ * Twitter logo sourced from: https://about.x.com/en/who-we-are/brand-toolkit
+ * LinkedIn logo sourced from: https://brand.linkedin.com/downloads
  * 
  * @author Aiden Anderson W21047714
  */

@@ -14,6 +14,7 @@ function NewsletterAdmin() {
     const [newsletter, setNewsletter] = useState([])
     const [search, setSearch] = useState("")
 
+    // Handles the response from the server.
     const handleResponse = (response) => {
         if (response.status === 200) {
             return response.json()
@@ -22,6 +23,7 @@ function NewsletterAdmin() {
         }
     }
 
+    // Handles the JSON response from the server.
     const handleJSON = (json) => {
         if (json.constructor === Array) {
             setNewsletter(json)
@@ -30,6 +32,7 @@ function NewsletterAdmin() {
         }
     }
 
+    // Fetch the newsletter list from the server.
     useEffect(() => {
         fetch("https://w21023500.nuwebspace.co.uk/assessment/api/newsletter")
         .then( response => handleResponse(response))
@@ -37,20 +40,24 @@ function NewsletterAdmin() {
         .catch( err => { console.log(err.message) })
     }, [])
 
+    // Handle the search input.
     const handleSearch = (event) => {
         setSearch(event.target.value)
     }
 
+    // Filter the newsletter list based on the search input.
     const searchEmail = (newsletter) => {
         newsletter.email.toLowerCase().includes(search.toLowerCase())
     }
 
+    // Display the newsletter list.
     const listOfNewsletter = newsletter.filter(searchEmail).map((newsletter, index) => 
         <section key = {index}>
             <p>{newsletter.email}</p>
         </section>
     )
 
+    // Remove a reader from the newsletter list.
     const removeReader = () => {
         alert('Deleted Reader');
 

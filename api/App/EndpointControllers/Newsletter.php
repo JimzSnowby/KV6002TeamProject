@@ -33,6 +33,7 @@ namespace App\EndpointControllers;
         parent::__construct($data);
     }
 
+    // Retrieves all email addresses subscribed to the newsletter from the newsletter table.
     private function getNewsletter() {
 
         $dbConn = new \App\Database(MAIN_DATABASE);
@@ -44,6 +45,7 @@ namespace App\EndpointControllers;
 
     }
 
+    // Adds a new email address to the newsletter table.
     private function addNewsletter() {
 
         if (!isset(\App\REQUEST::params()['email'])) {
@@ -70,6 +72,7 @@ namespace App\EndpointControllers;
  
     }
 
+    // Deletes an email address from the newsletter table.
     private function deleteNewsletter() {
 
         if (!isset(\App\REQUEST::params()['email'])) {
