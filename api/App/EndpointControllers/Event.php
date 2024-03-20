@@ -53,7 +53,7 @@ class Event extends Endpoint {
             throw new \App\ClientError(422);
         }
  
-        if (mb_strlen(\App\REQUEST::params()['description']) > 50)
+        if (mb_strlen(\App\REQUEST::params()['description']) > 250)
         {
             throw new \App\ClientError(402);
         }
@@ -84,11 +84,7 @@ class Event extends Endpoint {
         {
             throw new \App\ClientError(422);
         }
- 
-        if (!is_numeric(\App\REQUEST::params()['time']))
-        {
-            throw new \App\ClientError(402);
-        }
+
  
        $time = \App\REQUEST::params()['time'];
        return htmlspecialchars($time);

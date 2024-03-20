@@ -7,13 +7,15 @@ import VolunteerPage from "./pages/VolunteerPage"
 import ParticipantPage from "./pages/ParticipantPage"
 import RegistrationForm from "./pages/Register"
 import NotFound from "./pages/NotFound"
+import VolunteerSignUp from "./pages/VolunteerSignUp"
+import AdminRegister from './pages/AdminRegister'
+import NewEvent from './pages/NewEvent'
 
 import Header from "./components/Header"
 import Menu from "./components/Menu"
 import Footer from "./components/Footer"
 import SignIn from "./components/SignIn"
-import VolunteerSignUp from "./pages/VolunteerSignUp"
-import AdminRegister from './pages/AdminRegister'
+
 import Search from './components/Search'
 import Event from './components/Event'
 
@@ -63,6 +65,7 @@ function App() {
           <Route path="/participant" element={<ParticipantPage />} />
           <Route path="/register" element={<RegistrationForm />} />
           <Route path="/admin-sign-up" element={<AdminRegister />} />
+          <Route path="/new-event" element={<NewEvent />} />
           <Route path="*" element={<NotFound />} />
       </Routes>
 

@@ -1,30 +1,27 @@
-import bcrypt from 'bcryptjs'
 import React, { useState } from 'react'
 //import toast, { Toaster } from 'react-hot-toast'
 
 
-function AdminRegister() {
+function NewEvent() {
     const [name, setName] = useState('')
-    const [dob, setDob] = useState('')
-    const [email, setEmail] = useState('')
-    const [phone, setPhone] = useState('')
-    const [password, setPassword] = useState('')
-    const [position, setPosition] = useState('')
+    const [description, setDescription] = useState('')
+    const [date, setDate] = useState('')
+    const [time, setTime] = useState('')
+    const [location, setLocation] = useState('')
+    const [space, setSpace] = useState('')
     const [isLoading, setIsLoading] = useState(true)
-    const salt = bcrypt.genSaltSync(10)
 
-    const saveAdmin = () => {
-        if (name && email && password) {
-            const hashPassword = bcrypt.hashSync(password, salt)
+    const postEvent = () => {
+        if (name && description && date && time && location && space) {
             let formData = new FormData();
             formData.append('name', name)
-            formData.append('dob', dob)
-            formData.append('email', email)
-            formData.append('phone', phone)
-            formData.append('password', hashPassword)
-            formData.append('position', position)
+            formData.append('description', description)
+            formData.append('date', date)
+            formData.append('time', time)
+            formData.append('location', location)
+            formData.append('space', space)
 
-            fetch('https://w20012367.nuwebspace.co.uk/assessment/api/adminregister',
+            fetch('https://w20012367.nuwebspace.co.uk/assessment/api/event',
                 {
                     method: 'POST',
                     body: formData
@@ -41,11 +38,11 @@ function AdminRegister() {
     const handleResponse = (response) => {
         if (response.status === 200 || response.status === 204) {
             setName('')
-            setDob('')
-            setEmail('')
-            setPhone('')
-            setPassword('')
-            setPosition('')
+            setDescription('')
+            setDate('')
+            setTime('')
+            setLocation('')
+            setSpace('')
             return response.json()
         } else if (response.status === 409) {
             //toast.error('User already exists');
@@ -63,87 +60,83 @@ function AdminRegister() {
     }
     return (
         <div className="flex flex-col p-5 text-black overflow-">
-            <h2 className="text-2xl font-bold mb-8"> Add New Admin</h2>
+            <h2 className="text-2xl font-bold mb-8"> Post Event</h2>
             <div className="mb-6">
                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
-                    New Admin Name:
+                    Event name:
                 </label>
                 <input className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                     name="name"
-                    placeholder="Enter your name"
-                    maxLength="250"
+                    placeholder="Enter event name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                 />
             </div>
             <div className="mb-6">
-                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="dob">
-                    Date of Birth:
+                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="description">
+                    Description:
                 </label>
                 <input className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
-                    name="dob"
+                    name="description"
+                    placeholder="Enter event description"
+                    maxLength="250"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                />
+
+            </div>
+
+            <div className="mb-6">
+                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="date">
+                    Event date:
+                </label>
+                <input className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                    name="date"
                     type='date'
                     placeholder="(DD/MM/YYYY)"
-                    value={dob}
-                    onChange={(e) => setDob(e.target.value)}
-                />
-
-            </div>
-
-            <div className="mb-6">
-                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
-                    Email Address:
-                </label>
-                <input className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
-                    name="email"
-                    placeholder="example@email.com"
-                    maxLength="250"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    value={date}
+                    onChange={(e) => setDate(e.target.value)}
                 />
             </div>
             <div className="mb-6">
-                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="phone">
-                    Contact Number:
+                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="time">
+                    Event time:
                 </label>
                 <input className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
 
-                    name="phone"
-                    placeholder="016-xxx xxxx"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
+                    name="time"
+                    type='time'
+                    placeholder="Time"
+                    value={time}
+                    onChange={(e) => setTime(e.target.value)}
                 />
             </div>
             <div className="mb-6">
-                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
-                    New Admin Password:
+                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="location">
+                    Event location:
                 </label>
                 <input className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
 
-                    name="password"
-                    placeholder="*******"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    name="location"
+                    placeholder="Enter event location"
+                    value={location}
+                    onChange={(e) => setLocation(e.target.value)}
                 />
             </div>
             <div className="mb-6">
-                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="position">
-                    New Admin Position:
+                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="space">
+                    Available number of slot for the event:
                 </label>
-                <select
+                <input
                     className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
-                    name="position"
-                    value={position}
-                    onChange={(e) => setPosition(e.target.value)}
-                >
-                    <option value="">Select Admin Position:</option>
-                    <option value="head">Head of Admin</option>
-                    <option value="admin">Admin</option>
-                </select>
+                    name="space"
+                    value={space}
+                    onChange={(e) => setSpace(e.target.value)}
+                />
             </div>
             <div >
             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                    onClick={saveAdmin}
+                    onClick={postEvent}
                 >
                     Submit
                     </button>
@@ -156,4 +149,4 @@ function AdminRegister() {
 }
 
 
-            export default AdminRegister
+            export default NewEvent

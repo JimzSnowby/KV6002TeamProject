@@ -39,7 +39,7 @@ function SignIn(props) {
                 props.setRoleType(role)
             }
             if(position){
-                props.Position(position)
+                props.setPosition(position)
             }
         }
         if (!props.signedIn){
