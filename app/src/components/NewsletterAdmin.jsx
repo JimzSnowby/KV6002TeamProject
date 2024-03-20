@@ -43,8 +43,11 @@ function NewsletterAdmin() {
         newsletter.email.toLowerCase().includes(search.toLowerCase())
     }
 
-    const listOfNewsletter = newsletter.filter(searchEmail).map( 
-        (newsletter, index) => <NewsletterContent key={index} newsletter={newsletter}/>
+    const listOfNewsletter = details.filter(searchEmail).map(
+        (newsletter, index) => 
+    <section key = {index} className='p-5 bg-blue-200'>
+        <p>{newsletter.email}</p>
+    </section>
     )
 
     const removeReader = () => {

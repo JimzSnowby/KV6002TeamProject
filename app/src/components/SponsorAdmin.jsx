@@ -1,8 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react'
 
-import SponsorContent from './SponsorContent'
-
 function SponsorAdmin() {
     
     const [sponsor, setSponsor] = useState([])
@@ -43,12 +41,14 @@ function SponsorAdmin() {
         sponsor.email.toLowerCase().includes(search.toLowerCase())
     }
 
-    const listOfSponsor = sponsor.filter(searchEmail).map( 
-        (sponsor, index) => <SponsorContent key={index} sponsor={sponsor}/>
+    const listOfSponsor = details.filter(searchEmail).map((sponsor, index) => 
+        <section key = {index}>
+            <p>{sponsor.email}</p>
+        </section>
     )
 
     const removeSponsor = () => {
-        fetch('https://w123.nuwebspace.co.uk/api/favourites?film_id='+props.email,
+        fetch('https://w20012367.nuwebspace.co.uk/assessment/api/sponsor?email='+sponsor,
           {
            method: 'DELETE',
           }
