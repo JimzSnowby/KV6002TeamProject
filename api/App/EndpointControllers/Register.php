@@ -93,7 +93,7 @@ class Register extends Endpoint {
        return htmlspecialchars($ticket);
     }
 
-    private function evidence() 
+   /* private function evidence() 
     {
         if (!isset(\App\REQUEST::params()['evidence']))
         {
@@ -103,6 +103,7 @@ class Register extends Endpoint {
        $evidence = \App\REQUEST::params()['evidence'];
        return htmlspecialchars($evidence);
     }
+    */
     
     private function addUser()
     { 

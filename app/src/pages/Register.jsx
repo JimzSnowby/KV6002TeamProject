@@ -17,7 +17,7 @@ function RegistrationForm({ onRegistration }) {
     const [email, setEmail] = useState('')
     const [phone, setPhone] = useState('')
     const [ticket, setTicket] = useState('3') // Ticket set to always be 3
-    const [evidence, setEvidence] = useState('')
+    //const [evidence, setEvidence] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
     const [token, setToken] = useState('')
     const salt = bcrypt.genSaltSync(10) // Generate salt for password hashing
@@ -84,12 +84,10 @@ function RegistrationForm({ onRegistration }) {
 
 
     // Handle evidence file input changes
-    const handleEvidenceChange = (e) => {
-        const files = e.target.files;
-        setEvidence(files);
-    };
-
-
+    //const handleEvidenceChange = (e) => {
+    //    const files = e.target.files;
+    //    setEvidence(files);
+    //};
 
     // Handle registration form submission
     const handleRegistration = () => {
@@ -97,6 +95,11 @@ function RegistrationForm({ onRegistration }) {
         const selectedDate = new Date(dob)
         const nameRegex = /^[a-zA-Z\s]*$/
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        // Calculate age based on date of birth
+        const ageDifferenceMs = currentDate - selectedDate;
+        const ageDate = new Date(ageDifferenceMs);
+        const userAge = Math.abs(ageDate.getUTCFullYear() - 1970);
 
         if (selectedDate > currentDate) {
             setErrorMessage('Please enter a valid date of birth.');
@@ -114,12 +117,12 @@ function RegistrationForm({ onRegistration }) {
             return
         }
 
-        // Phone number validation regex for UK format
-        const phoneRegex = /^(?:(?:\+|00)44|0)7(?:[45789]\d{2}|624)\d{6}$/;
+        // Phone number validation regex for Malaysian format
+        const phoneRegex = /^(?:\+?6?01)[0-46-9]-*[0-9]{7,8}$/;
 
         // Check if phone number is valid
         if (!phone.match(phoneRegex)) {
-            setErrorMessage('Please enter a valid UK phone number.');
+            setErrorMessage('Please enter a valid Malaysian phone number.');
             return;
         }
 
@@ -129,7 +132,13 @@ function RegistrationForm({ onRegistration }) {
             return;
         }
 
-        if (name.trim() !== '' && dob.trim() !== '' && email.trim() !== '' && phone.trim() !== '' && password.trim() !== '' && evidence && ticket.trim() !== '') {
+        if (selectedDate >= currentDate || userAge < 18) {
+            setErrorMessage('You must be at least 18 years old to register.');
+            return;
+        }
+
+
+        if (name.trim() !== '' && dob.trim() !== '' && email.trim() !== '' && phone.trim() !== '' && password.trim() !== '' && ticket.trim() !== '') {
             const hashedPassword = bcrypt.hashSync(password, salt) // Hash the password
 
             let formData = new FormData()
@@ -141,9 +150,9 @@ function RegistrationForm({ onRegistration }) {
 
 
             // Append evidence files to formData
-            for (let i = 0; i < evidence.length; i++) {
-                formData.append('evidence', evidence[i]);
-            }
+            //for (let i = 0; i < evidence.length; i++) {
+            //   formData.append('evidence', evidence[i]);
+            //}
 
             // Append ticket amount
             formData.append('ticket', ticket)
@@ -156,7 +165,7 @@ function RegistrationForm({ onRegistration }) {
                 .then(response => {
                     // Successful registration
                     if (response.status === 200 || response.status === 204) {
-                        window.alert('You have sucessfully created an account. Your evidence will be evaluated by the member of our staff. You can log in now.')
+                        window.alert('You have sucessfully created an account.')
                         // Redirect to homepage
                         window.location.href = '/project/app/home'
                     } else {
@@ -230,16 +239,16 @@ function RegistrationForm({ onRegistration }) {
                         />
                     </div>
                     <div>
-                        <label htmlFor="dob" className="block text-gray-700">Date of birth</label>
-                        <input
-                            id="dob"
-                            type="date"
-                            placeholder="Date of birth"
-                            value={dob}
-                            onChange={(e) => setDob(e.target.value)}
-                            className="border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:border-blue-500"
-                        />
-                    </div>
+                    <label htmlFor="dob" className="block text-gray-700">Date of birth</label>
+                    <input
+                        id="dob"
+                        type="date"
+                        placeholder="Date of birth"
+                        value={dob}
+                        onChange={(e) => setDob(e.target.value)}
+                        className="border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:border-blue-500"
+                    />
+                </div>
                 </div>
                 <div>
                     <label htmlFor="password" className="block text-gray-700">Password</label>
