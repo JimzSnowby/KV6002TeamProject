@@ -1,4 +1,5 @@
 import React from "react"
+import ApplyEvent from "./ApplyEvent"
 
 function Event(props) {
 
@@ -45,6 +46,7 @@ function Event(props) {
                     <div className="bg-blue-500 h-full" style={{ width: `${spaceLeft}%` }}></div>
                 </div>
                 <div className="ml-2">{availableSpace} Spaces available</div>
+                <div><ApplyEvent selectEventID={props.event.eventID}/></div>
             </div>
         </div>
     )

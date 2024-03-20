@@ -80,6 +80,7 @@ function ParticipantPage(props) {
                         <FiUser className="text-5xl text-gray-600" />
                     </div>
                     <h2 className="text-center text-2xl font-semibold mb-4">User Profile</h2>
+                    <p className="text-center">Manage your account and edit your details here</p>
                     <form onSubmit={updateParticipant}>
                         <div className="mb-4">
                             <label htmlFor="name" className="block text-gray-700 text-sm font-bold mb-2">Name</label>
