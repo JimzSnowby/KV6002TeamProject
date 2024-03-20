@@ -2,9 +2,11 @@
  namespace App\EndpointControllers;
 
  /**
-  * Admin Endpoint
+  * Content note endpoint limited to authorised users
   *
-  * This endpoint is incharge of handling get and post requests for the admin endpoint
+  * This endpoint is incharge of handling the content note requests, 
+  * including GET and POST. Delete is not implemented as the POST request
+  * will overwrite the existing note.
   *
   * @author Pik Sum Siu
   */
@@ -19,7 +21,7 @@ class AdminRegister extends Endpoint
         switch(\App\Request::method()) 
         {
             case 'POST':
-                $data = $this->addAdmin();
+                $data = $this->addUser();
                 break;
 
             default:
@@ -47,7 +49,6 @@ class AdminRegister extends Endpoint
         $name = \App\REQUEST::params()['name'];
         return htmlspecialchars($name);
     }
-
     private function dob() 
     {
 
@@ -57,10 +58,14 @@ class AdminRegister extends Endpoint
             throw new \App\ClientError(422);
         }
     
+        if (mb_strlen(\App\REQUEST::params()['dob']) > 250)
+        {
+            throw new \App\ClientError(422);
+        }
+    
         $dob = \App\REQUEST::params()['dob'];
         return htmlspecialchars($dob);
     }
-
 
     private function email() 
     {
@@ -69,12 +74,15 @@ class AdminRegister extends Endpoint
         {
             throw new \App\ClientError(422);
         }
-
+ 
+        if (mb_strlen(\App\REQUEST::params()['email']) > 250)
+        {
+            throw new \App\ClientError(422);
+        }
  
        $email = \App\REQUEST::params()['email'];
        return htmlspecialchars($email);
     }
-
     private function phone() 
     {
 
@@ -82,10 +90,12 @@ class AdminRegister extends Endpoint
         {
             throw new \App\ClientError(422);
         }
+
  
        $phone = \App\REQUEST::params()['phone'];
        return htmlspecialchars($phone);
     }
+
 
     private function password() 
     {
@@ -103,7 +113,6 @@ class AdminRegister extends Endpoint
        $password = \App\REQUEST::params()['password'];
        return htmlspecialchars($password);
     }
-
     private function position() 
     {
 
@@ -112,7 +121,7 @@ class AdminRegister extends Endpoint
             throw new \App\ClientError(422);
         }
  
-        if (mb_strlen(\App\REQUEST::params()['position']) > 30)
+        if (mb_strlen(\App\REQUEST::params()['position']) > 250)
         {
             throw new \App\ClientError(422);
         }
@@ -120,8 +129,7 @@ class AdminRegister extends Endpoint
        $position = \App\REQUEST::params()['position'];
        return htmlspecialchars($position);
     }
-
-    private function addAdmin()
+    private function addUser()
     {
         $name = $this->name();
         $dob = $this->dob();
@@ -129,39 +137,12 @@ class AdminRegister extends Endpoint
         $phone = $this->phone();
         $password = $this->password(); 
         $position = $this->position();
-        
         $dbConn = new \App\Database(MAIN_DATABASE);
-       
-        $sqlParams = [
-                    ':name' => $name, 
-                    ':dob' => $dob, 
-                    ':email' => $email, 
-                    ':phone' => $phone,
-                    ':password' => $password,
-                    ':position' => $position
-                ];
-
-        // Check if the user already exists
+        $sqlParams = [':name' => $name, ':dob' => $dob, ':email' => $email, ':phone'=> $phone, ':password' => $password, ':position' => $position];
         if ($this->userExists($email)) {
             throw new \App\ClientError(409); 
         }
-
-        // Insert the user into the database
-        $sql = "INSERT INTO admin (
-            name,
-            dob,
-            email,
-            phone,
-            password,
-            position
-        ) VALUES (
-            :name, 
-            :dob,
-            :email,
-            :phone,
-            :password,
-            :position
-        )";
+        $sql = "INSERT INTO admin (name, dob, email, phone, password, position) VALUES (:name, :dob, :email, :phone, :password, :position)";
         $data = $dbConn->executeSQL($sql, $sqlParams);
 
     

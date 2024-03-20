@@ -13,6 +13,7 @@ import Menu from "./components/Menu"
 import Footer from "./components/Footer"
 import SignIn from "./components/SignIn"
 import VolunteerSignUp from "./pages/VolunteerSignUp"
+import AdminRegister from './pages/AdminRegister'
 
 
 
@@ -50,6 +51,7 @@ function App() {
           <Route path="/volunteer-sign-up" element={<VolunteerSignUp />} />
           <Route path="/participant" element={<ParticipantPage />} />
           <Route path="/register" element={<RegistrationForm />} />
+          <Route path="/admin-sign-up" element={<AdminRegister />} />
           <Route path="*" element={<NotFound />} />
       </Routes>
 
