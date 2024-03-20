@@ -1,6 +1,14 @@
 import React from 'react';
 import { useState, useEffect } from 'react'
 
+/**
+ * Display Newsletter Subscribers
+ * 
+ * Display a list of newsletter subscribers for the admin to view & delete.
+ *
+ * @author Aiden Anderson W21047714
+ */
+
 function NewsletterAdmin() {
 
     const [newsletter, setNewsletter] = useState([])

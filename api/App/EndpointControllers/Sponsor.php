@@ -1,13 +1,16 @@
 <?php
 
 namespace App\EndpointControllers;
+
 /**
- * Save content to authenticated users
+ * Sponsor
+ * 
+ * This class is responsible for handling the sponsor endpoint:
+ * adding, deleting, and getting sponsors.
+ * 
+ * params: email
  *
- * This class will save contents for authenticated users. 
- * It handles GET, POST and DELETE requests.
- *
- * @author Pik Sum Siu
+ * @author Aiden Anserson W21047714
  */
 
  class Sponsor extends Endpoint {
@@ -38,6 +41,7 @@ namespace App\EndpointControllers;
         $data = $dbConn->executeSQL($sql);
 
         return $data;
+
     }
 
     private function addSponsor() {

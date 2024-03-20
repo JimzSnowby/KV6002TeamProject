@@ -1,6 +1,14 @@
 import React from 'react'
 import { useState } from 'react'
 
+/**
+ * Sponsor
+ * 
+ * This is a form for the user to sign up to sponsor events.
+ *
+ * @author Aiden Anderson W21047714
+ */
+
 function Sponsor() {
 
   const [sponsorEmail, setSponsorEmail] = useState('');

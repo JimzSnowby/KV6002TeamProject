@@ -1,6 +1,14 @@
 import React from 'react';
 import { useState, useEffect } from 'react'
 
+/**
+ * Display Sponsor Subscribers
+ * 
+ * Display a list of Sponsor subscribers for the admin to view & delete.
+ *
+ * @author Aiden Anderson W21047714
+ */
+
 function SponsorAdmin() {
 
     const [sponsor, setSponsor] = useState([])

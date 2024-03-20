@@ -5,7 +5,18 @@ import instagramLogo from './../assets/Instagram_Glyph_Gradient.png'
 import twitterLogo from './../assets/LI-In-Bug.png'
 import linkedinLogo from './../assets/logo-black.png'
 
-// https://about.meta.com/uk/brand/resources/facebook/logo/   https://about.meta.com/uk/brand/resources/instagram/instagram-brand/   https://about.x.com/en/who-we-are/brand-toolkit   https://brand.linkedin.com/downloads
+/**
+ * Share To Social Media
+ * 
+ * Social media links to their respective websites.
+ * 
+ * https://about.meta.com/uk/brand/resources/facebook/logo/
+ * https://about.meta.com/uk/brand/resources/instagram/instagram-brand/
+ * https://about.x.com/en/who-we-are/brand-toolkit
+ * https://brand.linkedin.com/downloads
+ * 
+ * @author Aiden Anderson W21047714
+ */
 
 function Share() {
 

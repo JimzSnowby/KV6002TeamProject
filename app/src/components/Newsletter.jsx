@@ -1,6 +1,14 @@
 import React from 'react'
 import { useState } from 'react'
 
+/**
+ * Newsletter
+ * 
+ * This is a form for the user to sign up to the newsletter.
+ *
+ * @author Aiden Anderson W21047714
+ */
+
 function Newsletter() {
 
   const [newsEmail, setNewsEmail] = useState('');
@@ -16,9 +24,8 @@ function Newsletter() {
   const handleSubmit = () => {
     alert('You have submitted');
 
-    return fetch(
-      'https://w20012367.nuwebspace.co.uk/assessment/api/newsletter?email=' + newsEmail, 
-      { method: 'POST' })
+    return fetch('https://w20012367.nuwebspace.co.uk/assessment/api/newsletter?email=' + newsEmail, 
+    { method: 'POST' })
     .then( response => handleResponse(response))
     .catch( err => { console.log(err.message) })
   }

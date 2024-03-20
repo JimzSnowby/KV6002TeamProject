@@ -1,13 +1,16 @@
 <?php
 
 namespace App\EndpointControllers;
+
 /**
- * Save content to authenticated users
+ * Newsletter
+ * 
+ * This class is responsible for handling the newsletter endpoint:
+ * adding, deleting, and getting newsletter.
+ * 
+ * params: email
  *
- * This class will save contents for authenticated users. 
- * It handles GET, POST and DELETE requests.
- *
- * @author Pik Sum Siu
+ * @author Aiden Anderson W21047714
  */
 
  class Newsletter extends Endpoint {
@@ -64,7 +67,6 @@ namespace App\EndpointControllers;
 
         }
         return [];
- 
  
     }
 
