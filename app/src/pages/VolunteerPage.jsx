@@ -50,7 +50,7 @@ function VolunteerPage(props) {
         // Effect to fetch details and events when id changes
         if (id) {
             console.log("Volunteer ID: ", id);
-            setEvent([]); // Consider if you need to reset these every time id changes
+            setEvent([]); 
             setDetails([]);
             fetchDetails();
             fetchEvents();
@@ -95,6 +95,9 @@ function VolunteerPage(props) {
                 extendEvent={extendEvent}
                 setextendEvent={setextendEvent}
             />
+            <div className='flex justify-end'>
+                <button className='text-right'>Volunteer</button>
+            </div>
         </section>
     ))
 

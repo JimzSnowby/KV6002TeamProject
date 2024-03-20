@@ -13,11 +13,14 @@ function SignIn(props) {
     const navigate = useNavigate()
 
    const parseJwt = (token) => {
-        try {
-            return JSON.parse(atob(token.split('.')[1]));
-        } catch (e) {
-            return null;
-        }
+            const decode = JSON.parse(atob(token.split('.')[1]));
+            console.log(decode);
+            if (decode.exp * 1000 < new Date().getTime()) {
+                signOut();
+                console.log('Time Expired');
+                window.alert("Session Expired")
+            }
+            return decode;
     };
 
  
@@ -41,6 +44,8 @@ function SignIn(props) {
             setUserName("")
             setPassword("")
         }
+
+
         }, [props.signedIn]);
 
     const signIn = () => {
