@@ -53,8 +53,6 @@ class Volunteer extends Endpoint
             $this->sql .= " WHERE volunteer.volunteerID = :volunteerid";
             $this->sqlParams[":volunteerid"] = \App\Request::params()['volunteerid'];
         }
-
-        
     }
 
     private function addUser()
