@@ -7,7 +7,7 @@ function SponsorContent(props) {
         <section>
             <p> {props.sponsor.email} </p> 
         </section>
-  </div>
+    </div>
   )
 
 }

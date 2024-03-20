@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import Volunteer from '../components/Volunteer'
 
 /**
  * Page to manage Volunteers profile

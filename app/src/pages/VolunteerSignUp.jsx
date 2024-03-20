@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import bcryt from 'bcryptjs'
 
 /**
@@ -58,10 +58,11 @@ function VolunteerSignUp() {
 
     return (
         <>
-            <div className='bg-blue-200 p-6 rounded-lg max-w-xl mx-auto mt-10'>
+            <div className='bg-blue-200 p-6 rounded-lg max-w-xl mx-auto mt-10 mb-5'>
                 <h2 className='p-6 text-center text-4xl'>Want to help out?</h2>
-                <p className='text-center text-xl'>We are always in need of more volunteers to help at events.</p>
-                <p className='text-center text-xl'>Sign up below and let us know when you are available.</p>
+                <p className='text-center text-xl'>
+                    We are always in need of more volunteers to help at events, sign up below to become a volunteer.
+                </p>
                 <table className='bg-blue-800 mx-auto w-full mt-5 rounded-md'>
                     <tbody>
                         <tr>

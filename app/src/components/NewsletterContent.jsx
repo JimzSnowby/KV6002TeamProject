@@ -7,7 +7,7 @@ function NewsletterContent(props) {
         <section>
             <p> {props.newsletter.email} </p> 
         </section>
-  </div>
+    </div>
   )
 
 }
