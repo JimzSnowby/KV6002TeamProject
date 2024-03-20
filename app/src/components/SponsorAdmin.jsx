@@ -2,7 +2,7 @@ import React from 'react';
 import { useState, useEffect } from 'react'
 
 function SponsorAdmin() {
-    
+
     const [sponsor, setSponsor] = useState([])
     const [search, setSearch] = useState("")
 
@@ -17,7 +17,7 @@ function SponsorAdmin() {
             throw new Error("invalid response: " + response.status)
         }
     }
-     
+
     const handleJSON = (json) => {
         if (json.constructor === Array) {
             setSponsor(json)
@@ -26,10 +26,10 @@ function SponsorAdmin() {
         }
     }
 
-    const fetchData = () => { 
+    const fetchData = () => {
         fetch("https://w21023500.nuwebspace.co.uk/assessment/api/sponsor")
-        .then( response => handleResponse(response) )
-        .then( json => handleJSON(json) )
+        .then( response => handleResponse(response))
+        .then( json => handleJSON(json))
         .catch( err => { console.log(err.message) })
     }
 
@@ -48,43 +48,36 @@ function SponsorAdmin() {
     )
 
     const removeSponsor = () => {
-        fetch('https://w20012367.nuwebspace.co.uk/assessment/api/sponsor?email='+sponsor,
-          {
-           method: 'DELETE',
-          }
-         )
-         .then(res => {
-            if ((res.status === 200) || (res.status === 204)) {
-                // Use the filter method to remove the film_id(s) from the favourites array
-                props.setFavourites(props.favourites.filter(
-                  fav => fav !== props.film.film_id
-                ))
-            }
-         })
-      }
+        alert('Deleted Sponsor');
+
+        return fetch('https://w20012367.nuwebspace.co.uk/assessment/api/sponsor?email=' + sponsor, 
+          {method: 'DELETE'})
+          .then( response => handleResponse(response))
+          .catch( err => { console.log(err.message) })
+        }
 
     return (
         <div className="container">
-            
+
             <h1>Sponsor</h1>
 
             <input 
             value={search} 
             onChange={handleSearch} 
             type="text" 
-            placeholder="Search For Email" 
-            name="email" />
+            placeholder="Search For Sponsor" 
+            name="email"/>
 
             {listOfSponsor}
 
             <button 
                 type="submit" 
-                onClick={removeSponsor}>
+                onClick={(e) => { e.preventDefault(); removeSponsor()} }>
                 Delete Sponsor
             </button>
         </div>
     )
 
 }
- 
+
 export default SponsorAdmin

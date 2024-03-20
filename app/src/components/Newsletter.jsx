@@ -15,11 +15,11 @@ function Newsletter() {
 
   const handleSubmit = () => {
     alert('You have submitted');
-    
+
     return fetch(
-      'https://w20012367.nuwebspace.co.uk/assessment/api/newsletter?email=' + newsEmail,
+      'https://w20012367.nuwebspace.co.uk/assessment/api/newsletter?email=' + newsEmail, 
       { method: 'POST' })
-    .then( response => handleResponse(response) )
+    .then( response => handleResponse(response))
     .catch( err => { console.log(err.message) })
   }
 
@@ -36,21 +36,21 @@ function Newsletter() {
           <input 
           type="text" 
           placeholder="Enter Your Email" 
-          value={newsEmail}
-          onChange={e => setNewsEmail(e.target.value)}
-          maxLength="50"
-          name="email" />
+          value={newsEmail} 
+          onChange={e => setNewsEmail(e.target.value)} 
+          maxLength="50" 
+          name="email"/>
         </label>
 
         <button 
-          type="submit"
+          type="submit" 
           onClick={(e) => { e.preventDefault(); handleSubmit()} }>
           Submit
         </button>
       </form>
     </div>
   )
-  
+
 }
 
 export default Newsletter

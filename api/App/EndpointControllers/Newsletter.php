@@ -10,30 +10,27 @@ namespace App\EndpointControllers;
  * @author Pik Sum Siu
  */
 
- class Newsletter extends Endpoint 
- {
-    protected $allowedParams = ["email"];
-     public function __construct(){
-  
-         switch(\App\Request::method()) 
-         {
-             case 'GET':
-                $data = $this->getNewsletter();
-                 break;
-             case 'POST':
-                $data = $this->addNewsletter();
-                 break;
-             case 'DELETE':
-                $data = $this->deleteNewsletter();
-                 break;
-             default:
-                 throw new \App\ClientError(405);
-                 
-         }
-         parent::__construct($data);
-     }
+ class Newsletter extends Endpoint {
 
-     private function getNewsletter(){
+    public function __construct() {
+
+        switch(\App\Request::method()) {
+            case 'GET':
+            $data = $this->getNewsletter();
+                break;
+            case 'POST':
+            $data = $this->addNewsletter();
+                break;
+            case 'DELETE':
+            $data = $this->deleteNewsletter();
+                break;
+            default:
+                throw new \App\ClientError(405);
+        }
+        parent::__construct($data);
+    }
+
+    private function getNewsletter() {
 
         $dbConn = new \App\Database(MAIN_DATABASE);
 
@@ -44,13 +41,14 @@ namespace App\EndpointControllers;
 
     }
 
-    private function addNewsletter()
-    {
-        if (!isset(\App\REQUEST::params()['email']))
-        {
+    private function addNewsletter() {
+
+        if (!isset(\App\REQUEST::params()['email'])) {
+
             throw new \App\ClientError(422);
+
         }
-         
+
         $email = \App\Request::params()['email'];
 
         $dbConn = new \App\Database(MAIN_DATABASE);
@@ -58,23 +56,26 @@ namespace App\EndpointControllers;
         $sqlParams = [':email' => $email];
         $sql = "SELECT * FROM newsletter WHERE email = :email";
         $data = $dbConn->executeSQL($sql, $sqlParams);
- 
- 
+
         if (count($data) === 0) {
+
             $sql = "INSERT INTO newsletter (email) VALUES (:email)";
             $data = $dbConn->executeSQL($sql, $sqlParams);
+
         }
         return [];
  
  
     }
+
     private function deleteNewsletter() {
 
-        if (!isset(\App\REQUEST::params()['email']))
-        {
+        if (!isset(\App\REQUEST::params()['email'])) {
+
             throw new \App\ClientError(422);
+
         }
-         
+
         $email = \App\Request::params()['email'];
  
         $dbConn = new \App\Database(MAIN_DATABASE);
@@ -85,5 +86,5 @@ namespace App\EndpointControllers;
         return $data;
 
     }
- 
+
 }
