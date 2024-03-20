@@ -114,22 +114,14 @@ class Register extends Endpoint {
         $ticket = $this->ticket();
         $dbConn = new \App\Database(MAIN_DATABASE);
 
-        // Check if file was uploaded successfully
-        if(isset($_FILES['evidence']) && $_FILES['evidence']['error'] === UPLOAD_ERR_OK) {
-            // Read the file content
-            $evidenceContent = file_get_contents($_FILES['evidence']['tmp_name']);
-        } else {
-            throw new \App\ClientError(450); // File upload error
-        }
         // Prepare SQL query with parameters
-        $sql = "INSERT INTO participant (name, dob, email, phone, password, evidence, ticket) VALUES (:name, :dob, :email, :phone, :password, :evidence, :ticket)";
+        $sql = "INSERT INTO participant (name, dob, email, phone, password, ticket) VALUES (:name, :dob, :email, :phone, :password, :ticket)";
         $sqlParams = [
             ':name' => $name,
             ':dob' => $dob,
             ':email' => $email,
             ':phone' => $phone,
             ':password' => $password,
-            ':evidence' => $evidenceContent, // Use the content of the evidence file
             ':ticket' => $ticket
         ];
         $data = $dbConn->executeSQL($sql, $sqlParams);

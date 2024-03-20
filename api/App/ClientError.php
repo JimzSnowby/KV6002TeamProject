@@ -5,8 +5,6 @@ namespace App;
 /**
  * A custom error response for handling client errors.
  * 
- * @author James Sowerby
- * @studentID w21023500
  */
 
 class ClientError extends \Exception
@@ -43,6 +41,11 @@ class ClientError extends \Exception
                 http_response_code(405);
                 $message = 'Method Not Allowed';
                 break;
+<<<<<<< HEAD
+            case 444:
+                http_response_code(444);
+                $message = 'Unprocessable name';
+=======
             case 409:
                 http_response_code(405);
                 $message = 'No space available';
@@ -50,7 +53,37 @@ class ClientError extends \Exception
             case 422:
                 http_response_code(422);
                 $message = 'Unprocessable Entity';
+>>>>>>> main
                 break;
+            case 445:
+                http_response_code(445);
+                $message = 'Unprocessable dob';
+                break;     
+            case 446:
+                http_response_code(446);
+                $message = 'Unprocessable email';
+                break;     
+            case 447:
+                http_response_code(447);
+                $message = 'Unprocessable phone';
+                break;     
+            case 448:
+                http_response_code(448);
+                $message = 'Unprocessable password';
+                break;     
+            case 449:
+                http_response_code(449);
+                $message = 'Unprocessable ticket';
+                break;     
+            case 450:
+                http_response_code(450);
+                $message = 'Unprocessable evidence';
+                break;     
+            case 451:
+                http_response_code(451);
+                $message = 'Unprocessable evidence 2';
+                break;     
+
             default:
                 throw new \Exception('Internal Server Error');
         }

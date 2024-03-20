@@ -6,8 +6,6 @@ namespace App\EndpointControllers;
  * 
  * An endpoint that returns account details for a volunteer.
  * 
- * @author James Sowerby
- * @studentID w21023500
  */
 class Volunteer extends Endpoint
 {

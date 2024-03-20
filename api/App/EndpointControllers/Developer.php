@@ -5,8 +5,6 @@ namespace App\EndpointControllers;
 /**
  * An endpoint that returns my name and student id.
  * 
- * @author James Sowerby
- * @studentID w21023500
  */
 class Developer extends Endpoint
 {

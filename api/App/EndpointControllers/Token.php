@@ -8,8 +8,6 @@ namespace App\EndpointControllers;
  * This class will check a username and password against those held in the 
  * database. If authentication is successful it will return a JWT that expires after 30 minutes.
  *
- * @author James Sowerby
- * @studentID w21023500
  */
 
  class Token extends Endpoint { 
