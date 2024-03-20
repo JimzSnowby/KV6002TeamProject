@@ -86,6 +86,7 @@ function SignIn(props) {
         setUserName("")
         setPassword("")
         props.setSignedIn(false)
+        props.setPosition("")
         navigate("/")
     }
 
