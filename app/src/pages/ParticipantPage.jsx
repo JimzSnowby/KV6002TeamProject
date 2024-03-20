@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from 'react';
 
 /**
  * ParticipantPage Component
@@ -7,22 +6,23 @@ import React, { useState, useEffect } from 'react';
  * 
  * @author Maja Bosy
  */
+import React, { useState, useEffect } from 'react';
+import { FiUser } from 'react-icons/fi'; // Importing user icon from react-icons
+
 function ParticipantPage(props) {
-    const [name, setName] = useState(props.name || '') // Initialize with props.note or an empty string
-    const [phone, setPhone] = useState(props.phone || '') // Initialize with props.note or an empty string
-    const [email, setEmail] = useState(props.email || '') // Initialize with props.note or an empty string
-    const [evidence, setEvidence] = useState(props.evidence || '') // Initialize with props.note or an empty string
+    const [name, setName] = useState(props.name || '');
+    const [phone, setPhone] = useState(props.phone || '');
+    const [email, setEmail] = useState(props.email || '');
+    const [evidence, setEvidence] = useState(props.evidence || '');
 
     useEffect(() => {
-        // Fetch the note associated with the content_id
         fetch('https://w20037161.nuwebspace.co.uk/assessment/api/participant', {
             method: 'GET',
             headers: new Headers({ 'Authorization': 'Bearer ' + localStorage.getItem('token') })
         })
             .then(response => {
                 if (response.status === 200) {
-                    console.log(response)
-                    return response.json()
+                    return response.json();
                 }
             })
             .then(data => {
@@ -30,46 +30,41 @@ function ParticipantPage(props) {
                     setName(data[0].name)
                     setPhone(data[0].phone)
                     setEmail(data[0].email)
-                    setEvidence(data[0].evidence)
+                    setEvidence(data[0].evidence || '');
                 }
             })
             .catch(error => {
                 console.error('Error fetching participant:', error)
             })
+    }, [])
 
-    }, []) 
-
-    // Handle update participant 
     const updateParticipant = (event) => {
-        event.preventDefault(); // Prevent the default form submission behavior
+        event.preventDefault();
 
         let formData = new FormData();
         formData.append('name', name);
         formData.append('email', email);
-        formData.append('phone', phone);        
-        formData.append('evidence', evidence); // Append evidence file to form data
+        formData.append('phone', phone);
+        formData.append('evidence', evidence);
 
-
-        // Send a POST request to save the participant data
         fetch('https://w20037161.nuwebspace.co.uk/assessment/api/participant', {
             method: 'POST',
             headers: new Headers({ 'Authorization': 'Bearer ' + localStorage.getItem('token') }),
             body: formData,
         })
             .then(response => {
-                if (response.ok) { // Check if the response is successful
+                if (response.ok) {
                     return response.json();
                 } else {
                     throw new Error('Failed to update the data');
                 }
             })
             .then(data => {
-                // Update the participant data locally with the updated values
                 setName(data.name);
                 setEmail(data.email);
-                setPhone(data.phone);                
-                setEvidence(data.evidence);
-                window.alert('You have updated your profile sucessfully! The evidence income will be reveiewed by the member of our staff.');
+                setPhone(data.phone);
+                setEvidence(data.evidence || '');
+                window.alert('You have updated your profile successfully! The evidence income will be reviewed by the member of our staff.');
             })
             .catch(error => {
                 console.error('Error updating the profile:', error);
@@ -77,67 +72,76 @@ function ParticipantPage(props) {
             });
     }
 
-
     return (
-        <div className='bg-gray-100 p-6 rounded-lg shadow-lg max-w-xl mx-auto mt-12'>
-            <h2 className='text-xl mb-4 bg-gray-800 text-white py-2 rounded-t-md text-center font-semibold'>Participant Profile</h2>
-            <form onSubmit={updateParticipant}>
-                <div className='grid grid-cols-1 gap-4'>
-                    <div>
-                        <label htmlFor='name' className='block text-gray-700'>Name</label>
-                        <input
-                            id='name'
-                            type='text'
-                            placeholder='Enter your name...'
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                            className='border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:border-blue-500'
-                        />
+        <div className="min-h-screen bg-gray-100">
+            <div className="max-w-4xl mx-auto py-8">
+                <div className="bg-white shadow-md rounded px-8 py-8">
+                    <div className="flex justify-center mb-4">
+                        <FiUser className="text-5xl text-gray-600" />
                     </div>
-                    <div>
-                        <label htmlFor='email' className='block text-gray-700'>Email</label>
-                        <input
-                            id='email'
-                            type='email'
-                            placeholder='Enter your email...'
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            className='border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:border-blue-500'
-                        />
-                    </div>
-                    <div>
-                        <label htmlFor='phone' className='block text-gray-700'>Phone number</label>
-                        <input
-                            id='phone'
-                            type='tel'
-                            placeholder='Enter your phone number...'
-                            value={phone}
-                            onChange={(e) => setPhone(e.target.value)}
-                            className='border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:border-blue-500'
-                        />
-                    </div>
-                    <div>
-                        <label htmlFor='evidence' className='block text-gray-700'>Evidence</label>
-                        <input
-                            id='evidence'
-                            type="file"
-                            onChange={(e) => setEvidence(e.target.files[0])} // Update evidence state with selected file
-                            accept="image/png, image/jpeg, image/jpg, application/pdf,application/vnd.ms-excel"
-                            className="border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:border-blue-500"
-                        />
-                            <p className='text-sm text-gray-600 mt-1'>To successfully participate in the charity events you will need to attach a proof of your income which will be reviewed by the member of staff. For more information please head to our FAQ.</p>
-                    </div>
+                    <h2 className="text-center text-2xl font-semibold mb-4">User Profile</h2>
+                    <form onSubmit={updateParticipant}>
+                        <div className="mb-4">
+                            <label htmlFor="name" className="block text-gray-700 text-sm font-bold mb-2">Name</label>
+                            <input
+                                id="name"
+                                type="text"
+                                placeholder="Enter your name..."
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <label htmlFor="email" className="block text-gray-700 text-sm font-bold mb-2">Email</label>
+                            <input
+                                id="email"
+                                type="email"
+                                placeholder="Enter your email..."
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <label htmlFor="phone" className="block text-gray-700 text-sm font-bold mb-2">Phone number</label>
+                            <input
+                                id="phone"
+                                type="tel"
+                                placeholder="Enter your phone number..."
+                                value={phone}
+                                onChange={(e) => setPhone(e.target.value)}
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <label htmlFor="evidence" className="block text-gray-700 text-sm font-bold mb-2">Evidence</label>
+                            {/*{evidence && (
+                                <div className="mt-2 flex items-start">
+                                    <p className="block text-gray-700 text-sm font-bold mb-2">Current Evidence:</p>
+                                    <img src={`data:image/png;base64,${evidence}`} alt="Evidence" className="mx-auto w-1/2" />
+                                </div>
+                            )}*/}
+                            <input
+                                id="evidence"
+                                type="file"
+                                onChange={(e) => setEvidence(e.target.files[0])}
+                                accept="image/png, image/jpeg, image/jpg, application/pdf,application/vnd.ms-excel"
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            />
+                            <p className="text-xs text-gray-600 mt-1">To successfully participate in the charity events, you will need to attach a proof of your income which will be reviewed by the member of staff. For more information, please head to our FAQ.</p>
+                        </div>
+                        <div className="flex items-center justify-center">
+                            <button
+                                type="submit"
+                                className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                            >
+                                Save Changes
+                            </button>
+                        </div>
+                    </form>
                 </div>
-                <div className='mt-4'>
-                    <button
-                        onClick={updateParticipant}
-                        type='submit'
-                        className='bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-purple-500 focus:outline-none focus:ring-2 focus:ring-blue-300 w-full'
-                    >
-                        Save Changes
-                    </button>
-                </div>
-            </form>
+            </div>
         </div>
     );
 }

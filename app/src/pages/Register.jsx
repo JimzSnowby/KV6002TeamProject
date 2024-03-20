@@ -8,6 +8,7 @@
 
 import React, { useState } from 'react'
 import bcrypt from 'bcryptjs'
+import { LuUserPlus } from "react-icons/lu";
 
 function RegistrationForm({ onRegistration }) {
     const [name, setName] = useState('')
@@ -176,114 +177,104 @@ function RegistrationForm({ onRegistration }) {
 
 
     return (
-        <div className='bg-gray-100 p-6 rounded-lg shadow-lg max-w-xl mx-auto mt-12'>
-            <h2 className='text-xl mb-4 bg-gray-800 text-white py-2 rounded-t-md text-center font-semibold'>Sign Up</h2>
-            {errorMessage && (
-                <div className='bg-red-500 text-white p-2 mb-4 text-center'>
-                    {errorMessage}
+        <div className="min-h-screen flex items-center justify-center bg-gray-100">
+            <div className="container mx-auto bg-white shadow-md rounded px-8 py-8 pt-8">
+                <div className="flex justify-center mb-4">
+                    <LuUserPlus className="text-5xl text-gray-600" />
                 </div>
-            )}
-            <div className='grid grid-cols-1 gap-4'>
-                <div className='grid grid-cols-2 gap-4'>
+                <h2 className="text-center text-2xl font-semibold mb-4">Sign Up</h2>
+                {errorMessage && (
+                    <div className="bg-red-500 text-white p-2 mb-4 text-center">{errorMessage}</div>
+                )}
+                <div className="flex justify-center mb-4">
+                </div>
+                <div className="grid grid-cols-1 gap-4">
                     <div>
-                        <label htmlFor='name' className='block text-gray-700'>Full Name</label>
+                        <label htmlFor="name" className="block text-gray-700">Full Name</label>
                         <input
-                            id='name'
-                            type='text'
-                            placeholder='Please enter your full name...'
+                            id="name"
+                            type="text"
+                            placeholder="Please enter your full name..."
                             value={name}
-                            onChange={e => setName(e.target.value)}
-                            onKeyDown={e => {
+                            onChange={(e) => setName(e.target.value)}
+                            onKeyDown={(e) => {
                                 const key = e.key;
                                 // Allow letters (a-z, A-Z), backspace, and space
                                 if (!/[a-zA-Z\s]/.test(key) && key !== 'Backspace') {
                                     e.preventDefault();
                                 }
                             }}
-                            className='border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:border-blue-500'
+                            className="border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:border-blue-500"
                         />
                     </div>
                     <div>
-                        <label htmlFor='email' className='block text-gray-700'>E-mail</label>
+                        <label htmlFor="email" className="block text-gray-700">E-mail</label>
                         <input
-                            id='email'
-                            type='text'
-                            placeholder='Please enter your e-mail...'
+                            id="email"
+                            type="text"
+                            placeholder="Please enter your e-mail..."
                             value={email}
-                            onChange={e => setEmail(e.target.value)}
-                            className='border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:border-blue-500'
+                            onChange={(e) => setEmail(e.target.value)}
+                            className="border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:border-blue-500"
                         />
                     </div>
                     <div>
-                        <label htmlFor='phone' className='block text-gray-700'>Phone number</label>
+                        <label htmlFor="phone" className="block text-gray-700">Phone number</label>
                         <input
-                            id='phone'
-                            type='tel'
-                            placeholder='Please enter your phone number...'
+                            id="phone"
+                            type="tel"
+                            placeholder="Please enter your phone number..."
                             value={phone}
-                            onChange={e => setPhone(e.target.value)}
-                            className='border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:border-blue-500'
+                            onChange={(e) => setPhone(e.target.value)}
+                            className="border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:border-blue-500"
                         />
                     </div>
                     <div>
-                        <label htmlFor='dob' className='block text-gray-700'>Date of birth</label>
+                        <label htmlFor="dob" className="block text-gray-700">Date of birth</label>
                         <input
-                            id='dob'
-                            type='date'
-                            placeholder='Date of birth'
+                            id="dob"
+                            type="date"
+                            placeholder="Date of birth"
                             value={dob}
-                            onChange={e => setDob(e.target.value)}
-                            className='border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:border-blue-500'
+                            onChange={(e) => setDob(e.target.value)}
+                            className="border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:border-blue-500"
                         />
                     </div>
                 </div>
                 <div>
-                    <label htmlFor='password' className='block text-gray-700'>Password</label>
+                    <label htmlFor="password" className="block text-gray-700">Password</label>
                     <input
-                        id='password'
-                        type='password'
-                        placeholder='Password'
+                        id="password"
+                        type="password"
+                        placeholder="Password"
                         value={password}
                         onChange={handlePasswordChange}
-                        className='border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:border-blue-500'
+                        className="border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:border-blue-500"
                     />
                 </div>
                 <div>
-                    <label htmlFor='confirmPassword' className='block text-gray-700'>Confirm Password</label>
+                    <label htmlFor="confirmPassword" className="block text-gray-700">Confirm Password</label>
                     <input
-                        id='confirmPassword'
-                        type='password'
-                        placeholder='Confirm Password'
+                        id="confirmPassword"
+                        type="password"
+                        placeholder="Confirm Password"
                         value={confirmPassword}
                         onChange={handleConfirmPasswordChange}
-                        className='border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:border-blue-500'
-                    />
-                    <div className='mt-1 text-sm text-gray-600'>Password strength <span className={getPasswordStrengthTextClass()}>{passwordStrength}</span></div>
-                </div>
-                <div>
-                    <label htmlFor='evidence' className='block text-gray-700'>Income evidence</label>
-                    <input
-                        id='evidence'
-                        type="file"
-                        name="evidence"
-                        accept="image/png, image/jpeg, image/jpg, application/pdf,application/vnd.ms-excel"
                         className="border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:border-blue-500"
-                        onChange={handleEvidenceChange}
                     />
-                    <p className='text-sm text-gray-600 mt-1'>To successfully participate in the charity events you will need to attach a proof of your income which will be reviewed by the member of staff. For more information please head to our FAQ.</p>
+                    <div className="mt-1 text-sm text-gray-600">Password strength <span className={getPasswordStrengthTextClass()}>{passwordStrength}</span></div>
                 </div>
-            </div>
-            <div className='mt-4'>
-                <button
-                    onClick={handleRegistration}
-                    className='bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-purple-500 focus:outline-none focus:ring-2 focus:ring-blue-300 w-full'
-                >
-                    Sign Up
-                </button>
+                <div className="mt-4">
+                    <button
+                        onClick={handleRegistration}
+                        className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-purple-500 focus:outline-none focus:ring-2 focus:ring-blue-300 w-full"
+                    >
+                        Sign Up
+                    </button>
+                </div>
             </div>
         </div>
-    )
-
+    );
 }
 
 export default RegistrationForm

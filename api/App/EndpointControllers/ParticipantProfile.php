@@ -139,35 +139,50 @@ class ParticipantProfile extends Endpoint {
 
     private function getParticipant($id) { 
         $sqlParameters = ['id' => $id];
-
-        $sql = "SELECT name, phone, email, dob FROM participant WHERE participantID = :id";   
+    
+        $sql = "SELECT name, phone, email, dob, evidence FROM participant WHERE participantID = :id";
         
         $dbConn = new \App\Database(MAIN_DATABASE);
         $data = $dbConn->executeSQL($sql, $sqlParameters);
+    
+        // Convert blob evidence to base64 encoded string
+        if (!empty($data[0]['evidence'])) {
+            $data[0]['evidence'] = base64_encode($data[0]['evidence']);
+        }
+    
         return $data;
     }
+    
 
     private function updateDetails($id) {
-       // Retrieve the phone number from the request parameters
-       $phone = $this->phone(); 
-       $email = $this->email(); 
-       $name = $this->name(); 
-        
-       // Check if file was uploaded successfully
-        if(isset($_FILES['evidence']) && $_FILES['evidence']['error'] === UPLOAD_ERR_OK) {
-            // Read the file content
-            $evidenceContent = file_get_contents($_FILES['evidence']['tmp_name']);
-        } else {
-            throw new \App\ClientError(450); // File upload error
-        }
-
-       $sql = "UPDATE participant SET phone = :phone, email = :email, name = :name, evidence = :evidence WHERE participantID = :id";
-       $sqlParameters = ['phone' => $phone, 'email' => $email, 'name' => $name, 'evidence' => $evidenceContent, 'id' => $id];
-              
-       $dbConn = new \App\Database(MAIN_DATABASE);
-       $data = $dbConn->executeSQL($sql, $sqlParameters);
+        // Retrieve the phone number from the request parameters
+        $phone = $this->phone(); 
+        $email = $this->email(); 
+        $name = $this->name(); 
     
-       return [];
+        // Check if file was uploaded successfully
+        if(isset($_FILES['evidence']) && $_FILES['evidence']['error'] === UPLOAD_ERR_OK) {
+            // Read the uploaded file content
+            $evidence = file_get_contents($_FILES['evidence']['tmp_name']);
+        } else {
+            $evidence = null; // No new evidence provided
+        }
+    
+        // Update participant details including evidence
+        $sql = "UPDATE participant SET phone = :phone, email = :email, name = :name";
+        if ($evidence !== null) {
+            $sql .= ", evidence = :evidence";
+        }
+        $sql .= " WHERE participantID = :id";
+        $sqlParameters = ['phone' => $phone, 'email' => $email, 'name' => $name, 'id' => $id];
+        if ($evidence !== null) {
+            $sqlParameters['evidence'] = $evidence;
+        }
+                      
+        $dbConn = new \App\Database(MAIN_DATABASE);
+        $data = $dbConn->executeSQL($sql, $sqlParameters);
+    
+        return [];
     }
 
  }
