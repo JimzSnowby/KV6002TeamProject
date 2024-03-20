@@ -4,6 +4,7 @@ import Sponsor from '../components/Sponsor'
 import Search from '../components/Search'
 import Event from '../components/Event'
 
+
 /**
  * Home page for the application.
  * 
