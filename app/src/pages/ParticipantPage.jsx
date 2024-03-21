@@ -64,7 +64,7 @@ function ParticipantPage(props) {
                 setEmail(data.email);
                 setPhone(data.phone);
                 setEvidence(data.evidence || '');
-                window.alert('You have updated your profile successfully! The evidence income will be reviewed by the member of our staff.');
+                window.alert('You have updated your profile successfully!');
             })
             .catch(error => {
                 console.error('Error updating the profile:', error);
