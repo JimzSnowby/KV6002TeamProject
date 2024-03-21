@@ -5,6 +5,7 @@ namespace App;
 /**
  * A class that provides a database connection and methods to execute SQL.
  * 
+ * @author Team
  */
 
 class Database 

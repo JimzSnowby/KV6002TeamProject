@@ -5,6 +5,7 @@ namespace App\EndpointControllers;
 /**
  * A parent class for all endpoint controllers.
  * 
+ * @author Team
  */
 class Endpoint 
 {

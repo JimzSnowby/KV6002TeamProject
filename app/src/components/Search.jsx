@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from 'react'
 
+/**
+ * The SignIn component for the application.
+ * 
+ * @author ???
+ */
+
 function Search(props) {
     return (
         <div className='flex justify-center items-center h-16'>

@@ -1,17 +1,20 @@
 import React from 'react';
 import { useState, useEffect } from 'react'
 
-import SponsorContent from './SponsorContent'
+/**
+ * Display Sponsor Subscribers
+ * 
+ * Display a list of Sponsor subscribers for the admin to view & delete.
+ *
+ * @author Aiden Anderson W21047714
+ */
 
 function SponsorAdmin() {
-    
+
     const [sponsor, setSponsor] = useState([])
     const [search, setSearch] = useState("")
 
-    useEffect( () => {
-        fetchData()
-    }, [])
-
+    // Handles the response from the server.
     const handleResponse = (response) => {
         if (response.status === 200) {
             return response.json()
@@ -19,7 +22,8 @@ function SponsorAdmin() {
             throw new Error("invalid response: " + response.status)
         }
     }
-     
+
+    // Handles the JSON response from the server.
     const handleJSON = (json) => {
         if (json.constructor === Array) {
             setSponsor(json)
@@ -28,63 +32,63 @@ function SponsorAdmin() {
         }
     }
 
-    const fetchData = () => { 
+    // Fetch the sponsor list from the server.
+    useEffect(() => {
         fetch("https://w21023500.nuwebspace.co.uk/assessment/api/sponsor")
-        .then( response => handleResponse(response) )
-        .then( json => handleJSON(json) )
+        .then( response => handleResponse(response))
+        .then( json => handleJSON(json))
         .catch( err => { console.log(err.message) })
-    }
+    }, [])
 
+    // Handle the search input.
     const handleSearch = (event) => {
         setSearch(event.target.value)
     }
 
+    // Filter the sponsor list based on the search input.
     const searchEmail = (sponsor) => {
         sponsor.email.toLowerCase().includes(search.toLowerCase())
     }
 
-    const listOfSponsor = sponsor.filter(searchEmail).map( 
-        (sponsor, index) => <SponsorContent key={index} sponsor={sponsor}/>
+    // Display the sponsor list.
+    const listOfSponsor = sponsor.filter(searchEmail).map((sponsor, index) => 
+        <section key = {index}>
+            <p>{sponsor.email}</p>
+        </section>
     )
 
+    // Remove a sponsor from the sponsor list.
     const removeSponsor = () => {
-        fetch('https://w123.nuwebspace.co.uk/api/favourites?film_id='+props.email,
-          {
-           method: 'DELETE',
-          }
-         )
-         .then(res => {
-            if ((res.status === 200) || (res.status === 204)) {
-                // Use the filter method to remove the film_id(s) from the favourites array
-                props.setFavourites(props.favourites.filter(
-                  fav => fav !== props.film.film_id
-                ))
-            }
-         })
-      }
+        alert('Deleted Sponsor');
+
+        return fetch('https://w20012367.nuwebspace.co.uk/assessment/api/sponsor?email=' + sponsor, 
+          {method: 'DELETE'})
+          .then( response => handleResponse(response))
+          .catch( err => { console.log(err.message) })
+        }
 
     return (
         <div className="container">
-            
+
             <h1>Sponsor</h1>
 
             <input 
             value={search} 
             onChange={handleSearch} 
             type="text" 
-            placeholder="Search For Email" 
-            name="email" />
+            placeholder="Search For Sponsor" 
+            name="email"/>
 
             {listOfSponsor}
 
             <button 
                 type="submit" 
-                onClick={removeSponsor}>
+                onClick={(e) => { e.preventDefault(); removeSponsor()} }>
                 Delete Sponsor
             </button>
         </div>
     )
 
 }
- 
+
 export default SponsorAdmin

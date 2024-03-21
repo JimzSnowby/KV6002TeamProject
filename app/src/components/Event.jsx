@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import ApplyEvent from './ApplyEvent';
 
+/**
+ * The SignIn component for the application.
+ * 
+ * @author Antonio Gorgan
+ */
+
 function Event(props) {
     const [extendEvent, setExtendEvent] = useState(null);
     const [eventID, setEventID] = useState('')

@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react"
-import { useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
+import { useNavigate } from "react-router-dom"
 
 /**
  * The SignIn component for the application.
+ * @author James Sowerby
  */
+
 function SignIn(props) {
     const [username, setUserName] = useState("")
     const [password, setPassword] = useState("")
@@ -13,11 +14,14 @@ function SignIn(props) {
     const navigate = useNavigate()
 
    const parseJwt = (token) => {
-        try {
-            return JSON.parse(atob(token.split('.')[1]));
-        } catch (e) {
-            return null;
-        }
+            const decode = JSON.parse(atob(token.split('.')[1]));
+            console.log(decode);
+            if (decode.exp * 1000 < new Date().getTime()) {
+                signOut();
+                console.log('Time Expired');
+                window.alert("Session Expired")
+            }
+            return decode;
     };
 
     useEffect(() => {

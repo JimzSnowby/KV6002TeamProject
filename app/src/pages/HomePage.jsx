@@ -5,8 +5,11 @@ import Search from '../components/Search'
 import Event from '../components/Event'
 
 /**
+ * Home Page
+ * 
  * Home page for the application.
  * 
+ * @author Team
  */
 
 function HomePage(props) {

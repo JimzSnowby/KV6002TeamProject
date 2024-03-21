@@ -3,6 +3,7 @@
 /**
  * The main entry point for the API.
  * 
+ * @author Team
  */
 
 ini_set('display_errors', 1);

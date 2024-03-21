@@ -3,6 +3,7 @@
 /**
  * A config file that contains global settings for the API.
  * 
+ * @author Team
  */
 
 define('BASEPATH', '/assessment/api');

@@ -4,6 +4,7 @@
  * An exception handler that outputs a JSON message
  * when an error occurs.
  * 
+ * @author Team
  */
 
 function exceptionHandler($e) {
