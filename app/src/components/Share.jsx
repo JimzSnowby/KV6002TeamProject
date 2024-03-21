@@ -2,8 +2,8 @@ import React from 'react'
 
 import facebookLogo from './../assets/Facebook_Logo_Primary.png'
 import instagramLogo from './../assets/Instagram_Glyph_Gradient.png'
-import twitterLogo from './../assets/LI-In-Bug.png'
-import linkedinLogo from './../assets/logo-black.png'
+import linkedinLogo from './../assets/LI-In-Bug.png'
+import twitterLogo from './../assets/logo-black.png'
 
 /**
  * Share To Social Media
