@@ -20,8 +20,6 @@ function SignIn(props) {
         }
     };
 
- 
-
     useEffect(() => {
         const token = localStorage.getItem("token");
         if (token) {
@@ -70,7 +68,6 @@ function SignIn(props) {
                 }
             })
             .catch(error => console.log(error))  
-             
     }
 
     const signOut = () => {

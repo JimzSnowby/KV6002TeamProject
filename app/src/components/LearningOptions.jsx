@@ -9,7 +9,6 @@ const LearningOptions = (props) => {
     props.actionProvider.handleEvidenceTypes();
   };
 
-
   const handleDonationsClick = () => {
     // Call the handler function provided by the action provider
     props.actionProvider.handleDonations();
@@ -25,7 +24,10 @@ const LearningOptions = (props) => {
     props.actionProvider.handleDetails();
   };
 
-
+  const handleAboutUsClick = () => {
+    // Call the handler function provided by the action provider
+    props.actionProvider.handleAboutUs();
+  };
 
   const options = [
     {
@@ -37,6 +39,7 @@ const LearningOptions = (props) => {
     { text: "Contact Info", handler: handleDetailsClick, id: 6 },
     { text: "Volunteering", handler: handleVolunteeringClick, id: 3 },
     { text: "Evidence Types", handler: handleEvidenceTypesClick, id: 7 },
+    { text: "About Us", handler: handleAboutUsClick, id: 7 },
 
   ];
 

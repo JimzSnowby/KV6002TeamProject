@@ -6,8 +6,6 @@ class MessageParser {
   parse(message) {
     const lowerCaseMessage = message.toLowerCase();
 
-
-
     if (lowerCaseMessage.includes("allowed evidence types")) {
       this.actionProvider.handleEvidenceTypes();
     }
@@ -66,6 +64,36 @@ class MessageParser {
         break;
       }
     }
+
+    // Check for specific queries related to greetings
+    const aboutUsQueries = [
+      "rose",
+      "what is rose",
+      "rose charity",
+      "who is rose",
+      "about rose",
+      "rose charity",
+      "learn about rose",
+      "about the charity",
+      "rose organization",
+      "rose foundation",
+      "what does rose do",
+      "rose mission",
+      "rose purpose",
+      "what charity",
+      "what charity is it",
+      "rose objectives",
+      "rose goals",
+      "rose services",
+    ];
+
+    for (const query of aboutUsQueries) {
+      if (lowerCaseMessage.includes(query)) {
+        this.actionProvider.handleAboutUs();
+        break;
+      }
+    }
+
 
     // Check for specific queries related to evidence types
     const evidenceQueries = [

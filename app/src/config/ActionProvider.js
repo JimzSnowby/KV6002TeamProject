@@ -36,8 +36,14 @@ class ActionProvider {
   };
 
   handleVolunteering = () => {
-    const donationMessage = "Thank you for your interest in volunteering! To join ROSE charity as a Volunteer, simply go to 'Become a Volunteer' menu section. This will take you to the registation form where you will be able to sign up. If you encounter any issues, please contact our support team at support@rose.com.";
-    const message = this.createChatBotMessage(donationMessage);
+    const volunteeringMessage = "Thank you for your interest in volunteering! To join ROSE charity as a Volunteer, simply go to 'Become a Volunteer' menu section. This will take you to the registation form where you will be able to sign up. If you encounter any issues, please contact our support team at support@rose.com.";
+    const message = this.createChatBotMessage(volunteeringMessage);
+    this.updateChatbotState(message);
+  };
+
+  handleAboutUs = () => {
+    const aboutUsMessage = "ROSE is a compassionate charity dedicated to providing vital cancer screenings and comprehensive support services to individuals facing financial constraints. Our mission is to ensure that everyone, regardless of their financial situation, has access to life-saving screenings and the care they need. Through our programs, we offer affordable or free screenings, educational resources, and emotional support to empower individuals in their fight against cancer. Join us in making a difference in the lives of those affected by cancer.";
+    const message = this.createChatBotMessage(aboutUsMessage);
     this.updateChatbotState(message);
   };
 
