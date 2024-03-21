@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useNavigate } from "react-router-dom";
 import Event from '../components/Event'
 
 /**
@@ -13,6 +14,8 @@ function VolunteerPage(props) {
     const [page, setPage] = useState(1)
     const [extendEvent, setextendEvent] = useState(null)
     const [id, setID] = useState('')
+    const [refreshTrigger, setRefreshTrigger] = useState(0)
+    const navigate = useNavigate()
 
     const itemsPerPage = 10
     const startOfPage = (page - 1) * itemsPerPage
@@ -44,6 +47,9 @@ function VolunteerPage(props) {
             const decodedToken = parseJwt(token);
             const tokenID = decodedToken.id; // Access the id
             setID(tokenID); // This will trigger the second useEffect when the id state updates
+        } else {
+            window.alert('Please sign in to view this page')
+            navigate('/')
         }
     }, []);
 
@@ -57,7 +63,7 @@ function VolunteerPage(props) {
             fetchVolunteerEvents();
             fetchEvents();
         }
-    }, [id]);
+    }, [id, refreshTrigger]);
     
     const fetchDetails = () => {
         fetch('https://w21023500.nuwebspace.co.uk/assessment/api/volunteer?volunteerID=' + id)
@@ -68,9 +74,27 @@ function VolunteerPage(props) {
 
     const fetchVolunteerEvents = () => {
         fetch('https://w21023500.nuwebspace.co.uk/assessment/api/volunteerevent?volunteerid=' + id)
-        .then(response => response.json())
-        .then(data => setVolunteeredEvent(data))
-        .catch(error => console.error("Error fetching volunteered events: ", error))
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.text();
+        })
+        .then(text => {
+            try {
+                return JSON.parse(text);
+            } catch (e) {
+                if (text.trim() === '') {
+                    return [];
+                } else {
+                    throw e; 
+                }
+            }
+        })
+        .then(data => {
+            setVolunteeredEvent(data); // Update state with the parsed data (or empty array)
+        })
+        .catch(error => console.error("Error fetching volunteered events: ", error));
     }
 
     const eventSignUp = (eventid) => {
@@ -90,19 +114,18 @@ function VolunteerPage(props) {
             }
             if (response.status === 200 || response.status === 204){
                 console.log('Event signed up for')
+                window.alert('Signed up successfully!')
+                setRefreshTrigger(current => current + 1)
             }
         })
         .catch(error => console.error('Error signing up for event: ', error))
     }
 
     const eventUnregister = (eventid) => {
-        let formData = new FormData()
-        formData.append('eventid', eventid)
-        formData.append('volunteerid', id)
-        fetch('https://w21023500.nuwebspace.co.uk/assessment/api/volunteerevent',
+        const queryParams = `?volunteerid=${encodeURIComponent(id)}&eventid=${encodeURIComponent(eventid)}`;
+        fetch(`https://w21023500.nuwebspace.co.uk/assessment/api/volunteerevent${queryParams}`,
         {
-            method: 'DELETE',
-            body: formData
+            method: 'DELETE'
         })
         .then(response => {
             if (response.status === 401){
@@ -112,6 +135,8 @@ function VolunteerPage(props) {
             }
             if (response.status === 200 || response.status === 204){
                 console.log('Event unregistered')
+                window.alert('Unregistered successfully!')
+                setRefreshTrigger(current => current + 1)
             }
         })
         .catch(error => console.error('Error unregistering for event: ', error))
