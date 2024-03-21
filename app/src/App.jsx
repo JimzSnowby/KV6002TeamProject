@@ -79,14 +79,11 @@ function App() {
           setUserID={setUserID}
         />
       </div>
-
       <header>
         <Header />
       </header>
-
       <nav className="">
         <Menu roletype={roleType} signedIn={signedIn} />
-
       </nav>
       <Routes>
         <Route path="/" element={<HomePage />} />

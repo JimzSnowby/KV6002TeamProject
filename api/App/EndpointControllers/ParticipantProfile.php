@@ -14,8 +14,6 @@
 
 
 class ParticipantProfile extends Endpoint {
-
-    
     public function __construct(){
         $id = $this->validateToken();
         $this->checkUserExists($id);        

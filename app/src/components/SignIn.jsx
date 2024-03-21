@@ -83,7 +83,7 @@ function SignIn(props) {
     }
 
     return (
-        <div className="bg-blue-800 p-2 text-md text-right">
+        <div className="bg-slate-700 shadow-lg p-2 text-md text-right">
             {!props.signedIn && <div>
                 <input
                     type="text"
@@ -102,7 +102,7 @@ function SignIn(props) {
                 <input
                     type="submit"
                     value="Sign In"
-                    className="py-1 px-2 mx-2 bg-blue-100 hover:bg-blue-500 rounded-md"
+                    className="py-1 px-2 mx-2 bg-blue-500 hover:bg-blue-800 text-white font-semibold rounded-md"
                     onClick={signIn}
                 />
             </div>
@@ -111,7 +111,7 @@ function SignIn(props) {
                 <input
                     type="submit"
                     value="Sign Out"
-                    className="py-1 px-2 mx-2 bg-blue-100 hover:bg-blue-500 rounded-md"
+                    className="py-1 px-2 mx-2 bg-orange-500 hover:bg-orange-600 font-semibold text-white rounded-md"
                     onClick={signOut}
                 />
             </div>
