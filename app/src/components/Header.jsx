@@ -3,15 +3,18 @@ import React from 'react'
 /**
  * Header
  *
- * @author Aiden Anderson W21047714
+ * Header with some information.
+ *
+ * @author Aiden Anderson
  */
 
-function Header () {
+function Header() {
 
   return (
-    <header>
-      <h1>ROSE</h1>
+    <header className="bg-gradient-to-r from-blue-200 to-purple-200 py-6">
+      <h1 className="text-black text-4xl font-bold text-center">ROSE</h1>
     </header>
+
   )
 
 }
