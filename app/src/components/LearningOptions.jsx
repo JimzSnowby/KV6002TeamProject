@@ -15,18 +15,28 @@ const LearningOptions = (props) => {
     props.actionProvider.handleDonations();
   };
 
+  const handleVolunteeringClick = () => {
+    // Call the handler function provided by the action provider
+    props.actionProvider.handleVolunteering();
+  };
+
+  const handleDetailsClick = () => {
+    // Call the handler function provided by the action provider
+    props.actionProvider.handleDetails();
+  };
+
+
 
   const options = [
     {
-      text: "Account issues",
+      text: "Account Issues",
       handler: props.actionProvider.handleJavascriptList,
       id: 1,
     },
-    { text: "Charity", handler: () => {}, id: 2 },
-    { text: "Volunteering", handler: () => {}, id: 3 },
-    { text: "Participating", handler: () => {}, id: 4 },
-    { text: "Allowed evidence types", handler: handleEvidenceTypesClick, id: 7 }, // Update this option
     { text: "Donations", handler: handleDonationsClick, id: 6 },
+    { text: "Contact Info", handler: handleDetailsClick, id: 6 },
+    { text: "Volunteering", handler: handleVolunteeringClick, id: 3 },
+    { text: "Evidence Types", handler: handleEvidenceTypesClick, id: 7 },
 
   ];
 

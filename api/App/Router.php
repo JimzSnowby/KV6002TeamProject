@@ -54,7 +54,6 @@ abstract class Router
                 case '/eventlist/':
                     $endpoint = new EndpointControllers\EventList();
                     break;
-<<<<<<< Updated upstream
                 case '/volunteerlist':
                 case '/volunteerlist/':
                     $endpoint = new EndpointControllers\VolunteerEventList();
@@ -71,7 +70,6 @@ abstract class Router
                 case '/sponsors/':
                     $endpoint = new EndpointControllers\Sponsor();
                     break; 
-=======
                 case '/register':
                 case '/register/':
                         $endpoint = new EndpointControllers\Register();
@@ -81,7 +79,6 @@ abstract class Router
                 case '/participant/':
                         $endpoint = new EndpointControllers\ParticipantProfile();
                         break;
->>>>>>> Stashed changes
                 default:
                     throw new ClientError(404);
             }

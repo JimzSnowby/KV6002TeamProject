@@ -17,7 +17,6 @@ const config = {
     chatButton: {
       backgroundColor: "#3b82f6",
     },
-    // Additional styles for the floating icon
     floatingButton: {
       position: 'fixed',
       bottom: '20px',
@@ -40,7 +39,6 @@ const config = {
       widgetFunc: (props) => <LearningOptions {...props} />,
     },
     {
-      // Floating icon widget configuration
       widgetName: "floatingIcon",
       widgetFunc: (props) => (
         <div style={config.customStyles.floatingButton} onClick={props.onClick}>
@@ -50,30 +48,30 @@ const config = {
     },
     {
       widgetName: "javascriptLinks",
-      widgetFunc: (props) => <LinkList {...props} />,
-      props: {
-        options: [
-          {
-            text: "Logging in",
-            url: "https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures/basic-javascript/",
-            id: 1,
-          },
-          {
-            text: "Registering",
-            url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide",
-            id: 2,
-          },
-          {
-            text: "Frontend Masters",
-            url: "https://frontendmasters.com",
-            id: 3,
-          },
-        ],
-      },
+      widgetFunc: (props) => (
+        <LinkList
+          options={[
+            {
+              text: "Logging in",
+              handler: () => props.actionProvider.handleLoggingIn(), // Handler for Logging in option
+              id: 1,
+            },
+            {
+              text: "Registering",
+              handler: () => props.actionProvider.handleRegistering(), // Handler for Registering option
+              id: 2,
+            },
+            {
+              text: "Uploading the evidence",
+              handler: () => props.actionProvider.handleUploadingEvidence(), // Handler for Uploading the evidence option
+              id: 3,
+            },
+          ]}
+          handleOptionClick={(option) => option.handler()} // Pass the handler function from each option
+        />
+      ),
     },    
-
   ],
 };
 
 export default config;
-

@@ -20,7 +20,7 @@ import ActionProvider from "./config/ActionProvider"
 import MessageParser from "./config/MessageParser"
 import config from "./config/config"
 import 'react-chatbot-kit/build/main.css'
-
+import ApplyEvent from './components/ApplyEvent'
 
 function App() {
 
@@ -60,6 +60,13 @@ function App() {
           setSignedIn={setSignedIn}
           roleType={roleType}
           setRoleType={setRoleType}
+          userID={userID}
+          setUserID={setUserID}
+        />
+        <ApplyEvent
+          signedIn={signedIn}
+          setSignedIn={setSignedIn}
+          roleType={roleType}
           userID={userID}
           setUserID={setUserID}
         />
