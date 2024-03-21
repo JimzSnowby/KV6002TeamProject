@@ -73,6 +73,10 @@ abstract class Router
                 case '/adminregister/':
                     $endpoint = new EndpointControllers\AdminRegister();
                     break;
+                case '/checkparticipant':
+                case '/checkparticipant/':
+                    $endpoint = new EndpointControllers\ParticipantApplication();
+                    break;
                 default:
                     throw new ClientError(404);
             }

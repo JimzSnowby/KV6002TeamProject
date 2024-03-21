@@ -67,7 +67,7 @@ class ParticipantEvent extends Endpoint {
         }
     }
 
-    private function chekcParticipantEligible($id)
+    private function checkParticipantEligible($id)
     {
         $dbConn = new \App\Database(MAIN_DATABASE);
         $sql = "SELECT isEligible FROM participant WHERE participantID = :id";
@@ -141,7 +141,7 @@ class ParticipantEvent extends Endpoint {
 
     private function joinEvent($id) {
         $eventid = $this->event();
-        $this->chekcParticipantEligible($id);
+        $this->checkParticipantEligible($id);
         $this->checkSpaceAvailable($eventid);
         $this->checkTicket($id); 
         $sqlParameters = [':id' => $id, 'eventid' => $eventid];

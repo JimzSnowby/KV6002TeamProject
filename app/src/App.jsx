@@ -10,6 +10,7 @@ import NotFound from "./pages/NotFound"
 import VolunteerSignUp from "./pages/VolunteerSignUp"
 import AdminRegister from './pages/AdminRegister'
 import NewEvent from './pages/NewEvent'
+import CheckParticipant from './pages/CheckParticipant'
 
 import Header from "./components/Header"
 import Menu from "./components/Menu"
@@ -66,6 +67,7 @@ function App() {
           <Route path="/register" element={<RegistrationForm />} />
           <Route path="/admin-sign-up" element={<AdminRegister />} />
           <Route path="/new-event" element={<NewEvent />} />
+          <Route path="/check-participant" element={<CheckParticipant />} />
           <Route path="*" element={<NotFound />} />
       </Routes>
 

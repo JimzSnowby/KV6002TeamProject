@@ -29,6 +29,9 @@ function Menu(props) {
             <li>
             {props.signedIn && props.roletype === 'admin'  && <Link to="/new-event" className="px-8 hover:text-blue-500 transition duration-300">Post Event</Link>}
             </li>
+            <li>
+            {props.signedIn && props.roletype === 'admin'  && <Link to="/check-participant" className="px-8 hover:text-blue-500 transition duration-300">Pending Participant Application </Link>}
+            </li>
 
         </ul>
     );
