@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import bcryt from 'bcryptjs'
+import { Navigate, useNavigate } from "react-router-dom";
 
 /**
  * Registration page for volunteers.
@@ -15,6 +16,7 @@ function VolunteerSignUp() {
     const [phone, setPhone] = useState('')
     const [error, setError] = useState('')
 
+    const navigate = useNavigate()
     const salt = bcryt.genSaltSync(10)
 
     const handleRegistration = () => {
@@ -37,14 +39,16 @@ function VolunteerSignUp() {
             formData.append('password', hashedPassword)
             formData.append('phone', phone)
 
-            fetch('https://w21023500.nuwebspace.co.uk/assessment/api/volunteer', {
+            fetch('https://w21023500.nuwebspace.co.uk/assessment/api/volunteer', 
+            {
                 method: 'POST',
                 body: formData
             })
             .then(response => {
                 if (response.status === 200 || response.status === 204){
                     console.log('Volunteer added')
-                    window.alert('Registration successful!')
+                    window.alert('Registration successful! You can now sign in.')
+                    navigate('/')
                 }
             })
             .catch(error => {

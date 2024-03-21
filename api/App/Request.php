@@ -5,8 +5,7 @@ namespace App;
 /**
  * An Abstract class to get information about the http request.
  * 
- * @author James Sowerby
- * @studentID w21023500
+ * @author Team
  */
 
 abstract class Request 

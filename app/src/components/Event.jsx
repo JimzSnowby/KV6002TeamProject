@@ -1,5 +1,11 @@
 import React from "react"
 
+/**
+ * The SignIn component for the application.
+ * 
+ * @author Antonio Gorgan
+ */
+
 function Event(props) {
 
     const toggleVisibility = () => {

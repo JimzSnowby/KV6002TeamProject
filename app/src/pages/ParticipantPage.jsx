@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react'
 
 /**
- * Page to manage Volunteers profile
+ * The SignIn component for the application.
  * 
- * @author James Sowerby w21023500
+ * @author ???
  */
+
 function ParticipantPage() {
     return (
         <>

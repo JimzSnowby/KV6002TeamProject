@@ -5,9 +5,11 @@ import Search from '../components/Search'
 import Event from '../components/Event'
 
 /**
+ * Home Page
+ * 
  * Home page for the application.
  * 
- * @author James Sowerby w21023500
+ * @author Team
  */
 
 function HomePage(props) {
