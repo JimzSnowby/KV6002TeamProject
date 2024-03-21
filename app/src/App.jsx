@@ -1,6 +1,6 @@
 import React from 'react'
 import { Routes, Route } from "react-router-dom"
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 import HomePage from "./pages/HomePage"
 import VolunteerPage from "./pages/VolunteerPage"
@@ -26,6 +26,37 @@ function App() {
   const [userID, setUserID] = useState('')
 
   console.log("Final Role type:", roleType);
+
+  // Function to parse JWT token
+  const parseJwt = (token) => {
+    try {
+      return JSON.parse(atob(token.split('.')[1]));
+    } catch (e) {
+      return null;
+    }
+  };
+
+  // Function to check token validity
+  const checkTokenValidity = () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const decodedToken = parseJwt(token);
+      if (decodedToken && decodedToken.exp * 1000 > new Date().getTime()) {
+        // Token is valid
+        setSignedIn(true);
+        setRoleType(decodedToken.role);
+        setUserID(decodedToken.id);
+      } else {
+        // Token is expired or invalid
+        localStorage.removeItem("token");
+        setSignedIn(false);
+      }
+    }
+  };
+
+  useEffect(() => {
+    checkTokenValidity();
+  }, []);
 
   return (
     <div>

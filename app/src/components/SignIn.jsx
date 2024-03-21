@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
 
 /**
  * The SignIn component for the application.
+ * @author James Sowerby
  */
 function SignIn(props) {
     const [username, setUserName] = useState("")
@@ -22,31 +22,6 @@ function SignIn(props) {
             }
             return decode;
     };
-
- 
-
-    useEffect(() => {
-        const token = localStorage.getItem("token");
-        if (token) {
-            const decodedToken = parseJwt(token);
-            const role = decodedToken.role; // Access the role field
-            const currentTime = Date.now() / 1000;
-            if (decodedToken.exp < currentTime) {
-                signOut()
-            }
-            props.setRoleType(decodedToken.role)
-            props.setUserID(decodedToken.id)
-            if(role){
-                props.setRoleType(role)
-            }
-        }
-        if (!props.signedIn){
-            setUserName("")
-            setPassword("")
-        }
-
-
-        }, [props.signedIn]);
 
     const signIn = () => {
         const encodedString = btoa(username + ':' + password)

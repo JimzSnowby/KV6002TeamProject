@@ -42,6 +42,11 @@ class VolunteerEvent extends Endpoint
                 $dbConn = new \App\Database(MAIN_DATABASE);
                 $data = $dbConn->executeSQL($this->sql, $this->sqlParams);
                 break;
+            case 'DELETE':
+                $this->unregisterEvent();
+                $dbConn = new \App\Database(MAIN_DATABASE);
+                $data = $dbConn->executeSQL($this->sql, $this->sqlParams);
+                break;
             default:
                 throw new \App\ClientError(405);
         }
@@ -54,7 +59,7 @@ class VolunteerEvent extends Endpoint
         {
             throw new \App\ClientError(422);
         }
-        if (!is_numeric(\App\REQUEST::params()['volunteerid']) || !is_numeric(\App\Request::params()['eventid'])) {
+        if (!is_numeric(\App\REQUEST::params()['volunteerid'])) {
             throw new \App\ClientError(422);
         }
         if (count(\App\Request::params()) > 2) {
@@ -62,6 +67,12 @@ class VolunteerEvent extends Endpoint
         }
         $this->sql .= " WHERE volunteerEvent.volunteerID = :volunteerid";
         $this->sqlParams[":volunteerid"] = \App\Request::params()['volunteerid'];
+    
+        // Check if 'eventid' is present and numeric, then add to SQL query
+        if (isset(\App\Request::params()['eventid']) && is_numeric(\App\Request::params()['eventid'])) {
+            $this->sql .= " AND volunteerEvent.eventID = :eventid";
+            $this->sqlParams[":eventid"] = \App\Request::params()['eventid'];
+        }
     }
 
     private function joinEvent()
@@ -78,6 +89,27 @@ class VolunteerEvent extends Endpoint
         if ($allParamsSet)
         {
             $this->sql = "INSERT INTO volunteerEvent (volunteerID, eventID) VALUES (:volunteerid, :eventid)";
+            $this->sqlParams = [
+                ":volunteerid" => \App\Request::params()["volunteerid"],
+                ":eventid" => \App\Request::params()["eventid"]
+            ];
+        }
+    }
+
+    private function unregisterEvent()
+    {
+        $requiredParams = ["volunteerid", "eventid"];
+        $allParamsSet = true;
+        foreach($requiredParams as $param){
+            if (!isset(\App\Request::params()[$param])){
+                $allParamsSet = false;
+                throw new \App\ClientError(400);
+            }
+        }
+
+        if ($allParamsSet)
+        {
+            $this->sql = "DELETE FROM volunteerEvent WHERE volunteerID = :volunteerid AND eventID = :eventid";
             $this->sqlParams = [
                 ":volunteerid" => \App\Request::params()["volunteerid"],
                 ":eventid" => \App\Request::params()["eventid"]

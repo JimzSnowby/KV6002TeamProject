@@ -9,6 +9,7 @@ import Event from '../components/Event'
 function VolunteerPage(props) {
     const [details, setDetails] = useState([])
     const [event, setEvent] = useState([])
+    const [volunteeredEvent, setVolunteeredEvent] = useState([])
     const [page, setPage] = useState(1)
     const [extendEvent, setextendEvent] = useState(null)
     const [id, setID] = useState('')
@@ -53,6 +54,7 @@ function VolunteerPage(props) {
             setEvent([]); 
             setDetails([]);
             fetchDetails();
+            fetchVolunteerEvents();
             fetchEvents();
         }
     }, [id]);
@@ -64,8 +66,55 @@ function VolunteerPage(props) {
         .catch(error => console.error("Error fetching details: ", error))
     }
 
-    const fetchAvailability = () => {
-        
+    const fetchVolunteerEvents = () => {
+        fetch('https://w21023500.nuwebspace.co.uk/assessment/api/volunteerevent?volunteerid=' + id)
+        .then(response => response.json())
+        .then(data => setVolunteeredEvent(data))
+        .catch(error => console.error("Error fetching volunteered events: ", error))
+    }
+
+    const eventSignUp = (eventid) => {
+        let formData = new FormData()
+        formData.append('eventid', eventid)
+        formData.append('volunteerid', id)
+        fetch('https://w21023500.nuwebspace.co.uk/assessment/api/volunteerevent',
+        {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (response.status === 401){
+                localStorage.removeItem("token")
+                props.setSignedIn(false)
+                return
+            }
+            if (response.status === 200 || response.status === 204){
+                console.log('Event signed up for')
+            }
+        })
+        .catch(error => console.error('Error signing up for event: ', error))
+    }
+
+    const eventUnregister = (eventid) => {
+        let formData = new FormData()
+        formData.append('eventid', eventid)
+        formData.append('volunteerid', id)
+        fetch('https://w21023500.nuwebspace.co.uk/assessment/api/volunteerevent',
+        {
+            method: 'DELETE',
+            body: formData
+        })
+        .then(response => {
+            if (response.status === 401){
+                localStorage.removeItem("token")
+                props.setSignedIn(false)
+                return
+            }
+            if (response.status === 200 || response.status === 204){
+                console.log('Event unregistered')
+            }
+        })
+        .catch(error => console.error('Error unregistering for event: ', error))
     }
 
     const fetchEvents = () => {
@@ -96,7 +145,25 @@ function VolunteerPage(props) {
                 setextendEvent={setextendEvent}
             />
             <div className='flex justify-end'>
-                <button className='text-right'>Volunteer</button>
+                <button 
+                    onClick={() => eventSignUp(item.eventID)}
+                    className='bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-green-500'>Volunteer</button>
+            </div>
+        </section>
+    ))
+
+    const volunteerEventsJSX = volunteeredEvent.map((item) => (
+        <section key={item.eventID} className='p-4 m-2 rounded-lg border border-gray-300'>
+            <Event
+                event={item}
+                signedIn={props.signedIn}
+                extendEvent={extendEvent}
+                setextendEvent={setextendEvent}
+            />
+            <div className='flex justify-end'>
+                <button 
+                    onClick={() => eventUnregister(item.eventID)}
+                    className='bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-green-500'>Unregister</button>
             </div>
         </section>
     ))
@@ -109,6 +176,10 @@ function VolunteerPage(props) {
                 <div className='flex-1 p-5'>
                     <p className='text-2xl text-center'>Availability</p>
                 </div>
+            </div>
+            <div>
+                <p className='text-2xl text-center'>Volunteered Events</p>
+                {volunteerEventsJSX}
             </div>
             <div className='justify-center p-5'>
                     <p className='text-2xl text-center'>Upcoming Events</p>

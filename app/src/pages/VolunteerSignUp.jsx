@@ -39,7 +39,8 @@ function VolunteerSignUp() {
             formData.append('password', hashedPassword)
             formData.append('phone', phone)
 
-            fetch('https://w21023500.nuwebspace.co.uk/assessment/api/volunteer', {
+            fetch('https://w21023500.nuwebspace.co.uk/assessment/api/volunteer', 
+            {
                 method: 'POST',
                 body: formData
             })
