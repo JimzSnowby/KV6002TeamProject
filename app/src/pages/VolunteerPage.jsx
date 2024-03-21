@@ -67,7 +67,16 @@ function VolunteerPage(props) {
     
     const fetchDetails = () => {
         fetch('https://w21023500.nuwebspace.co.uk/assessment/api/volunteer?volunteerID=' + id)
-        .then(response => response.json())
+        .then(response => {
+            if (response.status === 401){
+                localStorage.removeItem("token")
+                props.setSignedIn(false)
+                return []
+            }
+            if (response.status === 200 || response.status === 204){
+                return response.json()
+            }
+        })
         .then(data => setDetails(data))
         .catch(error => console.error("Error fetching details: ", error))
     }
@@ -75,7 +84,7 @@ function VolunteerPage(props) {
     const fetchVolunteerEvents = () => {
         fetch('https://w21023500.nuwebspace.co.uk/assessment/api/volunteerevent?volunteerid=' + id)
         .then(response => {
-            if (!response.ok) {
+            if (response.status === 401) {
                 throw new Error('Network response was not ok');
             }
             return response.text();
@@ -110,7 +119,7 @@ function VolunteerPage(props) {
             if (response.status === 401){
                 localStorage.removeItem("token")
                 props.setSignedIn(false)
-                return
+                return []
             }
             if (response.status === 200 || response.status === 204){
                 console.log('Event signed up for')
@@ -131,7 +140,7 @@ function VolunteerPage(props) {
             if (response.status === 401){
                 localStorage.removeItem("token")
                 props.setSignedIn(false)
-                return
+                return []
             }
             if (response.status === 200 || response.status === 204){
                 console.log('Event unregistered')
@@ -144,7 +153,17 @@ function VolunteerPage(props) {
 
     const fetchEvents = () => {
         fetch('https://w20021570.nuwebspace.co.uk/assessment/api/event')
-        .then(response => response.json())
+        .then(response => {
+            if (response.status === 401){
+                localStorage.removeItem("token")
+                props.setSignedIn(false)
+                return []
+            }
+            if (response.status === 200 || response.status === 204){
+                return response.json()
+            }
+            
+        })
         .then(data => setEvent(data))
         .catch(error => console.error("Error fetching events: ", error))
     }
@@ -203,12 +222,11 @@ function VolunteerPage(props) {
         volunteerEventsJSX = (
             <div className="flex justify-center items-center w-full">
               <div className="bg-blue-200 text-center p-4 rounded-lg max-w-md mx-auto">
-                You have not sign up for any events.
+                You have not signed up for any events.
               </div>
             </div>
           );
     }
-
 
     return (
         <>

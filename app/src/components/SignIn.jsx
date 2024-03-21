@@ -31,13 +31,16 @@ function SignIn(props) {
                 headers: new Headers({ "Authorization": "Basic " + encodedString })
             })
             .then(response => {
+                if (response.status === 401) {
+                    setSignInError(true)
+                    window.alert("Invalid Username or Password")
+                    return
+                }
                 if (response.status === 200 || response.status === 204) {
                     props.setSignedIn(true)
                     setSignInError(false)
-                } else {
-                    setSignInError(true)
+                    return response.json()
                 }
-                return response.json()
             })
             .then(data => {
                 if (data.token) {
