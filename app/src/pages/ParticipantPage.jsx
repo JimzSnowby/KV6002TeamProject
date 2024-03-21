@@ -80,7 +80,7 @@ function ParticipantPage(props) {
                         <FiUser className="text-5xl text-gray-600" />
                     </div>
                     <h2 className="text-center text-2xl font-semibold mb-4">User Profile</h2>
-                    <p className="text-center">Manage your account and edit your details here</p>
+                    <p className="text-center">Manage your account and edit your details here.</p>
                     <form onSubmit={updateParticipant}>
                         <div className="mb-4">
                             <label htmlFor="name" className="block text-gray-700 text-sm font-bold mb-2">Name</label>
@@ -130,7 +130,7 @@ function ParticipantPage(props) {
                                 accept="image/png, image/jpeg, image/jpg, application/pdf,application/vnd.ms-excel"
                                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             />
-                            <p className="text-xs text-gray-600 mt-1">To successfully participate in the charity events, you will need to attach a proof of your income which will be reviewed by the member of staff. For more information, please head to our FAQ.</p>
+                            <p className="text-xs text-gray-600 mt-1">Please attach a proof of your income which will be reviewed by the member of staff. For more information, please head to our ROSE chatbot.</p>
                         </div>
                         <div className="flex items-center justify-center">
                             <button

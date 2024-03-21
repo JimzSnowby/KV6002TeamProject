@@ -7,9 +7,11 @@ class MessageParser {
     const lowerCaseMessage = message.toLowerCase();
 
 
+
     if (lowerCaseMessage.includes("allowed evidence types")) {
       this.actionProvider.handleEvidenceTypes();
     }
+
     // Check for specific queries related to contact details
     const contactInfoQueries = [
       "contact info",
@@ -32,6 +34,35 @@ class MessageParser {
     for (const query of contactInfoQueries) {
       if (lowerCaseMessage.includes(query)) {
         this.actionProvider.handleDetails();
+        break;
+      }
+    }
+
+    // Check for specific queries related to greetings
+    const greetingsQueries = [
+      "hello",
+      "hi",
+      "hey",
+      "good morning",
+      "good afternoon",
+      "good evening",
+      "greetings",
+      "how are you",
+      "what's up",
+      "how's it going",
+      "howdy",
+      "yo",
+      "hi there",
+      "hello there",
+      "hey there",
+      "hi!",
+      "hello!",
+      "hey!",
+    ];
+
+    for (const query of greetingsQueries) {
+      if (lowerCaseMessage.includes(query)) {
+        this.actionProvider.handleGreeting();
         break;
       }
     }

@@ -11,12 +11,10 @@ class ActionProvider {
         widget: "javascriptLinks",
       }
     );
-
     this.updateChatbotState(message);
   };
 
   handleDonations = () => {
-    // Define the evidence types
     const donationMessage = "Thank you for your interest in donating! Your generosity can make a significant impact. To proceed with your donation, please visit our Sponsor page. Thank you again for your generosity and kindness. Together, we can make a difference!";
 
     // Create a chatbot message with the donation information
@@ -27,25 +25,19 @@ class ActionProvider {
   };
 
   handleDetails = () => {
-    // Define the evidence types
     const detailsMessage = "For any inquiries or assistance, you can reach out to us via email at support@rose.com or by phone at +1-800-555-1234. Our dedicated support team is here to help you with any questions or concerns you may have.";
-
-    // Create a chatbot message with the donation information
     const message = this.createChatBotMessage(detailsMessage);
-
-    // Update the chatbot state
     this.updateChatbotState(message);
   };
 
+  handleGreeting = () => {
+    const message = this.createChatBotMessage("Hello! How can I assist you today?");
+    this.updateChatbotState(message);
+  };
 
   handleVolunteering = () => {
-    // Define the evidence types
     const donationMessage = "Thank you for your interest in volunteering! To join ROSE charity as a Volunteer, simply go to 'Become a Volunteer' menu section. This will take you to the registation form where you will be able to sign up. If you encounter any issues, please contact our support team at support@rose.com.";
-
-    // Create a chatbot message with the donation information
     const message = this.createChatBotMessage(donationMessage);
-
-    // Update the chatbot state
     this.updateChatbotState(message);
   };
 
@@ -75,7 +67,6 @@ class ActionProvider {
         widget: "incomeEvidence",
       }
     );
-
     this.updateChatbotState(message);
   };
 
@@ -83,7 +74,6 @@ class ActionProvider {
     const message = this.createChatBotMessage(
       "I apologize for the inconvenience. If you're experiencing issues logging in, please reach out to us via email at support@rose.com."
     );
-
     this.updateChatbotState(message);
   };
 
@@ -91,7 +81,6 @@ class ActionProvider {
     const message = this.createChatBotMessage(
       "I apologize for the inconvenience. If you're experiencing issues registering, please try the following troubleshooting steps:\n\n1. Try registering using a different web browser.\n2. Clear your browser's cache and cookies, then try again.\n3. Make sure you have a stable internet connection.\n4. Restart your device and try registering again.\n\nIf the issue persists, please reach out to us via email at support@rose.com for further assistance."
     );
-
     this.updateChatbotState(message);
   };
 

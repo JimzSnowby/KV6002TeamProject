@@ -159,7 +159,7 @@ function RegistrationForm({ onRegistration }) {
             formData.append('ticket', ticket)
 
             // Send a POST request to register the user
-            fetch('https://w20021570.nuwebspace.co.uk/assessment/api/register', {
+            fetch('https://w20037161.nuwebspace.co.uk/assessment/api/register', {
                 method: 'POST',
                 body: formData,
             })
@@ -192,104 +192,93 @@ function RegistrationForm({ onRegistration }) {
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-100">
-            <div className="container mx-auto bg-white shadow-md rounded px-8 py-8 pt-8">
-                <div className="flex justify-center mb-4">
-                    <LuUserPlus className="text-5xl text-gray-600" />
-                </div>
-                <h2 className="text-center text-2xl font-semibold mb-4">Sign Up</h2>
-                {errorMessage && (
-                    <div className="bg-red-500 text-white p-2 mb-4 text-center">{errorMessage}</div>
-                )}
-                <div className="flex justify-center mb-4">
-                </div>
-                <div className="grid grid-cols-1 gap-4">
-                    <div>
-                        <label htmlFor="name" className="block text-gray-700">Full Name</label>
-                        <input
-                            id="name"
-                            type="text"
-                            placeholder="Please enter your full name..."
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                            onKeyDown={(e) => {
-                                const key = e.key;
-                                // Allow letters (a-z, A-Z), backspace, and space
-                                if (!/[a-zA-Z\s]/.test(key) && key !== 'Backspace') {
-                                    e.preventDefault();
-                                }
-                            }}
-                            className="border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:border-blue-500"
-                        />
-                    </div>
-                    <div>
-                        <label htmlFor="email" className="block text-gray-700">E-mail</label>
-                        <input
-                            id="email"
-                            type="text"
-                            placeholder="Please enter your e-mail..."
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            className="border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:border-blue-500"
-                        />
-                    </div>
-                    <div>
-                        <label htmlFor="phone" className="block text-gray-700">Phone number</label>
-                        <input
-                            id="phone"
-                            type="tel"
-                            placeholder="Please enter your phone number..."
-                            value={phone}
-                            onChange={(e) => setPhone(e.target.value)}
-                            className="border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:border-blue-500"
-                        />
-                    </div>
-                    <div>
-                        <label htmlFor="dob" className="block text-gray-700">Date of birth</label>
-                        <input
-                            id="dob"
-                            type="date"
-                            placeholder="Date of birth"
-                            value={dob}
-                            onChange={(e) => setDob(e.target.value)}
-                            className="border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:border-blue-500"
-                        />
-                    </div>
-                </div>
+        <div className="bg-white rounded-lg shadow p-8 max-w-lg w-full">
+            <div className="flex justify-center mb-4">
+                <LuUserPlus className="text-5xl text-gray-600" />
+            </div>
+            <h2 className="text-center text-2xl font-semibold mb-4">Sign Up</h2>
+            {errorMessage && (
+                <div className="bg-red-500 text-white p-2 mb-4 text-center">{errorMessage}</div>
+            )}
+            <div className="grid grid-cols-1 gap-4">
                 <div>
-                    <label htmlFor="password" className="block text-gray-700">Password</label>
+                    <label htmlFor="name" className="block text-gray-700">Full Name</label>
                     <input
-                        id="password"
-                        type="password"
-                        placeholder="Password"
-                        value={password}
-                        onChange={handlePasswordChange}
+                        id="name"
+                        type="text"
+                        placeholder="Please enter your full name..."
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
                         className="border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:border-blue-500"
                     />
                 </div>
                 <div>
-                    <label htmlFor="confirmPassword" className="block text-gray-700">Confirm Password</label>
+                    <label htmlFor="email" className="block text-gray-700">E-mail</label>
                     <input
-                        id="confirmPassword"
-                        type="password"
-                        placeholder="Confirm Password"
-                        value={confirmPassword}
-                        onChange={handleConfirmPasswordChange}
+                        id="email"
+                        type="text"
+                        placeholder="Please enter your e-mail..."
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         className="border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:border-blue-500"
                     />
-                    <div className="mt-1 text-sm text-gray-600">Password strength <span className={getPasswordStrengthTextClass()}>{passwordStrength}</span></div>
                 </div>
-                <div className="mt-4">
-                    <button
-                        onClick={handleRegistration}
-                        className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-purple-500 focus:outline-none focus:ring-2 focus:ring-blue-300 w-full"
-                    >
-                        Sign Up
-                    </button>
+                <div>
+                    <label htmlFor="phone" className="block text-gray-700">Phone number</label>
+                    <input
+                        id="phone"
+                        type="tel"
+                        placeholder="Please enter your phone number..."
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                        className="border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:border-blue-500"
+                    />
+                </div>
+                <div>
+                    <label htmlFor="dob" className="block text-gray-700">Date of birth</label>
+                    <input
+                        id="dob"
+                        type="date"
+                        placeholder="Date of birth"
+                        value={dob}
+                        onChange={(e) => setDob(e.target.value)}
+                        className="border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:border-blue-500"
+                    />
                 </div>
             </div>
+            <div>
+                <label htmlFor="password" className="block text-gray-700">Password</label>
+                <input
+                    id="password"
+                    type="password"
+                    placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:border-blue-500"
+                />
+            </div>
+            <div>
+                <label htmlFor="confirmPassword" className="block text-gray-700">Confirm Password</label>
+                <input
+                    id="confirmPassword"
+                    type="password"
+                    placeholder="Confirm Password"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    className="border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:border-blue-500"
+                />
+            </div>
+            <div className="mt-4">
+                <button
+                    onClick={handleRegistration}
+                    className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-300 w-full"
+                >
+                    Sign Up
+                </button>
+            </div>
         </div>
-    );
+    </div>
+);
 }
-
 export default RegistrationForm
 

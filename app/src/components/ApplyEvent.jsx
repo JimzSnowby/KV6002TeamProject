@@ -10,15 +10,13 @@ import React from "react"
 import { useState } from "react";
 import { useEffect } from "react";
 
-function ApplyEvent(props){
+function ApplyEvent(props) {
     const [apply, setApply] = useState('');
-
 
     const applyToEvent = () => {
         let formData = new FormData();
         formData.append('eventid', props.selectEventID);
         formData.append('participantid', props.userID);
-
 
         fetch('https://w20021570.nuwebspace.co.uk/assessment/api/attend', {
             method: 'POST',
@@ -26,12 +24,25 @@ function ApplyEvent(props){
             body: formData,
         })
         .then(response => {
+            console.log('Response:', response);
             if (response.status === 200 || response.status === 204) {
                 setApply(apply)
-                window.alert('You have sucessfully registered for an event.')
+                window.alert('Applied successfully!')
+            } else if (response.status === 467){
+                window.alert('No space!')
+            } else if (response.status === 468){
+                window.alert('No ticket!')
+            } else if (response.status === 469){
+                window.alert('Already attending!')
             }
+            return response.json();
         })
+        .catch(error => {
+            console.error('Error applying to event:', error);
+            window.alert('An error occurred while applying to the event.');
+        });
     }
+
     
 
     const cancelEventAttendance = () => {
@@ -42,7 +53,7 @@ function ApplyEvent(props){
             .then(response => {
                 if (response.status === 200 || response.status === 204) {
                     setApply('')
-                    window.alert('You have sucessfully cancelled your attendenca at the event.')
+                    window.alert('You have successfully cancelled your attendance at the event.');
                 }
             })
     }
@@ -55,10 +66,11 @@ function ApplyEvent(props){
                 type='submit'
                 value='Apply'
                 onClick={applyToEvent}
-            >Click me
+            >
+                Click me
             </button>
         </div>
     );
 }
 
-export default ApplyEvent
+export default ApplyEvent;
