@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from "react-router-dom";
 import Event from '../components/Event'
+import Availability from '../components/Availability';
 
 /**
  * Page to manage Volunteers profile
@@ -14,6 +15,7 @@ function VolunteerPage(props) {
     const [page, setPage] = useState(1)
     const [extendEvent, setextendEvent] = useState(null)
     const [id, setID] = useState('')
+    const [selectedDates, setSelectedDates] = useState([]);
     const [refreshTrigger, setRefreshTrigger] = useState(0)
     const navigate = useNavigate()
 
@@ -235,6 +237,10 @@ function VolunteerPage(props) {
                 {detailsJSX}
                 <div className='flex-1 p-5'>
                     <p className='text-2xl text-center'>Availability</p>
+                    <Availability
+                        selectedDates={selectedDates}
+                        setSelectedDates={setSelectedDates}
+                    />
                 </div>
             </div>
             <div>
