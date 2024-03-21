@@ -45,7 +45,7 @@ function SignIn(props) {
 
     const signIn = () => {
         const encodedString = btoa(username + ':' + password)
-        fetch('https://w20037161.nuwebspace.co.uk/assessment/api/token',
+        fetch('https://w20021570.nuwebspace.co.uk/assessment/api/token',
             {
                 method: 'GET',
                 headers: new Headers({ "Authorization": "Basic " + encodedString })
@@ -82,7 +82,7 @@ function SignIn(props) {
     }
 
     return (
-        <div className="bg-blue-800 p-2 text-md text-right rounded-md">
+        <div className="bg-blue-800 p-2 text-md text-right">
             {!props.signedIn && <div>
                 <input
                     type="text"

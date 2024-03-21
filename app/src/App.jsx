@@ -30,11 +30,18 @@ function App() {
   const [userID, setUserID] = useState('')
 
   console.log("Final Role type:", roleType);
+  <ApplyEvent
+    signedIn={signedIn}
+    setSignedIn={setSignedIn}
+    roleType={roleType}
+    userID={userID}
+    setUserID={setUserID}
+  />
 
   return (
     <div>
-     {/* Chatbot icon */}
-     <div
+      {/* Chatbot icon */}
+      <div
         className={`fixed bottom-8 right-8 bg-blue-500 text-white rounded-full p-4 cursor-pointer hover:bg-blue-600 ${showChatbot ? 'hidden' : ''}`}
         onClick={() => setShowChatbot(true)}
       >
@@ -62,50 +69,43 @@ function App() {
         </div>
       )}
 
-        <div className="p-10">
-          <SignIn
-            signedIn={signedIn}
-            setSignedIn={setSignedIn}
-            roleType={roleType}
-            setRoleType={setRoleType}
-            userID={userID}
-            setUserID={setUserID}
-          />
-          <ApplyEvent
-            signedIn={signedIn}
-            setSignedIn={setSignedIn}
-            roleType={roleType}
-            userID={userID}
-            setUserID={setUserID}
-          />
-        </div>
-
-        <header>
-          <Header />
-        </header>
-
-        <nav className="px-5">
-          <Menu roletype={roleType} signedIn={signedIn} />
-
-        </nav>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/register" element={<RegistrationForm />} /> {/* Route for the registration form */}
-          <Route path="/becomeparticipant" element={<BecomeParticipant />} />
-          <Route path="/participant" element={<ParticipantPage />} />
-          <Route path="/volunteer" element={<VolunteerPage userID={userID} />} />
-          <Route path="/volunteer-sign-up" element={<VolunteerSignUp />} />
-          <Route path="/register" element={<RegistrationForm />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-
-        <footer className="px-5">
-
-          <Footer />
-        </footer>
-
+      <div className="">
+        <SignIn
+          signedIn={signedIn}
+          setSignedIn={setSignedIn}
+          roleType={roleType}
+          setRoleType={setRoleType}
+          userID={userID}
+          setUserID={setUserID}
+        />
       </div>
-      )
+
+      <header>
+        <Header />
+      </header>
+
+      <nav className="">
+        <Menu roletype={roleType} signedIn={signedIn} />
+
+      </nav>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/register" element={<RegistrationForm />} /> {/* Route for the registration form */}
+        <Route path="/becomeparticipant" element={<BecomeParticipant />} />
+        <Route path="/participant" element={<ParticipantPage />} />
+        <Route path="/volunteer" element={<VolunteerPage userID={userID} />} />
+        <Route path="/volunteer-sign-up" element={<VolunteerSignUp />} />
+        <Route path="/register" element={<RegistrationForm />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+
+      <footer className="px-5">
+
+        <Footer />
+      </footer>
+
+    </div>
+  )
 }
 
-      export default App
+export default App
