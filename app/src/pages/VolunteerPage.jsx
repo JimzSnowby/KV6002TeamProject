@@ -170,28 +170,45 @@ function VolunteerPage(props) {
                 setextendEvent={setextendEvent}
             />
             <div className='flex justify-end'>
-                <button 
-                    onClick={() => eventSignUp(item.eventID)}
-                    className='bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-green-500'>Volunteer</button>
-            </div>
-        </section>
-    ))
+            <button 
+                onClick={() => eventSignUp(item.eventID)}
+                disabled={volunteeredEvent.some(ve => ve.eventID === item.eventID)} // Disable if user has signed up
+                className={`bg-gray-800 text-white px-4 py-2 rounded-md ${volunteeredEvent.some(ve => ve.eventID === item.eventID) 
+                            ? 'opacity-50 cursor-not-allowed' : 'hover:bg-green-500'}`}>
+                {volunteeredEvent.some(ve => ve.eventID === item.eventID) ? 'Registered' : 'Volunteer'}
+            </button>
 
-    const volunteerEventsJSX = volunteeredEvent.map((item) => (
-        <section key={item.eventID} className='p-4 m-2 rounded-lg border border-gray-300'>
-            <Event
-                event={item}
-                signedIn={props.signedIn}
-                extendEvent={extendEvent}
-                setextendEvent={setextendEvent}
-            />
-            <div className='flex justify-end'>
-                <button 
-                    onClick={() => eventUnregister(item.eventID)}
-                    className='bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-green-500'>Unregister</button>
             </div>
         </section>
     ))
+    
+    let volunteerEventsJSX;
+    if (volunteeredEvent.length > 0) {
+    volunteerEventsJSX = volunteeredEvent.map((item) => (
+        <section key={item.eventID} className='p-4 m-2 rounded-lg border border-gray-300'>
+        <Event
+            event={item}
+            signedIn={props.signedIn}
+            extendEvent={extendEvent}
+            setextendEvent={setextendEvent}
+        />
+        <div className='flex justify-end'>
+            <button 
+            onClick={() => eventUnregister(item.eventID)}
+            className='bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-green-500'>Unregister</button>
+        </div>
+        </section>
+    ));
+    } else {
+        volunteerEventsJSX = (
+            <div className="flex justify-center items-center w-full">
+              <div className="bg-blue-200 text-center p-4 rounded-lg max-w-md mx-auto">
+                You have not sign up for any events.
+              </div>
+            </div>
+          );
+    }
+
 
     return (
         <>
