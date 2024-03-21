@@ -95,7 +95,7 @@ function SignIn(props) {
     }
 
     return (
-        <div className="bg-blue-800 p-2 text-md text-right rounded-md">
+        <div className="bg-blue-800 p-2 text-md text-right ">
             {!props.signedIn && <div>
                 <input
                     type="text"

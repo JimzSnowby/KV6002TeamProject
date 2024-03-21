@@ -20,12 +20,12 @@ import RegistrationForm from "./pages/Register"
 import Search from './components/Search'
 import Event from './components/Event'
 
-import Chatbot from 'react-chatbot-kit'
-import ActionProvider from "./config/ActionProvider"
-import MessageParser from "./config/MessageParser"
-import config from "./config/config"
-import 'react-chatbot-kit/build/main.css'
-import ApplyEvent from './components/ApplyEvent'
+//import Chatbot from 'react-chatbot-kit'
+//import ActionProvider from "./config/ActionProvider"
+//import MessageParser from "./config/MessageParser"
+//import config from "./config/config"
+//import 'react-chatbot-kit/build/main.css'
+//import ApplyEvent from './components/ApplyEvent'
 
 function App() {
 
@@ -38,13 +38,13 @@ function App() {
   console.log("Final Position:", position);
   const [showChatbot, setShowChatbot] = useState(false);
 
-  <ApplyEvent
+  /*<ApplyEvent
     signedIn={signedIn}
     setSignedIn={setSignedIn}
     roleType={roleType}
     userID={userID}
     setUserID={setUserID}
-  />
+  />*/
 
   return (
     <div>
@@ -102,13 +102,13 @@ function App() {
         <Route path="/" element={<HomePage />} />
           <Route path="/volunteer" element={<VolunteerPage userID={userID}/>} />
           <Route path="/volunteer-sign-up" element={<VolunteerSignUp />} />
-          <Route path="/participant" element={<ParticipantPage />} />
+          {/*<Route path="/participant" element={<ParticipantPage />} />--> */}
           <Route path="/register" element={<RegistrationForm />} />
           <Route path="/admin-sign-up" element={<AdminRegister />} />
           <Route path="/new-event" element={<NewEvent />} />
           <Route path="/check-participant" element={<CheckParticipant />} />
           <Route path="*" element={<NotFound />} />
-        <Route path="/becomeparticipant" element={<BecomeParticipant />} />
+        {/*<Route path="/becomeparticipant" element={<BecomeParticipant />} />*/}
       </Routes>
 
       <footer className="px-5">
