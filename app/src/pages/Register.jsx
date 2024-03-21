@@ -159,7 +159,7 @@ function RegistrationForm({ onRegistration }) {
             formData.append('ticket', ticket)
 
             // Send a POST request to register the user
-            fetch('https://w20037161.nuwebspace.co.uk/assessment/api/register', {
+            fetch('https://w20021570.nuwebspace.co.uk/assessment/api/register', {
                 method: 'POST',
                 body: formData,
             })
