@@ -19,15 +19,15 @@ function Availability(props){
 
     return(
         <>
-            <div className='flex justify-cente'>
+            <div className='flex flex-col items-center p-5 bg-blue-200'>
                 <ReactCalendar
                     onChange={props.setSelectedDates}
                     value={props.selectedDates}
                     selectRange={false} // Allows selection of a range of dates
                     multiple={true} // Allows multiple date selection
                 />
+                <button onClick={handleSaveAvailability} className="bg-gray-800 text-white px-4 py-2 rounded-b-md hover:bg-green-500">Save Availability</button>
             </div>
-            <button onClick={handleSaveAvailability}>Save Availability</button>
         </>
     )
 }

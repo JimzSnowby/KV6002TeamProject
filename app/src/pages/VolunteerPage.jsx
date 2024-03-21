@@ -235,7 +235,7 @@ function VolunteerPage(props) {
             <h1 className='text-4xl text-center p-2'>Profile</h1>
             <div className='p-5 flex'>
                 {detailsJSX}
-                <div className='flex-1 p-5'>
+                <div className='flex-1 flex-col p-5'>
                     <p className='text-2xl text-center'>Availability</p>
                     <Availability
                         selectedDates={selectedDates}
