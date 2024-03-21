@@ -205,7 +205,7 @@ function VolunteerPage(props) {
     
     let volunteerEventsJSX;
     if (volunteeredEvent.length > 0) {
-    volunteerEventsJSX = volunteeredEvent.map((item) => (
+        volunteerEventsJSX = volunteeredEvent.map((item) => (
         <section key={item.eventID} className='p-4 m-2 rounded-lg border border-gray-300'>
         <Event
             event={item}
@@ -236,8 +236,9 @@ function VolunteerPage(props) {
             <div className='p-5 flex'>
                 {detailsJSX}
                 <div className='flex-1 flex-col p-5'>
-                    <p className='text-2xl text-center'>Availability</p>
+                    
                     <Availability
+                        id={id}
                         selectedDates={selectedDates}
                         setSelectedDates={setSelectedDates}
                     />

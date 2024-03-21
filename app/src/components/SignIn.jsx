@@ -39,6 +39,7 @@ function SignIn(props) {
                 if (response.status === 200 || response.status === 204) {
                     props.setSignedIn(true)
                     setSignInError(false)
+                    navigate("/")
                     return response.json()
                 }
             })
