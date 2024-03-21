@@ -74,7 +74,7 @@ function ParticipantPage(props) {
 
     return (
         <div className="min-h-screen bg-gray-100">
-            <div className="max-w-4xl mx-auto py-8">
+            <div className="max-w-3xl mx-auto py-6">
                 <div className="bg-white shadow-md rounded px-8 py-8">
                     <div className="flex justify-center mb-4">
                         <FiUser className="text-5xl text-gray-600" />
@@ -130,12 +130,17 @@ function ParticipantPage(props) {
                                 accept="image/png, image/jpeg, image/jpg, application/pdf,application/vnd.ms-excel"
                                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             />
-                            <p className="text-xs text-gray-600 mt-1">Please attach a proof of your income which will be reviewed by the member of staff. For more information, please head to our ROSE chatbot.</p>
+                            <p className="text-xs text-gray-600 mt-1"></p>
+                            <div className="bg-blue-100 border-l-4 border-blue-500 text-blue-800 p-1 rounded-md mt-2 mb-1">
+                                <p className="text-sm">
+                                    <span className="font-bold">Info:</span> Please attach a proof of your income which will be reviewed by the member of staff. This can be a pdf or png, jpg or jpeg file. For more information, please head to our ROSE chatbot.
+                                </p>
+                            </div>
                         </div>
                         <div className="flex items-center justify-center">
                             <button
                                 type="submit"
-                                className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                                className="bg-blue-500 hover:bg-blue-800 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                             >
                                 Save Changes
                             </button>

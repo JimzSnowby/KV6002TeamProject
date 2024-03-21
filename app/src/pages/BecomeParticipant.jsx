@@ -21,7 +21,7 @@ function BecomeParticipant() {
             <p className="text-lg mb-4">Upon successful registration, you will be notified via email and provided with further instructions on how to participate in our charity events.</p>
             <p className="text-lg mb-4">If you have any questions or need assistance, please feel free to contact us.</p>
             <div>
-                <Link to="/register" className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded inline-block">Sign Up</Link>
+                <Link to="/register" className="bg-blue-500 hover:bg-blue-800 text-white py-2 px-4 rounded inline-block">Sign Up</Link>
             </div>
         </div>
     );
