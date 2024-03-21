@@ -75,12 +75,10 @@ function HomePage(props) {
 
     return (
         <>
-            <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
-                <div className='col-span-1 md:col-span-2'>
-                    <h1>Home Page</h1>
-                    <p>Welcome to ROSE</p>
-                    <h1 className='text-3xl font-bold mb-4 mt-4'>Events</h1>
-
+            <div className='grid grid-cols-1 px-10'>
+                <div className="col-span-1 text-center">
+                    <h1 className="text-4xl font-bold text-gray-900 mb-4">Welcome to ROSE</h1>
+                    <h2 className="text-xl font-semibold text-gray-700 mb-8">Explore Upcoming Events</h2>
                 </div>
                 {loading ? (
                     <div className='fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'>
@@ -96,22 +94,22 @@ function HomePage(props) {
                                 <button
                                     onClick={previousPage}
                                     disabled={page <= 1}
-                                    className={`py-2 px-4 mr-2 ${page <= 1 ? 'bg-gray-300 cursor-not-allowed' : 
-                                    'bg-blue-500 hover:bg-blue-600 text-white'} rounded`}
+                                    className={`py-2 px-4 mr-2 ${page <= 1 ? 'bg-gray-300 cursor-not-allowed' :
+                                        'bg-blue-500 hover:bg-blue-600 text-white'} rounded`}
                                 > Previous
                                 </button>
                                 <button
                                     onClick={nextPage}
                                     disabled={event.length === 0}
-                                    className={`py-2 px-4 ${event.length === 0 ? 'bg-gray-300 cursor-not-allowed' : 
-                                    'bg-blue-500 hover:bg-blue-600 text-white'} rounded`}
+                                    className={`py-2 px-4 ${event.length === 0 ? 'bg-gray-300 cursor-not-allowed' :
+                                        'bg-blue-500 hover:bg-blue-600 text-white'} rounded`}
                                 > Next
                                 </button>
                             </div>
                         )}
                     </>
                 )}
-            </div>
+            </div >
             <Newsletter />
             <Sponsor />
         </>
