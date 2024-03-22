@@ -85,11 +85,6 @@ class Event extends Endpoint {
             throw new \App\ClientError(422);
         }
  
-        if (!is_numeric(\App\REQUEST::params()['time']))
-        {
-            throw new \App\ClientError(402);
-        }
- 
        $time = \App\REQUEST::params()['time'];
        return htmlspecialchars($time);
     }
@@ -148,8 +143,8 @@ class Event extends Endpoint {
  
         $dbConn = new \App\Database(MAIN_DATABASE);
  
-        $sqlParameters = ['eventID' => $eventID];
-        $sql = "SELECT * FROM event WHERE eventID = :eventID";
+        $sqlParameters = ['eventid' => $eventID];
+        $sql = "SELECT * FROM event WHERE eventID = :eventid";
         $data = $dbConn->executeSQL($sql, $sqlParameters);
 
         if (count($data) === 0) {
@@ -169,12 +164,12 @@ class Event extends Endpoint {
     }
 
     private function deleteEvent() {
-        if (!isset(\App\REQUEST::params()['eventID']))
+        if (!isset(\App\REQUEST::params()['eventid']))
         {
             throw new \App\ClientError(422);
         }
  
-        $eventID =\App\REQUEST::params()['eventID'];
+        $eventID =\App\REQUEST::params()['eventid'];
         
         if (!is_numeric($eventID))
         {
@@ -182,8 +177,8 @@ class Event extends Endpoint {
         }
  
         $dbConn = new \App\Database(MAIN_DATABASE);
-        $sql = "DELETE FROM event WHERE eventID = :eventID";
-        $sqlParameters = ['eventID' => $eventID];
+        $sql = "DELETE FROM event WHERE eventID = :eventid";
+        $sqlParameters = ['eventid' => $eventID];
         $data = $dbConn->executeSQL($sql, $sqlParameters);
         return $data;
     }

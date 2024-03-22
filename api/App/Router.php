@@ -54,24 +54,20 @@ abstract class Router
                 case '/eventlist/':
                     $endpoint = new EndpointControllers\EventList();
                     break;
-<<<<<<< Updated upstream
                 case '/volunteerlist':
                 case '/volunteerlist/':
                     $endpoint = new EndpointControllers\VolunteerEventList();
                     break;
-                case '/newsletter':
-                case '/newsletter/':
+               
                 case '/newsletters':
                 case '/newsletters/':
                     $endpoint = new EndpointControllers\Newsletter();
                     break;
-                case '/sponsor':
-                case '/sponsor/':
+                
                 case '/sponsors':
                 case '/sponsors/':
                     $endpoint = new EndpointControllers\Sponsor();
                     break; 
-=======
                 case '/register':
                 case '/register/':
                         $endpoint = new EndpointControllers\Register();
@@ -81,7 +77,10 @@ abstract class Router
                 case '/participant/':
                         $endpoint = new EndpointControllers\ParticipantProfile();
                         break;
->>>>>>> Stashed changes
+                case '/waitingdata':
+                case '/waitingdata/':
+                        $endpoint = new EndpointControllers\WaitingData();
+                        break;
                 default:
                     throw new ClientError(404);
             }

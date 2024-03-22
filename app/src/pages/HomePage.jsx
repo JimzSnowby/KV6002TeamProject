@@ -76,11 +76,10 @@ function HomePage(props) {
 
     return (
         <>
-            <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
-                <div className='col-span-1 md:col-span-2'>
-                    <h1>Home Page</h1>
-                    <p>Welcome to ROSE</p>
-                    <h1 className='text-3xl font-bold mb-4 mt-4'>Events</h1>
+            <div className='grid grid-cols-1'>
+                <div className='col-span-1 text-center'>
+                    <h1 className='text-4xl font-bold text-gray-900 mb-4'>Welcome to ROSE</h1>
+                    <h2 className='text-xl font-semibold text-gray-700 mb-8'>Explore Upcoming Events</h2>
 
                 </div>
                 {loading ? (

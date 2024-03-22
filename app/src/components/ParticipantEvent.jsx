@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { PieChart } from 'react-minimal-pie-chart';
 
-function ParticipantEvent({ props }) {
-    const [eventData, setEventData] = useState([]);
+function ParticipantEvent({ selectedEventID }) {
+    const [participantData, setParticipantData] = useState([]);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         setLoading(true);
-        const eventUrl = `https://w20021570.nuwebspace.co.uk/assessment/api/eventList/}`;
+        const eventUrl = 'https://w20021570.nuwebspace.co.uk/assessment/api/eventList';
         fetch(eventUrl)
             .then(response => {
                 if (!response.ok) {
@@ -16,7 +15,7 @@ function ParticipantEvent({ props }) {
                 return response.json();
             })
             .then(data => {
-                setEventData(data);
+                setParticipantData(data);
                 setLoading(false);
             })
             .catch(error => {
@@ -25,49 +24,19 @@ function ParticipantEvent({ props }) {
             });
     }, []);
 
-    const calculatePercentage = (value, total) => (value / total) * 100;
-
-    // Combine participants and volunteers data
-    const totalParticipants = eventData.reduce((total, event) => total + event.numberOfPa, 0);
-    const totalVolunteers = eventData.reduce((total, event) => total + event.numberOfVo, 0);
-
-    const data = [
-        {
-            title: 'Participants',
-            value: totalParticipants,
-            color: 'rgba(255, 99, 132, 0.6)',
-        },
-        {
-            title: 'Volunteers',
-            value: totalVolunteers,
-            color: 'rgba(54, 162, 235, 0.6)',
-        },
-    ];
-
-    const dataWithPercentage = data.map(item => ({
-        ...item,
-        value: calculatePercentage(item.value, totalParticipants + totalVolunteers),
-    }));
+    // Filter participant data for the selected event
+    const selectedEventData = participantData.find(event => event.eventID === selectedEventID);
 
     return (
         <div>
             {loading ? (
                 <p>Loading...</p>
-            ) : (
+            ) : selectedEventData ? (
                 <div>
-                    <h2>Participant and Volunteer Numbers</h2>
-                    <PieChart
-                        data={dataWithPercentage}
-                        lineWidth={40}
-                        label={({ dataEntry }) => `${dataEntry.title}: ${Math.round(dataEntry.value)}%`}
-                        labelStyle={{
-                            fontSize: '5px',
-                            fontFamily: 'sans-serif',
-                        }}
-                        width={300}
-                        height={200}
-                    />
+                    <h2> {selectedEventData.numberOfPa} participants are signed up for the appointment!</h2>
                 </div>
+            ) : (
+                <p>No data available</p>
             )}
         </div>
     );

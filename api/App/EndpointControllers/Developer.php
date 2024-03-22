@@ -8,10 +8,15 @@ namespace App\EndpointControllers;
  */
 class Developer extends Endpoint
 {
-    public function __construct()
-    {
-        $data['id'] = "w21023500";
-        $data['name'] = "James Sowerby";
+
+
+    private $sql = "SELECT * FROM waitingList";
+
+    private $sqlParameters = [];
+
+    public function __construct() {
+        $dbConn = new \App\Database(MAIN_DATABASE);
+        $data = $dbConn->executeSQL($this->sql, $this->sqlParameters);
         parent::__construct($data);
     }
 }

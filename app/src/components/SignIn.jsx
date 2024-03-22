@@ -45,7 +45,7 @@ function SignIn(props) {
 
     const signIn = () => {
         const encodedString = btoa(username + ':' + password)
-        fetch('https://w21023500.nuwebspace.co.uk/assessment/api/token',
+        fetch('https://w20021570.nuwebspace.co.uk/assessment/api/token',
             {
                 method: 'GET',
                 headers: new Headers({ "Authorization": "Basic " + encodedString })

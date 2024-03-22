@@ -4,8 +4,10 @@
  * 
  *
  * @author Antonio Gorgan
- * This endpoint is used to make participants attend an eventid. participantID is linked to the eventid. 
+ * This endpoint is used to make participants attend an event. participantID is linked to the eventid. 
  * When a participant is inserted into the list an available space is deducted from the space field. 
+ * There are several checks and validation when the participant registeres to the event, such as checking if they eligible, 
+ * if events have available spaces and if participants are already attending events. 
  * 
  */ 
 
@@ -37,11 +39,9 @@ class ParticipantEvent extends Endpoint {
         parent::__construct($data);
     }
 
-    private function validateToken() {
+    private function validateToken(){
         $secretkey = SECRET;    
-
         $jwt = \App\Request::getBearerToken();
-
         try {
             $decodedJWT = \Firebase\JWT\JWT::decode($jwt, new \Firebase\JWT\Key($secretkey, 'HS256'));
         } catch (Exception $e) {
@@ -56,8 +56,7 @@ class ParticipantEvent extends Endpoint {
         return $decodedJWT->id;
     }
 
-    private function checkUserExists($id)
-    {
+    private function checkUserExists($id){
         $dbConn = new \App\Database(MAIN_DATABASE);
         $sql = "SELECT participantID FROM participant WHERE participantID = :id";
         $sqlParameters = [':id' => $id];
@@ -67,24 +66,22 @@ class ParticipantEvent extends Endpoint {
         }
     }
 
-    private function chekcParticipantEligible($id)
-    {
+    private function checkParticipantEligible($id){
         $dbConn = new \App\Database(MAIN_DATABASE);
-        $sql = "SELECT isEligible FROM participant WHERE participantID = :id";
+        $sql = "SELECT eligible FROM participant WHERE participantID = :id";
         $sqlParameters = [':id' => $id];
         $data = $dbConn->executeSQL($sql, $sqlParameters);
         if (count($data) != 1) {
             throw new \App\ClientError(401);
         }
-        $eligible = $data[0]['isEligible'];
+        $eligible = $data[0]['eligible'];
 
         if ($eligible === 0) {
-            throw new \App\ClientError(410); // Not eligible
+            throw new \App\ClientError(467); // Not eligible
         }
     }
 
-    private function event() 
-    {  
+    private function event(){  
         if (!isset(\App\REQUEST::params()['eventid']))
         {
             throw new \App\ClientError(422);
@@ -99,7 +96,9 @@ class ParticipantEvent extends Endpoint {
 
     }
 
-    private function checkSpaceAvailable($eventid) {
+    
+
+    private function checkSpaceAvailable($eventid){
         $dbConn = new \App\Database(MAIN_DATABASE);
     
         // Check if there's space available
@@ -110,15 +109,47 @@ class ParticipantEvent extends Endpoint {
         if (count($data) === 0) {
             throw new \App\ClientError(404); // eventid not found
         }
-
+    
         $space = $data[0]['space'];
     
         if ($space <= 0) {
-            throw new \App\ClientError(409); // No space available
+            $this->addToWaiting($eventid);
+            throw new \App\ClientError(467); // No space available
         }
     }
 
-    private function checkTicket($id) {
+    private function checkSpaceAfterSubmit($eventid){
+        $dbConn = new \App\Database(MAIN_DATABASE);
+    
+        // Check if there's space available
+        $sql = "SELECT space FROM event WHERE eventID = :eventid";
+        $sqlParameters = ['eventid' => $eventid];
+        $data = $dbConn->executeSQL($sql, $sqlParameters);
+    
+        $space = $data[0]['space'];
+    
+        if ($space <= 0) {
+            $this->addToWaiting($eventid);
+            throw new \App\ClientError(467); // No space available
+        }
+    }
+    
+    private function addToWaiting($eventid){
+        $dbConn = new \App\Database(MAIN_DATABASE);
+        
+        $sql = "SELECT COUNT(*) AS count FROM waitingList WHERE eventID = :eventid";
+        $sqlParameters = ['eventid' => $eventid];
+        $waitingListData = $dbConn->executeSQL($sql, $sqlParameters);
+    
+        if ($waitingListData[0]['count'] === 0) {
+            // Insert the eventID into the waiting list with space value 5
+            $sql = "INSERT INTO waitingList (eventID, space) VALUES (:eventid, 5)";
+            $dbConn->executeSQL($sql, $sqlParameters);
+        }
+    }
+    
+
+    private function checkTicket($id){
         $dbConn = new \App\Database(MAIN_DATABASE);
         $sql = "SELECT ticket FROM participant WHERE participantID = :id";
         $sqlParameters = ['id' => $id];
@@ -127,7 +158,7 @@ class ParticipantEvent extends Endpoint {
         $ticket = $data[0]['ticket'];
     
         if ($ticket === 0) {
-            throw new \App\ClientError(412); // No tickets available
+            throw new \App\ClientError(468); // No tickets available
         }
     }
 
@@ -139,11 +170,87 @@ class ParticipantEvent extends Endpoint {
 
     }
 
-    private function joinEvent($id) {
+    private function removeTicket($id){ 
+        $sqlParameters = [ ':id' => $id];
+        $sql = "UPDATE participant SET ticket = ticket - 1 WHERE participantID = :id";
+        $dbConn = new \App\Database(MAIN_DATABASE);
+        $data = $dbConn->executeSQL($sql, $sqlParameters);
+
+    }
+
+
+    private function getDateAndTime($eventid){
+        $dbConn = new \App\Database(MAIN_DATABASE);
+        $sql = "SELECT date, time FROM event WHERE eventID = :eventid";
+        $sqlParameters = ['eventid' => $eventid];
+        $data = $dbConn->executeSQL($sql, $sqlParameters);
+    
+        if (count($data) === 0) {
+            throw new \App\ClientError(404); 
+        }
+    
+        
+        $eventDate = date_create_from_format('d.m.Y', $data[0]['date']);
+        if (!$eventDate) {
+            $eventDate = date_create_from_format('m/d/Y', $data[0]['date']);
+        }
+        if (!$eventDate) {
+            throw new \App\ClientError(500); 
+        }
+        $eventDateFormatted = $eventDate->format('Y-m-d');
+    
+       
+        $eventTime = date_create_from_format('h:i A', $data[0]['time']);
+        if (!$eventTime) {
+            $eventTime = date_create_from_format('H:i', $data[0]['time']);
+        }
+        if (!$eventTime) {
+            throw new \App\ClientError(500); 
+        }
+        $eventTimeFormatted = $eventTime->format('H:i:s');
+    
+       
+        $dateTimeStr = $eventDateFormatted . ' ' . $eventTimeFormatted;
+        $eventDateTime = new DateTime($dateTimeStr);
+    
+        return $eventDateTime;
+    }
+
+    private function addSpace($eventid){ 
+        $sqlParameters = [ 'eventid' => $eventid];
+        $sql = "UPDATE event SET space = space + 1 WHERE eventID = :eventid";
+        $dbConn = new \App\Database(MAIN_DATABASE);
+        $data = $dbConn->executeSQL($sql, $sqlParameters);
+    }
+
+    private function addTicket($id){ 
+        $sqlParameters = [ ':id' => $id];
+        $sql = "UPDATE participant SET ticket = ticket + 1 WHERE participantID = :id";
+        $dbConn = new \App\Database(MAIN_DATABASE);
+        $data = $dbConn->executeSQL($sql, $sqlParameters);
+    }
+
+    private function userAttends($id, $eventid){
+        $dbConn = new \App\Database(MAIN_DATABASE);
+        $sql = "SELECT COUNT(*) AS count FROM participantEvent WHERE participantID = :id AND eventID = :eventid ";
+        $sqlParameters = [':id' => $id, 'eventid' => $eventid];
+        $result = $dbConn->executeSQL($sql, $sqlParameters); // Execute the SQL query and fetch the result
+        $count = $result[0]['count'];
+        return $count > 0;
+    }
+
+
+    private function joinEvent($id){
         $eventid = $this->event();
-        $this->chekcParticipantEligible($id);
+
+        if ($this->userAttends($id,$eventid)){
+
+            throw new \App\ClientError(469);
+        }
+        
         $this->checkSpaceAvailable($eventid);
         $this->checkTicket($id); 
+        
         $sqlParameters = [':id' => $id, 'eventid' => $eventid];
         $dbConn = new \App\Database(MAIN_DATABASE);
 
@@ -160,6 +267,8 @@ class ParticipantEvent extends Endpoint {
         $data = $dbConn->executeSQL($sql, $sqlParameters);
     
         $this->removeSpace($eventid);
+        $this->removeTicket($id);
+        $this -> checkSpaceAfterSubmit($eventID);
     
         return [];
     }
@@ -173,11 +282,45 @@ class ParticipantEvent extends Endpoint {
         }
 
     private function cancelEvent($id) {
-        $eventid = $this->eventid();
+        $eventid = $this->event();
+        
         $dbConn = new \App\Database(MAIN_DATABASE);
+        
+        if (!$this->userAttends($id, $eventid)) {
+            throw new \App\ClientError(471); // Unauthorized cancellation
+        }
+
         $sql = "DELETE FROM participantEvent WHERE participantID = :id AND eventID = :eventid";
         $sqlParameters = [':id' => $id, 'eventid' => $eventid];
         $data = $dbConn->executeSQL($sql, $sqlParameters);
-        return $data;
+
+        $this->addSpace($eventid);
+        $this->addTicket($id);
+
+           
+        $sql = "SELECT participantID FROM waitingList WHERE eventID = :eventid ORDER BY id ASC LIMIT 1";
+        $sqlParameters = ['eventid' => $eventid];
+        $waitingListData = $dbConn->executeSQL($sql, $sqlParameters);
+
+        if (!empty($waitingListData)) {
+            $waitingParticipantID = $waitingListData[0]['participantID'];
+
+            $sql = "DELETE FROM waitingList WHERE participantID = :waitingparticipant AND eventID = :eventid";
+            $sqlParameters = [':waitingparticipant' => $waitingParticipantID, 'eventid' => $eventid];
+            $dbConn->executeSQL($sql, $sqlParameters);
+
+            $sql = "INSERT INTO participantEvent (participantID, eventID) VALUES (:waitingparticipant, :eventid)";
+            $sqlParameters = [':waitingparticipant' => $waitingParticipantID, 'eventid' => $eventid];
+            $dbConn->executeSQL($sql, $sqlParameters);
+
+            $this->removeSpace($eventid);
+            $this->removeTicket($waitingParticipantID);
+
+            // Optionally, notify the promoted participant about their new status
+            // You may implement a notification mechanism here
+        }
+
+        
+        return $data; 
     }
 }

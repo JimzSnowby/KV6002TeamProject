@@ -1,21 +1,25 @@
 import React, { useState } from 'react';
 import ParticipantEvent from './ParticipantEvent';
+import ApplyEvent from './ApplyEvent';
+import ApplyWaitingList from './ApplyWaitingList';
 
 function Event(props) {
     const [extendEvent, setExtendEvent] = useState(null);
+    const [eventID, setEventID] = useState('')
 
     const toggleVisibility = (eventID) => {
         if (extendEvent === eventID) {
             setExtendEvent(null);
         } else {
             setExtendEvent(eventID);
+            setEventID(eventID); // Use local setEventID
         }
     };
 
     const expandedEventClass = "md:col-span-2";
     const isExpanded = props.event.eventID === extendEvent;
 
-    const totalSpace = 20;
+    const totalSpace = 5;
     const availableSpace = props.event.space;
     const spaceLeft = ((totalSpace - availableSpace) / totalSpace) * 100;
 
@@ -47,8 +51,26 @@ function Event(props) {
                     <div className="bg-blue-500 h-full" style={{ width: `${spaceLeft}%` }}></div>
                 </div>
                 <div className="ml-2">{availableSpace} Spaces available</div>
-                {isExpanded && <ParticipantEvent selectedEventID={props.event.eventID} />}
             </div>
+
+            {isExpanded && (
+                <div className="mt-4">
+                    <ParticipantEvent selectedEventID={props.event.eventID} />
+                    <div className="mt-4">
+                        <ApplyEvent setEventID={setEventID} eventID={eventID} />
+                    </div>
+                </div>
+            )}
+
+            {isExpanded && availableSpace === 0 && (
+                <div className="mt-4">
+                    
+                    <div className="mt-4">
+                        <ApplyWaitingList setEventID={setEventID} eventID={eventID} />
+                    </div>
+                </div>
+            )}
+
         </div>
     );
 }

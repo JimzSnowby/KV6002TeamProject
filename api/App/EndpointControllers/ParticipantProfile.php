@@ -140,7 +140,7 @@ class ParticipantProfile extends Endpoint {
     private function getParticipant($id) { 
         $sqlParameters = ['id' => $id];
     
-        $sql = "SELECT name, phone, email, dob, evidence FROM participant WHERE participantID = :id";
+        $sql = "SELECT name, phone, email, dob, evidence, ticket FROM participant WHERE participantID = :id";
         
         $dbConn = new \App\Database(MAIN_DATABASE);
         $data = $dbConn->executeSQL($sql, $sqlParameters);
@@ -153,7 +153,6 @@ class ParticipantProfile extends Endpoint {
         return $data;
     }
     
-
     private function updateDetails($id) {
         // Retrieve the phone number from the request parameters
         $phone = $this->phone(); 

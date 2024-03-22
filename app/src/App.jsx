@@ -14,12 +14,13 @@ import BecomeParticipant from './pages/BecomeParticipant'
 import VolunteerSignUp from "./pages/VolunteerSignUp"
 import Search from './components/Search'
 import Event from './components/Event'
-
+import ApplyEvent from './components/ApplyEvent'
 import Chatbot from 'react-chatbot-kit'
 import ActionProvider from "./config/ActionProvider"
 import MessageParser from "./config/MessageParser"
 import config from "./config/config"
 import 'react-chatbot-kit/build/main.css'
+import ApplyWaitingList from './components/ApplyWaitingList'
 
 
 function App() {
@@ -30,6 +31,22 @@ function App() {
   const [userID, setUserID] = useState('')
 
   console.log("Final Role type:", roleType);
+  <>
+    <ApplyEvent signedIn={signedIn}
+      setSignedIn={setSignedIn}
+      roleType={roleType}
+      setRoleType={setRoleType}
+      userID={userID}
+      setUserID={setUserID}>  </ApplyEvent>
+
+    <ApplyWaitingList signedIn={signedIn}
+      setSignedIn={setSignedIn}
+      roleType={roleType}
+      setRoleType={setRoleType}
+      userID={userID}
+      setUserID={setUserID}>  </ApplyWaitingList>
+  </>
+
 
   return (
     <div>

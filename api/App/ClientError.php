@@ -41,19 +41,9 @@ class ClientError extends \Exception
                 http_response_code(405);
                 $message = 'Method Not Allowed';
                 break;
-<<<<<<< HEAD
             case 444:
                 http_response_code(444);
                 $message = 'Unprocessable name';
-=======
-            case 409:
-                http_response_code(405);
-                $message = 'No space available';
-                break;
-            case 422:
-                http_response_code(422);
-                $message = 'Unprocessable Entity';
->>>>>>> main
                 break;
             case 445:
                 http_response_code(445);
@@ -83,6 +73,22 @@ class ClientError extends \Exception
                 http_response_code(451);
                 $message = 'Unprocessable evidence 2';
                 break;     
+             case 467:
+                http_response_code(467);
+                $message = 'No space';
+                break;  
+            case 468:
+                http_response_code(468);
+                $message = 'No ticket';
+                break;  
+            case 469:
+                http_response_code(469);
+                $message = 'Alredy attending';
+                break;  
+            case 471:
+                http_response_code(471);
+                $message = 'Cannot cancel';
+                break;  
 
             default:
                 throw new \Exception('Internal Server Error');
