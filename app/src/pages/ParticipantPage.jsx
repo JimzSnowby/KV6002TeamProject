@@ -1,77 +1,11 @@
 
 /**
- * ParticipantPage Component
- *
- * This component represents the page for managing participant profile.
+ * The SignIn component for the application.
  * 
- * @author Maja Bosy
+ * @author ???
  */
-import React, { useState, useEffect } from 'react';
-import { FiUser } from 'react-icons/fi'; // Importing user icon from react-icons
 
-function ParticipantPage(props) {
-    const [name, setName] = useState(props.name || '');
-    const [phone, setPhone] = useState(props.phone || '');
-    const [email, setEmail] = useState(props.email || '');
-    const [evidence, setEvidence] = useState(props.evidence || '');
-
-    useEffect(() => {
-        fetch('https://w20021570.nuwebspace.co.uk/assessment/api/participant', {
-            method: 'GET',
-            headers: new Headers({ 'Authorization': 'Bearer ' + localStorage.getItem('token') })
-        })
-            .then(response => {
-                if (response.status === 200) {
-                    return response.json();
-                }
-            })
-            .then(data => {
-                if (data && data.length > 0) {
-                    setName(data[0].name)
-                    setPhone(data[0].phone)
-                    setEmail(data[0].email)
-                    setEvidence(data[0].evidence || '');
-                }
-            })
-            .catch(error => {
-                console.error('Error fetching participant:', error)
-            })
-    }, [])
-
-    const updateParticipant = (event) => {
-        event.preventDefault();
-
-        let formData = new FormData();
-        formData.append('name', name);
-        formData.append('email', email);
-        formData.append('phone', phone);
-        formData.append('evidence', evidence);
-
-        fetch('https://w20021570.nuwebspace.co.uk/assessment/api/participant', {
-            method: 'POST',
-            headers: new Headers({ 'Authorization': 'Bearer ' + localStorage.getItem('token') }),
-            body: formData,
-        })
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    throw new Error('Failed to update the data');
-                }
-            })
-            .then(data => {
-                setName(data.name);
-                setEmail(data.email);
-                setPhone(data.phone);
-                setEvidence(data.evidence || '');
-                window.alert('You have updated your profile successfully! The evidence income will be reviewed by the member of our staff.');
-            })
-            .catch(error => {
-                console.error('Error updating the profile:', error);
-                window.alert('Failed to update the profile. Please try again.');
-            });
-    }
-
+function ParticipantPage() {
     return (
         <div className="min-h-screen bg-gray-100">
             <div className="max-w-4xl mx-auto py-8">

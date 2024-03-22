@@ -3,6 +3,12 @@ import ParticipantEvent from './ParticipantEvent';
 import ApplyEvent from './ApplyEvent';
 import ApplyWaitingList from './ApplyWaitingList';
 
+/**
+ * The SignIn component for the application.
+ * 
+ * @author Antonio Gorgan
+ */
+
 function Event(props) {
     const [extendEvent, setExtendEvent] = useState(null);
     const [eventID, setEventID] = useState('')

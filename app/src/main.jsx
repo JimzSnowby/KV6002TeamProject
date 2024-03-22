@@ -7,7 +7,10 @@ import { BrowserRouter } from 'react-router-dom'
 /**
  * The main entry point for the application.
  * 
+ * @author Team
  */
+
+// Basepath needed?
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

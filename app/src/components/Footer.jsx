@@ -3,8 +3,9 @@ import React from 'react'
 import Share from './Share'
 
 /**
+ * Footer
  * 
- * Footer Component
+ * @author Aiden Anderson W21047714
  */
 
 function Footer() {
