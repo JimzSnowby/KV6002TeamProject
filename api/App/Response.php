@@ -6,6 +6,7 @@ namespace App;
  * A class that provides methods to correctly format and output JSON,
  * as well as controlling access to the API.
  * 
+ * @author Team
  */
 
 class Response

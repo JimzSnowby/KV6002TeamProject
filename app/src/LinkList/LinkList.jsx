@@ -1,29 +1,22 @@
-import React from "react";
 
 import "./LinkList.css";
+import React from "react";
 
 
-const LinkList = ({ options, actionProvider }) => {
-  const handleLinkClick = (link) => {
-    if (link.action) {
-      actionProvider[link.action]();
-    } else {
-      window.open(link.url, "_blank");
-    }
+const LinkList = ({ options, handleOptionClick }) => {
+  const handleClick = (option) => {
+    handleOptionClick(option); // Call the handleOptionClick function provided by the actionProvider
   };
 
-  const linkMarkup = options.map((link) => (
-    <li key={link.id} className="link-list-item">
-      <button
-        onClick={() => handleLinkClick(link)}
-        className="link-list-item-url"
-      >
-        {link.text}
-      </button>
-    </li>
-  ));
-
-  return <ul className="link-list">{linkMarkup}</ul>;
+  return (
+    <div>
+      {options.map((option) => (
+        <div key={option.id} className="link-list-item-url" onClick={() => handleClick(option)}>
+          {option.text}
+        </div>
+      ))}
+    </div>
+  );
 };
 
 export default LinkList;

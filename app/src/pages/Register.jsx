@@ -17,7 +17,7 @@ function RegistrationForm({ onRegistration }) {
     const [email, setEmail] = useState('')
     const [phone, setPhone] = useState('')
     const [ticket, setTicket] = useState('3') // Ticket set to always be 3
-    const [evidence, setEvidence] = useState('')
+    //const [evidence, setEvidence] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
     const [token, setToken] = useState('')
     const salt = bcrypt.genSaltSync(10) // Generate salt for password hashing
@@ -84,12 +84,10 @@ function RegistrationForm({ onRegistration }) {
 
 
     // Handle evidence file input changes
-    const handleEvidenceChange = (e) => {
-        const files = e.target.files;
-        setEvidence(files);
-    };
-
-
+    //const handleEvidenceChange = (e) => {
+    //    const files = e.target.files;
+    //    setEvidence(files);
+    //};
 
     // Handle registration form submission
     const handleRegistration = () => {
@@ -97,6 +95,10 @@ function RegistrationForm({ onRegistration }) {
         const selectedDate = new Date(dob)
         const nameRegex = /^[a-zA-Z\s]*$/
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        // Calculate age based on date of birth
+        const ageDifferenceMs = currentDate - selectedDate;
+        const ageDate = new Date(ageDifferenceMs);
+        const userAge = Math.abs(ageDate.getUTCFullYear() - 1970);
 
         if (selectedDate > currentDate) {
             setErrorMessage('Please enter a valid date of birth.');
@@ -114,12 +116,14 @@ function RegistrationForm({ onRegistration }) {
             return
         }
 
-        // Phone number validation regex for UK format
-        const phoneRegex = /^(?:(?:\+|00)44|0)7(?:[45789]\d{2}|624)\d{6}$/;
+
+        // Phone number validation regex for numeric format only
+        const phoneRegex = /^[0-9]+$/;
+
 
         // Check if phone number is valid
         if (!phone.match(phoneRegex)) {
-            setErrorMessage('Please enter a valid UK phone number.');
+            setErrorMessage('Please enter a valid phone number.');
             return;
         }
 
@@ -129,7 +133,13 @@ function RegistrationForm({ onRegistration }) {
             return;
         }
 
-        if (name.trim() !== '' && dob.trim() !== '' && email.trim() !== '' && phone.trim() !== '' && password.trim() !== ''  && ticket.trim() !== '') {
+        if (selectedDate >= currentDate || userAge < 18) {
+            setErrorMessage('You must be at least 18 years old to register.');
+            return;
+        }
+
+
+        if (name.trim() !== '' && dob.trim() !== '' && email.trim() !== '' && phone.trim() !== '' && password.trim() !== '' && ticket.trim() !== '') {
             const hashedPassword = bcrypt.hashSync(password, salt) // Hash the password
 
             let formData = new FormData()
@@ -141,9 +151,9 @@ function RegistrationForm({ onRegistration }) {
 
 
             // Append evidence files to formData
-            for (let i = 0; i < evidence.length; i++) {
-                formData.append('evidence', evidence[i]);
-            }
+            //for (let i = 0; i < evidence.length; i++) {
+            //   formData.append('evidence', evidence[i]);
+            //}
 
             // Append ticket amount
             formData.append('ticket', ticket)
@@ -154,31 +164,35 @@ function RegistrationForm({ onRegistration }) {
                 body: formData,
             })
                 .then(response => {
-                    // Successful registration
+                    // Check if registration was successful
                     if (response.status === 200 || response.status === 204) {
-                        window.alert('You have sucessfully created an account. Your evidence will be evaluated by the member of our staff. You can log in now.')
+                        window.alert('You have successfully created an account.');
                         // Redirect to homepage
-                        window.location.href = '/project/app/home'
-                    } else {
-                        // Registration failed, handle errors
+                        window.location.href = '/project/app/home';
+                    } else if (response.status === 450) { // Check if email already exists
                         response.json().then(data => {
-                            setErrorMessage(data.error || 'Registration failed. Please try again later.')
-                        })
+                            // Show an alert to the user
+                            setErrorMessage(data.error || 'Email already exists.');
+                        });
+                    } else {
+                        // Registration failed, handle other errors
+                        response.json().then(data => {
+                            setErrorMessage(data.error || 'Registration failed. Please try again later.');
+                        });
                     }
                 })
                 .catch(error => {
-                    console.error('Error registering:', error)
-                    setErrorMessage('Registration failed. Please try again later.')
-                })
+                    console.error('Error registering:', error);
+                    setErrorMessage('Registration failed. Please try again later.');
+                });
         } else {
-            setErrorMessage('Please fill in all fields.')
+            setErrorMessage('Please fill in all fields.');
         }
-    }
-
+    };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-100">
-            <div className="container mx-auto bg-white shadow-md rounded px-8 py-8 pt-8">
+        <div className="min-h-screen flex items-center justify-center bg-gray-100 py-8"> {/* Added padding top and bottom */}
+            <div className="bg-white rounded-lg shadow p-8 max-w-lg w-full">
                 <div className="flex justify-center mb-4">
                     <LuUserPlus className="text-5xl text-gray-600" />
                 </div>
@@ -186,29 +200,20 @@ function RegistrationForm({ onRegistration }) {
                 {errorMessage && (
                     <div className="bg-red-500 text-white p-2 mb-4 text-center">{errorMessage}</div>
                 )}
-                <div className="flex justify-center mb-4">
-                </div>
                 <div className="grid grid-cols-1 gap-4">
                     <div>
-                        <label htmlFor="name" className="block text-gray-700">Full Name</label>
+                        <label htmlFor="name" className="block font-semibold text-gray-700">Full Name</label>
                         <input
                             id="name"
                             type="text"
                             placeholder="Please enter your full name..."
                             value={name}
                             onChange={(e) => setName(e.target.value)}
-                            onKeyDown={(e) => {
-                                const key = e.key;
-                                // Allow letters (a-z, A-Z), backspace, and space
-                                if (!/[a-zA-Z\s]/.test(key) && key !== 'Backspace') {
-                                    e.preventDefault();
-                                }
-                            }}
                             className="border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:border-blue-500"
                         />
                     </div>
                     <div>
-                        <label htmlFor="email" className="block text-gray-700">E-mail</label>
+                        <label htmlFor="email" className="block font-semibold text-gray-700">E-mail</label>
                         <input
                             id="email"
                             type="text"
@@ -219,7 +224,7 @@ function RegistrationForm({ onRegistration }) {
                         />
                     </div>
                     <div>
-                        <label htmlFor="phone" className="block text-gray-700">Phone number</label>
+                        <label htmlFor="phone" className="block font-semibold text-gray-700">Phone number</label>
                         <input
                             id="phone"
                             type="tel"
@@ -230,7 +235,7 @@ function RegistrationForm({ onRegistration }) {
                         />
                     </div>
                     <div>
-                        <label htmlFor="dob" className="block text-gray-700">Date of birth</label>
+                        <label htmlFor="dob" className="block font-semibold text-gray-700">Date of birth</label>
                         <input
                             id="dob"
                             type="date"
@@ -242,40 +247,43 @@ function RegistrationForm({ onRegistration }) {
                     </div>
                 </div>
                 <div>
-                    <label htmlFor="password" className="block text-gray-700">Password</label>
+                    <label htmlFor="password" className="block font-semibold text-gray-700">Password</label>
                     <input
                         id="password"
                         type="password"
                         placeholder="Password"
                         value={password}
-                        onChange={handlePasswordChange}
+                        onChange={(e) => setPassword(e.target.value)}
                         className="border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:border-blue-500"
                     />
                 </div>
                 <div>
-                    <label htmlFor="confirmPassword" className="block text-gray-700">Confirm Password</label>
+                    <label htmlFor="confirmPassword" className="block font-semibold text-gray-700">Confirm Password</label>
                     <input
                         id="confirmPassword"
                         type="password"
                         placeholder="Confirm Password"
                         value={confirmPassword}
-                        onChange={handleConfirmPasswordChange}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
                         className="border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:border-blue-500"
                     />
-                    <div className="mt-1 text-sm text-gray-600">Password strength <span className={getPasswordStrengthTextClass()}>{passwordStrength}</span></div>
                 </div>
                 <div className="mt-4">
                     <button
                         onClick={handleRegistration}
-                        className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-purple-500 focus:outline-none focus:ring-2 focus:ring-blue-300 w-full"
+                        className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-300 w-full"
                     >
                         Sign Up
                     </button>
+                </div>
+                <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-1 rounded-md mt-2 mb-1">
+                    <p className="text-sm">
+                        <span className="font-bold">Note:</span> Participation in our charity events requires the submission of proof of income via your profile upon logging in. This crucial step ensures that our events reach those most in need. After submission, our dedicated staff will review your eligibility to ensure fairness and transparency in our selection process.
+                    </p>
                 </div>
             </div>
         </div>
     );
 }
-
 export default RegistrationForm
 

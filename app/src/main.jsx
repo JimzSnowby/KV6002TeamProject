@@ -9,7 +9,6 @@ import { BrowserRouter } from 'react-router-dom'
  * 
  * @author Team
  */
-
 // Basepath needed?
 
 ReactDOM.createRoot(document.getElementById('root')).render(
