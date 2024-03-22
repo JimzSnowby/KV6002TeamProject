@@ -62,98 +62,90 @@ function AdminRegister() {
         }
     }
     return (
-        <div className="flex flex-col p-5 text-black overflow-">
-            <h2 className="text-2xl font-bold mb-8"> Add New Admin</h2>
-            <div className="mb-6">
-                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
-                    New Admin Name:
-                </label>
-                <input className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
-                    name="name"
-                    placeholder="Enter your name"
-                    maxLength="250"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                />
-            </div>
-            <div className="mb-6">
-                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="dob">
-                    Date of Birth:
-                </label>
-                <input className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
-                    name="dob"
-                    type='date'
-                    placeholder="(DD/MM/YYYY)"
-                    value={dob}
-                    onChange={(e) => setDob(e.target.value)}
-                />
-
-            </div>
-
-            <div className="mb-6">
-                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
-                    Email Address:
-                </label>
-                <input className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
-                    name="email"
-                    placeholder="example@email.com"
-                    maxLength="250"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                />
-            </div>
-            <div className="mb-6">
-                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="phone">
-                    Contact Number:
-                </label>
-                <input className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
-
-                    name="phone"
-                    placeholder="016-xxx xxxx"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                />
-            </div>
-            <div className="mb-6">
-                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
-                    New Admin Password:
-                </label>
-                <input className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
-
-                    name="password"
-                    placeholder="*******"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-            </div>
-            <div className="mb-6">
-                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="position">
-                    New Admin Position:
-                </label>
-                <select
-                    className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
-                    name="position"
-                    value={position}
-                    onChange={(e) => setPosition(e.target.value)}
-                >
-                    <option value="">Select Admin Position:</option>
-                    <option value="head">Head of Admin</option>
-                    <option value="admin">Admin</option>
-                </select>
-            </div>
-            <div >
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                    onClick={saveAdmin}
-                >
-                    Submit
+        <div className="min-h-screen flex items-center justify-center bg-gray-100 py-8">
+            <div className="bg-white rounded-lg shadow p-8 max-w-lg w-full">
+                <h2 className="text-center text-2xl font-semibold mb-8">Add New Admin</h2>
+                <div className="grid grid-cols-1 gap-4">
+                    <div>
+                        <label htmlFor="name" className="block font-semibold text-gray-700">New Admin Name:</label>
+                        <input
+                            id="name"
+                            type="text"
+                            placeholder="Enter your name"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            className="input-field"
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="dob" className="block font-semibold text-gray-700">Date of Birth:</label>
+                        <input
+                            id="dob"
+                            type="date"
+                            placeholder="Date of Birth"
+                            value={dob}
+                            onChange={(e) => setDob(e.target.value)}
+                            className="input-field"
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="email" className="block font-semibold text-gray-700">Email Address:</label>
+                        <input
+                            id="email"
+                            type="text"
+                            placeholder="example@email.com"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            className="input-field"
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="phone" className="block font-semibold text-gray-700">Contact Number:</label>
+                        <input
+                            id="phone"
+                            type="tel"
+                            placeholder="016-xxx xxxx"
+                            value={phone}
+                            onChange={(e) => setPhone(e.target.value)}
+                            className="input-field"
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="password" className="block font-semibold text-gray-700">New Admin Password:</label>
+                        <input
+                            id="password"
+                            type="password"
+                            placeholder="*******"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            className="input-field"
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="position" className="block font-semibold text-gray-700">New Admin Position:</label>
+                        <select
+                            id="position"
+                            className="input-field"
+                            value={position}
+                            onChange={(e) => setPosition(e.target.value)}
+                        >
+                            <option value="">Select Admin Position:</option>
+                            <option value="head">Head of Admin</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                    </div>
+                </div>
+                <div className="mt-6">
+                    <button
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
+                        onClick={saveAdmin}
+                    >
+                        Submit
                     </button>
-
+                </div>
             </div>
-
-            </div>
-            )
-    
+        </div>
+    );
 }
 
-
-            export default AdminRegister
+export default AdminRegister
