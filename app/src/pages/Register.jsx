@@ -9,6 +9,7 @@
 import React, { useState } from 'react'
 import bcrypt from 'bcryptjs'
 import { LuUserPlus } from "react-icons/lu";
+import { useEffect } from 'react';
 
 function RegistrationForm({ onRegistration }) {
     const [name, setName] = useState('')
@@ -67,6 +68,13 @@ function RegistrationForm({ onRegistration }) {
         }
     }
 
+    useEffect(() => {
+        // Calculate password strength when component mounts
+        if (password) {
+            setPasswordStrength(checkPasswordStrength(password));
+        }
+    }, [password]);
+
 
     // Handle password input changes
     const handlePasswordChange = (e) => {
@@ -116,10 +124,8 @@ function RegistrationForm({ onRegistration }) {
             return
         }
 
-
         // Phone number validation regex for numeric format only
         const phoneRegex = /^[0-9]+$/;
-
 
         // Check if phone number is valid
         if (!phone.match(phoneRegex)) {
@@ -189,6 +195,7 @@ function RegistrationForm({ onRegistration }) {
             setErrorMessage('Please fill in all fields.');
         }
     };
+
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-100 py-8"> {/* Added padding top and bottom */}
@@ -267,6 +274,9 @@ function RegistrationForm({ onRegistration }) {
                         onChange={(e) => setConfirmPassword(e.target.value)}
                         className="border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:border-blue-500"
                     />
+                </div>
+                <div className="text-xs text-gray-600 mt-1">
+                    Password strength: <span className={getPasswordStrengthTextClass()}>{passwordStrength}</span>
                 </div>
                 <div className="mt-4">
                     <button

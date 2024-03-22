@@ -53,22 +53,29 @@ function ParticipantPage(props) {
             body: formData,
         })
             .then(response => {
-                if (response.ok) {
+                if (response.status === 204) {
+                    // If response status is 204, consider it successful
+                    window.alert('You have updated your profile successfully!');
+                    return; // No need to parse empty response, return immediately
+                } else if (response.ok) {
                     return response.json();
                 } else {
-                    throw new Error('Failed to update the data');
+                    throw new Error('Failed to update the data. Server returned status: ' + response.status);
                 }
             })
             .then(data => {
-                setName(data.name);
-                setEmail(data.email);
-                setPhone(data.phone);
-                setEvidence(data.evidence || '');
-                window.alert('You have updated your profile successfully!');
+                // Process data if it exists (for successful responses with content)
+                if (data) {
+                    console.log('Updated participant data:', data);
+                    setName(data.name);
+                    setEmail(data.email);
+                    setPhone(data.phone);
+                    setEvidence(data.evidence || '');
+                }
             })
             .catch(error => {
                 console.error('Error updating your profile:', error);
-                window.alert('Failed to update your profile. Please try again.');
+                window.alert(error.message);
             });
     }
 
