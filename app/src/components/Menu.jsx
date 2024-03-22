@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 function Menu(props) {
     return (
-        <ul className="flex flex-col md:flex-row justify-evenly text-lg font-semibold bg-gray-100">
+        <ul className="flex flex-col md:flex-row justify-evenly text-lg font-semibold bg-teal-100">
             <li>
                 <Link to="/" className="px-8 py-4 text-gray-800 hover:text-blue-500 transition duration-300">Home</Link>
             </li>
