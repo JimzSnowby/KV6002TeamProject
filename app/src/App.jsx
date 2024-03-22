@@ -95,8 +95,10 @@ function App() {
       </header>
 
       <nav className="">
-        <Menu roletype={roleType} signedIn={signedIn} />
+        <Menu roletype={roleType} 
         position={position}
+        signedIn={signedIn} />
+        
       </nav>
       <Routes>
         <Route path="/" element={<HomePage />} />
