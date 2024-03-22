@@ -19,6 +19,18 @@ function Menu(props) {
             <li>
                 {props.signedIn && props.roletype === 'volunteer' && <Link to="/volunteer" className="px-8 py-4 text-gray-800 hover:text-blue-500 transition duration-300">Volunteer</Link>}
             </li>
+        
+            <li>
+            {props.signedIn && props.roletype === 'admin' && props.position ==="head" && <Link to="/admin-sign-up" className="px-8 hover:text-blue-500 transition duration-300">Add New Admin</Link>}
+            </li>
+
+            <li>
+            {props.signedIn && props.roletype === 'admin'  && <Link to="/new-event" className="px-8 hover:text-blue-500 transition duration-300">Post Event</Link>}
+            </li>
+            <li>
+            {props.signedIn && props.roletype === 'admin'  && <Link to="/check-participant" className="px-8 hover:text-blue-500 transition duration-300">Pending Participant Application </Link>}
+            </li>
+
         </ul>
     );
 }

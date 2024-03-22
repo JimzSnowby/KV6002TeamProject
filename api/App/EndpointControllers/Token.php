@@ -14,11 +14,11 @@ namespace App\EndpointControllers;
 
  class Token extends Endpoint { 
 
-    private $sqlAdmin = "SELECT adminID, password FROM admin WHERE email = :email";
+    private $sqlAdmin = "SELECT adminID, password, position FROM admin WHERE email = :email";
     private $sqlParticipant = "SELECT participantID, password FROM participant WHERE email = :email";
     private $sqlVolunteer = "SELECT volunteerID, password FROM volunteer WHERE email = :email";
 
-    private function generateJWT($id, $role) { 
+    private function generateJWT($id, $role, $position=null) { 
         $secretKey = SECRET;
         $time = time();
         $payload = [
@@ -26,6 +26,9 @@ namespace App\EndpointControllers;
             'role' => $role,
             'exp' => strtotime('+ 30 minutes', $time),
         ];
+        if ($position !== null) { 
+            $payload['position'] = $position;
+        }
         
         $jwt = \Firebase\JWT\JWT::encode($payload, $secretKey, 'HS256');
         
@@ -54,7 +57,8 @@ namespace App\EndpointControllers;
                 // Check if the user is an admin
                 $data = $dbConn->executeSQL($this->sqlAdmin, [':email' => $email]);
                 if (count($data) === 1 && password_verify($password, $data[0]['password'])) {
-                    $token = $this->generateJWT($data[0]['adminID'], 'admin');
+                    $position = $data[0]['position'];  // Fetch the position
+                    $token = $this->generateJWT($data[0]['adminID'], 'admin', $position);  // Pass the position to generateJWT
                     $data = ['token' => $token];
                     parent::__construct($data);
                     break;

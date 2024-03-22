@@ -29,14 +29,19 @@ function SignIn(props) {
         if (token) {
             const decodedToken = parseJwt(token);
             const role = decodedToken.role; // Access the role field
+            const position = decodedToken.position; // Access the position field
             const currentTime = Date.now() / 1000;
             if (decodedToken.exp < currentTime) {
                 signOut()
             }
             props.setRoleType(decodedToken.role)
+            props.setPosition(decodedToken.position)
             props.setUserID(decodedToken.id)
             if(role){
                 props.setRoleType(role)
+            }
+            if(position){
+                props.setPosition(position)
             }
         }
         if (!props.signedIn){
@@ -66,8 +71,12 @@ function SignIn(props) {
                     localStorage.setItem("token", data.token);
                     const decodedToken = parseJwt(data.token);
                     const role = decodedToken.role; // Access the role field
+                    const position = decodedToken.position; // Access the position field
                     if(role){
                         props.setRoleType(role)
+                    }
+                    if(position){
+                        props.setPosition(position)
                     }
                 }
             })
@@ -79,6 +88,7 @@ function SignIn(props) {
         setUserName("")
         setPassword("")
         props.setSignedIn(false)
+        props.setPosition("")
         navigate("/")
     }
 

@@ -45,6 +45,13 @@ class ClientError extends \Exception
             case 444:
                 http_response_code(444);
                 $message = 'Unprocessable name';
+            case 409:
+                http_response_code(409);
+                $message = 'No space available';
+                break;
+            case 422:
+                http_response_code(422);
+                $message = 'Unprocessable Entity';
                 break;
             case 445:
                 http_response_code(445);

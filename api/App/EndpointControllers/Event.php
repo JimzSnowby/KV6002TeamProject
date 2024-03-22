@@ -53,7 +53,7 @@ class Event extends Endpoint {
             throw new \App\ClientError(422);
         }
  
-        if (mb_strlen(\App\REQUEST::params()['description']) > 50)
+        if (mb_strlen(\App\REQUEST::params()['description']) > 250)
         {
             throw new \App\ClientError(402);
         }

@@ -29,9 +29,6 @@ abstract class Router
                 case '/token/':
                     $endpoint = new EndpointControllers\Token();
                     break;
-                case '/volunteer':
-                case '/volunteer/':
-                    $endpoint = new EndpointControllers\Volunteer();
                     break;
                 case '/volunteerevent':
                 case '/volunteerevent/':
@@ -71,6 +68,14 @@ abstract class Router
                 case '/sponsors/':
                     $endpoint = new EndpointControllers\Sponsor();
                     break; 
+                case '/adminregister':
+                case '/adminregister/':
+                    $endpoint = new EndpointControllers\AdminRegister();
+                    break;
+                case '/checkparticipant':
+                case '/checkparticipant/':
+                    $endpoint = new EndpointControllers\ParticipantApplication();
+                    break;
                 case '/register':
                 case '/register/':
                         $endpoint = new EndpointControllers\Register();

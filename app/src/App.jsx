@@ -4,14 +4,19 @@ import { useState } from 'react'
 import HomePage from "./pages/HomePage"
 import VolunteerPage from "./pages/VolunteerPage"
 import NotFound from "./pages/NotFound"
+import VolunteerSignUp from "./pages/VolunteerSignUp"
+import AdminRegister from './pages/AdminRegister'
+import NewEvent from './pages/NewEvent'
+import CheckParticipant from './pages/CheckParticipant'
+
 import Header from "./components/Header"
 import Menu from "./components/Menu"
 import Footer from "./components/Footer"
 import SignIn from "./components/SignIn"
-import ParticipantPage from "./pages/ParticipantPage"
+
+//import ParticipantPage from "./pages/ParticipantPage"
 import RegistrationForm from "./pages/Register"
-import BecomeParticipant from './pages/BecomeParticipant'
-import VolunteerSignUp from "./pages/VolunteerSignUp"
+//import BecomeParticipant from './pages/BecomeParticipant'
 import Search from './components/Search'
 import Event from './components/Event'
 import ApplyEvent from './components/ApplyEvent'
@@ -27,7 +32,7 @@ function App() {
 
   const [signedIn, setSignedIn] = useState(false)
   const [roleType, setRoleType] = useState('')
-  const [showChatbot, setShowChatbot] = useState(false);
+  const [position, setPosition] = useState('')
   const [userID, setUserID] = useState('')
 
   console.log("Final Role type:", roleType);
@@ -47,6 +52,7 @@ function App() {
       setUserID={setUserID}>  </ApplyWaitingList>
   </>
 
+  const [showChatbot, setShowChatbot] = useState(false);
 
   return (
     <div>
@@ -87,23 +93,30 @@ function App() {
           setRoleType={setRoleType}
           userID={userID}
           setUserID={setUserID}
+          position={position}
+          setPosition={setPosition}
         />
       </div>
       <header>
         <Header />
       </header>
       <nav className="">
-        <Menu roletype={roleType} signedIn={signedIn} />
+        <Menu roletype={roleType} 
+        position={position}
+        signedIn={signedIn} />
+        
       </nav>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/register" element={<RegistrationForm />} /> {/* Route for the registration form */}
-        <Route path="/becomeparticipant" element={<BecomeParticipant />} />
-        <Route path="/participant" element={<ParticipantPage />} />
-        <Route path="/volunteer" element={<VolunteerPage userID={userID} />} />
-        <Route path="/volunteer-sign-up" element={<VolunteerSignUp />} />
-        <Route path="/register" element={<RegistrationForm />} />
-        <Route path="*" element={<NotFound />} />
+          <Route path="/volunteer" element={<VolunteerPage userID={userID}/>} />
+          <Route path="/volunteer-sign-up" element={<VolunteerSignUp />} />
+          <Route path="/participant" element={<ParticipantPage />} />
+          <Route path="/register" element={<RegistrationForm />} />
+          <Route path="/admin-sign-up" element={<AdminRegister />} />
+          <Route path="/new-event" element={<NewEvent />} />
+          <Route path="/check-participant" element={<CheckParticipant />} />
+          <Route path="*" element={<NotFound />} />
+          <Route path="/becomeparticipant" element={<BecomeParticipant />} />
       </Routes>
 
       <footer className="px-5">
