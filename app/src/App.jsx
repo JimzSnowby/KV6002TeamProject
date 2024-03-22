@@ -8,12 +8,12 @@ import VolunteerSignUp from "./pages/VolunteerSignUp"
 import AdminRegister from './pages/AdminRegister'
 import NewEvent from './pages/NewEvent'
 import CheckParticipant from './pages/CheckParticipant'
+import EventParticipant from './pages/EventParticipant'
 
 import Header from "./components/Header"
 import Menu from "./components/Menu"
 import Footer from "./components/Footer"
 import SignIn from "./components/SignIn"
-
 import ParticipantPage from "./pages/ParticipantPage"
 import RegistrationForm from "./pages/Register"
 import BecomeParticipant from './pages/BecomeParticipant'
@@ -26,8 +26,13 @@ import MessageParser from "./config/MessageParser"
 import config from "./config/config"
 import 'react-chatbot-kit/build/main.css'
 import ApplyWaitingList from './components/ApplyWaitingList'
+import AboutUs from './pages/AboutUs'
 
-
+/**
+ * App component
+ *  
+ * @author Team 
+ */
 function App() {
 
   const [signedIn, setSignedIn] = useState(false)
@@ -112,11 +117,13 @@ function App() {
           <Route path="/volunteer-sign-up" element={<VolunteerSignUp />} />
           <Route path="/participant" element={<ParticipantPage />} />
           <Route path="/register" element={<RegistrationForm />} />
+          <Route path="/about" element={<AboutUs />} />
           <Route path="/admin-sign-up" element={<AdminRegister />} />
           <Route path="/new-event" element={<NewEvent />} />
           <Route path="/check-participant" element={<CheckParticipant />} />
           <Route path="*" element={<NotFound />} />
           <Route path="/becomeparticipant" element={<BecomeParticipant />} />
+          <Route path="/eventparticipant" element={<EventParticipant />} />
       </Routes>
 
       <footer className="bg-slate-700 shadow-lg p-2 text-md text-right" >
