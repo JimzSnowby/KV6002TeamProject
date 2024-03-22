@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 
 function BecomeParticipant() {
     return (
-        <div className="max-w-2xl mx-auto p-6">
+        <div className="max-w-lg mx-auto p-6 bg-white shadow-md rounded-lg mt-8 mb-8">
             <h1 className="text-3xl font-bold mb-4">Welcome to ROSE</h1>
             <p className="text-lg mb-4">Thank you for your interest in becoming a participant in our charity events!</p>
             <p className="text-lg mb-4">To register as a participant and take part in our cancer screenings, please follow these steps:</p>
@@ -20,12 +20,11 @@ function BecomeParticipant() {
             </ol>
             <p className="text-lg mb-4">Upon successful registration, you will be notified via email and provided with further instructions on how to participate in our charity events.</p>
             <p className="text-lg mb-4">If you have any questions or need assistance, please feel free to contact us.</p>
-            <div>
-                <Link to="/register" className="bg-blue-500 hover:bg-blue-800 text-white py-2 px-4 rounded font-semibold inline-block">Sign Up</Link>
+            <div className="text-center">
+                <Link to="/register" className="bg-blue-500 hover:bg-blue-700 text-white py-3 px-6 rounded-md font-semibold inline-block">Sign Up</Link>
             </div>
         </div>
     );
 }
-
 
 export default BecomeParticipant
