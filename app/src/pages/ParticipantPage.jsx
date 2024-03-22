@@ -14,6 +14,10 @@ function ParticipantPage(props) {
     const [phone, setPhone] = useState(props.phone || '');
     const [email, setEmail] = useState(props.email || '');
     const [evidence, setEvidence] = useState(props.evidence || '');
+    const [errorMessage, setErrorMessage] = useState('');
+    const nameRegex = /^[a-zA-Z\s]*$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^[0-9]+$/;
 
     useEffect(() => {
         fetch('https://w20021570.nuwebspace.co.uk/assessment/api/participant', {
@@ -41,6 +45,23 @@ function ParticipantPage(props) {
     const updateParticipant = (event) => {
         event.preventDefault();
 
+        // Validation
+        if (!name.match(nameRegex)) {
+            setErrorMessage('Please enter a valid name with no special characters or numbers.');
+            return;
+        }
+
+        if (!email.match(emailRegex)) {
+            setErrorMessage('Please enter a valid email address.');
+            return;
+        }
+
+        if (!phone.match(phoneRegex)) {
+            setErrorMessage('Please enter a valid phone number.');
+            return;
+        }
+
+        // If validation passes, proceed with update
         let formData = new FormData();
         formData.append('name', name);
         formData.append('email', email);
@@ -86,8 +107,11 @@ function ParticipantPage(props) {
                     <div className="flex justify-center mb-4">
                         <FiUser className="text-5xl text-gray-600" />
                     </div>
-                    <h2 className="text-center text-2xl font-semibold mb-4">User Profile</h2>
-                    <p className="text-center">Manage your account and edit your details here.</p>
+                    <h2 className="text-center text-2xl font-semibold mb-4">My Profile</h2>
+                    <p className="text-center">Welcome to your participant profile where you can conveniently edit your details and securely upload income evidence.</p>
+                    {errorMessage && (
+                        <div className="bg-red-500 text-white p-2 mb-4 text-center">{errorMessage}</div>
+                    )}
                     <form onSubmit={updateParticipant}>
                         <div className="mb-4">
                             <label htmlFor="name" className="block text-gray-700 text-sm font-bold mb-2">Name</label>
