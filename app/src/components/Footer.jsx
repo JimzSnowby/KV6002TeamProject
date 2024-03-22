@@ -11,7 +11,7 @@ import Share from './Share'
 function Footer() {
 
   return (
-    <footer className="bg-blue-800 text-white text-center">
+    <footer className=" text-white text-center">
       <Share />
     </footer>
   )

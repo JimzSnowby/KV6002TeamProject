@@ -62,18 +62,18 @@ function VolunteerSignUp() {
 
     return (
         <>
-            <div className='bg-blue-200 p-6 rounded-lg max-w-xl mx-auto mt-10 mb-5'>
+            <div className='bg-gray-100 p-6 rounded-lg max-w-xl mx-auto mt-10 mb-5 shadow-md'>
                 <h2 className='p-6 text-center text-4xl'>Want to help out?</h2>
                 <p className='text-center text-xl'>
                     We are always in need of more volunteers to help at events, sign up below to become a volunteer.
                 </p>
-                <table className='bg-blue-800 mx-auto w-full mt-5 rounded-md'>
+                <table className='bg-white mx-auto w-full mt-5 rounded-md'>
                     <tbody>
                         <tr>
-                            <td className='p-2 text-white'>
+                            <td className='p-2 '>
                                 <label htmlFor='name'>Name:</label>
                             </td>
-                            <td className='p-2'>
+                            <td className='p-2 text-gray-700'>
                                 <input
                                     type='text'
                                     id='name'
@@ -84,7 +84,7 @@ function VolunteerSignUp() {
                             </td>
                         </tr>
                         <tr>
-                            <td className='p-2 text-white'>
+                            <td className='p-2 text-gray-700'>
                                 <label htmlFor='dob'>Date of Birth:</label>
                             </td>
                             <td className='p-2'>
@@ -97,7 +97,7 @@ function VolunteerSignUp() {
                             </td>
                         </tr>
                         <tr>
-                            <td className='p-2 text-white'>
+                            <td className='p-2 text-gray-700'>
                                 <label htmlFor='email'>Email:</label>
                             </td>
                             <td className='p-2'>
@@ -111,7 +111,7 @@ function VolunteerSignUp() {
                             </td>
                         </tr>
                         <tr>
-                            <td className='p-2 text-white'>
+                            <td className='p-2 text-gray-700'>
                                 <label htmlFor='password'>Password:</label>
                             </td>
                             <td className='p-2'>
@@ -125,7 +125,7 @@ function VolunteerSignUp() {
                             </td>
                         </tr>
                         <tr>
-                            <td className='p-2 text-white'>
+                            <td className='p-2 text-gray-700'>
                                 <label htmlFor='confirmPassword'>Confirm Password:</label>
                             </td>
                             <td className='p-2'>
@@ -139,7 +139,7 @@ function VolunteerSignUp() {
                             </td>
                         </tr>
                         <tr>
-                            <td className='p-2 text-white'>
+                            <td className='p-2 text-gray-700'>
                                 <label htmlFor='phone'>Phone:</label>
                             </td>
                             <td className='p-2'>

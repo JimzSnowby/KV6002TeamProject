@@ -18,7 +18,7 @@ import twitterLogo from './../assets/logo-black.png'
 
 function Share() {
     return (
-      <div className="bg-slate-700 shadow-lg p-2 text-md text-right">
+      <div >
         <div className="container mx-auto py-4">
           <ul className="flex justify-center space-x-4">
             <li>

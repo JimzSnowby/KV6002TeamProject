@@ -69,8 +69,8 @@ abstract class Router
                     $endpoint = new EndpointControllers\Newsletter();
                     break;
                 
-                case '/sponsors':
-                case '/sponsors/':
+                case '/sponsor':
+                case '/sponsor/':
                     $endpoint = new EndpointControllers\Sponsor();
                     break; 
                 case '/adminregister':
