@@ -23,6 +23,7 @@ function ApplyEvent(props) {
             body: formData,
         })
             .then(response => {
+                console.log(props.userID)
                 console.log('Response:', response);
                 console.log(props.eventID)
                 if (response.status === 200 || response.status === 204) {
@@ -48,6 +49,7 @@ function ApplyEvent(props) {
             headers: new Headers({ 'Authorization': 'Bearer ' + localStorage.getItem('token') }),
         })
             .then(response => {
+                console.log(response.status)
                 if (response.status === 200 || response.status === 204) {
                     setApply('');
                     window.alert('You have successfully cancelled your attendance at the event.');

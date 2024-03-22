@@ -12,7 +12,7 @@ function Header() {
 
   return (
     <header className="bg-blue-300 py-6">
-      <h1 className="text-black text-4xl font-bold text-center">ROSE</h1>
+      <h1 className="text-black text-4xl font-bold mt-4 text-center">ROSE</h1>
     </header>
 
   )

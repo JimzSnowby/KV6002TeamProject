@@ -81,8 +81,8 @@ function HomePage(props) {
         <>
             <div className='grid grid-cols-1 px-10 '>
                 <div className="col-span-1 text-center">
-                    <h1 className="text-4xl font-bold text-gray-900 mb-4">Welcome to ROSE</h1>
-                    <h2 className="text-xl font-semibold text-gray-700 mb-8">Explore Upcoming Events</h2>
+                    <h2 className="text-4xl font-bold text-gray-900 mt-4 mb-4">Welcome to ROSE</h2>
+                    <h3 className="text-xl font-semibold text-gray-700 mb-8">Explore Upcoming Events</h3>
                 </div>
                 {loading ? (
                     <div className='fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'>

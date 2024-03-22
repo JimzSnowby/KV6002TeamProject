@@ -8,9 +8,7 @@ namespace App\EndpointControllers;
  */
 class Developer extends Endpoint
 {
-
-
-    private $sql = "SELECT * FROM waitingList";
+    private $sql = "SELECT * FROM participant";
 
     private $sqlParameters = [];
 
