@@ -119,12 +119,14 @@ function App() {
           <Route path="/becomeparticipant" element={<BecomeParticipant />} />
       </Routes>
 
-      <footer className="px-5">
+      <footer className="bg-slate-700 shadow-lg p-2 text-md text-right" >
 
         <Footer />
       </footer>
 
     </div>
+
+    
   )
 }
 
