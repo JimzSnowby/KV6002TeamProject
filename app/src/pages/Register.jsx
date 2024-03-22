@@ -203,7 +203,7 @@ function RegistrationForm({ onRegistration }) {
                 <div className="flex justify-center mb-4">
                     <LuUserPlus className="text-5xl text-gray-600" />
                 </div>
-                <h2 className="text-center text-2xl font-semibold mb-4">Sign Up</h2>
+                <h2 className="text-center text-2xl font-semibold mb-4">Participant Sign Up</h2>
                 {errorMessage && (
                     <div className="bg-red-500 text-white p-2 mb-4 text-center">{errorMessage}</div>
                 )}
