@@ -58,7 +58,7 @@ function App() {
     <div>
       {/* Chatbot icon */}
       <div
-        className={`fixed bottom-8 right-8 bg-blue-500 text-white rounded-full p-4 cursor-pointer hover:bg-blue-600 ${showChatbot ? 'hidden' : ''}`}
+        className={`fixed bottom-20 right-8 bg-blue-500 text-white rounded-full p-4 cursor-pointer hover:bg-blue-600 ${showChatbot ? 'hidden' : ''}`}
         onClick={() => setShowChatbot(true)}
       >
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="w-8 h-8">

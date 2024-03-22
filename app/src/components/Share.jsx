@@ -1,7 +1,5 @@
 import facebookLogo from './../assets/Facebook_Logo_Primary.png'
 import instagramLogo from './../assets/Instagram_Glyph_Gradient.png'
-import twitterLogo from './../assets/LI-In-Bug.png'
-import linkedinLogo from './../assets/logo-black.png'
 import linkedinLogo from './../assets/LI-In-Bug.png'
 import twitterLogo from './../assets/logo-black.png'
 
@@ -15,39 +13,39 @@ import twitterLogo from './../assets/logo-black.png'
  * Twitter logo sourced from: https://about.x.com/en/who-we-are/brand-toolkit
  * LinkedIn logo sourced from: https://brand.linkedin.com/downloads
  * 
- * @author Aiden Anderson W21047714
+ * @author Aiden Anderson W23047714
  */
 
 function Share() {
-
-  return (
-    <div>
-        <ul>
+    return (
+      <div className="bg-slate-700 shadow-lg p-2 text-md text-right">
+        <div className="container mx-auto py-4">
+          <ul className="flex justify-center space-x-4">
             <li>
-                <a href="https://www.facebook.com/" rel="noopener noreferrer" target="_blank">
-                    <img src={facebookLogo} alt="Facebook logo" />
-                </a>
+              <a href="https://www.facebook.com/" rel="noopener noreferrer" target="_blank">
+                <img className="h-10 w-10" src={facebookLogo} alt="Facebook logo" />
+              </a>
             </li>
             <li>
-                <a href="https://www.instagram.com/" rel="noopener noreferrer" target="_blank">
-                    <img src={instagramLogo} alt="Instagram logo" />
-                </a>
+              <a href="https://www.instagram.com/" rel="noopener noreferrer" target="_blank">
+                <img className="h-10 w-10" src={instagramLogo} alt="Instagram logo" />
+              </a>
             </li>
             <li>
-                
-                <a href="https://twitter.com/" rel="noopener noreferrer" target="_blank">
-                    <img src={twitterLogo} alt="X logo also know as Twitters logo" />
-                </a>
+              <a href="https://twitter.com/" rel="noopener noreferrer" target="_blank">
+                <img className="h-10 w-10" src={twitterLogo} alt="X logo also known as Twitter's logo" />
+              </a>
             </li>
             <li>
-                <a href="https://www.linkedin.com/" rel="noopener noreferrer" target="_blank">
-                    <img src={linkedinLogo} alt="LinkedIn logo" />
-                </a>
+              <a href="https://www.linkedin.com/" rel="noopener noreferrer" target="_blank">
+                <img className="h-10 w-10" src={linkedinLogo} alt="LinkedIn logo" />
+              </a>
             </li>
-        </ul>
-    </div>
-  )
-
-}
+          </ul>
+        </div>
+      </div>
+    )
+  }
+  
 
 export default Share
