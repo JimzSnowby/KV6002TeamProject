@@ -43,7 +43,7 @@ function CheckParticipant() {
             formData.append('eligible', eligible)
             
 
-            fetch('https://w20012367.nuwebspace.co.uk/assessment/api/checkparticipant',
+            fetch('https://w20021570.nuwebspace.co.uk/assessment/api/checkparticipant',
                 {
                     method: 'POST',
                     body: formData
@@ -57,7 +57,7 @@ function CheckParticipant() {
         }
     }
     useEffect(() => {
-        fetch('https://w20012367.nuwebspace.co.uk/assessment/api/checkparticipant')
+        fetch('https://w20021570.nuwebspace.co.uk/assessment/api/checkparticipant')
             .then(response => handleResponse(response))
             .then(json => handleJSON(json))
             .catch(err => {

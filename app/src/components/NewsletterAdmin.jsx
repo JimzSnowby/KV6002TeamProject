@@ -34,7 +34,7 @@ function NewsletterAdmin() {
 
     // Fetch the newsletter list from the server.
     useEffect(() => {
-        fetch("https://w21023500.nuwebspace.co.uk/assessment/api/newsletter")
+        fetch("https://w20021570.nuwebspace.co.uk/assessment/api/newsletter")
         .then( response => handleResponse(response))
         .then( json => handleJSON(json))
         .catch( err => { console.log(err.message) })
@@ -61,7 +61,7 @@ function NewsletterAdmin() {
     const removeReader = () => {
         alert('Deleted Reader');
 
-        return fetch('https://w20012367.nuwebspace.co.uk/assessment/api/newsletter?email=' + newsletter, 
+        return fetch('https://w20021570.nuwebspace.co.uk/assessment/api/newsletter?email=' + newsletter, 
           {method: 'DELETE'})
           .then( response => handleResponse(response))
           .catch( err => { console.log(err.message) })

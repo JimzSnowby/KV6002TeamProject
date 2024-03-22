@@ -32,7 +32,7 @@ function Sponsor() {
   const handleSubmit = () => {
     alert('You have submitted');
 
-    return fetch('https://w20012367.nuwebspace.co.uk/assessment/api/sponsor?email=' + sponsorEmail, 
+    return fetch('https://w20021570.nuwebspace.co.uk/assessment/api/sponsor?email=' + sponsorEmail, 
     { method: 'POST' })
     .then( response => handleResponse(response))
     .catch( err => { console.log(err.message) })

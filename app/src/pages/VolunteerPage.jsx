@@ -68,7 +68,7 @@ function VolunteerPage(props) {
     }, [id, refreshTrigger]);
     
     const fetchDetails = () => {
-        fetch('https://w21023500.nuwebspace.co.uk/assessment/api/volunteer?volunteerID=' + id)
+        fetch('https://w20021570.nuwebspace.co.uk/assessment/api/volunteer?volunteerID=' + id)
         .then(response => {
             if (response.status === 401){
                 localStorage.removeItem("token")
@@ -84,7 +84,7 @@ function VolunteerPage(props) {
     }
 
     const fetchVolunteerEvents = () => {
-        fetch('https://w21023500.nuwebspace.co.uk/assessment/api/volunteerevent?volunteerid=' + id)
+        fetch('https://w20021570.nuwebspace.co.uk/assessment/api/volunteerevent?volunteerid=' + id)
         .then(response => {
             if (response.status === 401) {
                 throw new Error('Network response was not ok');
@@ -112,7 +112,7 @@ function VolunteerPage(props) {
         let formData = new FormData()
         formData.append('eventid', eventid)
         formData.append('volunteerid', id)
-        fetch('https://w21023500.nuwebspace.co.uk/assessment/api/volunteerevent',
+        fetch('https://w20021570.nuwebspace.co.uk/assessment/api/volunteerevent',
         {
             method: 'POST',
             body: formData
@@ -134,7 +134,7 @@ function VolunteerPage(props) {
 
     const eventUnregister = (eventid) => {
         const queryParams = `?volunteerid=${encodeURIComponent(id)}&eventid=${encodeURIComponent(eventid)}`;
-        fetch(`https://w21023500.nuwebspace.co.uk/assessment/api/volunteerevent${queryParams}`,
+        fetch(`https://w20021570.nuwebspace.co.uk/assessment/api/volunteerevent${queryParams}`,
         {
             method: 'DELETE'
         })

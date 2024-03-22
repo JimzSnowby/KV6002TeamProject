@@ -34,7 +34,7 @@ function SponsorAdmin() {
 
     // Fetch the sponsor list from the server.
     useEffect(() => {
-        fetch("https://w21023500.nuwebspace.co.uk/assessment/api/sponsor")
+        fetch("https://w20021570.nuwebspace.co.uk/assessment/api/sponsor")
         .then( response => handleResponse(response))
         .then( json => handleJSON(json))
         .catch( err => { console.log(err.message) })
@@ -61,7 +61,7 @@ function SponsorAdmin() {
     const removeSponsor = () => {
         alert('Deleted Sponsor');
 
-        return fetch('https://w20012367.nuwebspace.co.uk/assessment/api/sponsor?email=' + sponsor, 
+        return fetch('https://w20021570.nuwebspace.co.uk/assessment/api/sponsor?email=' + sponsor, 
           {method: 'DELETE'})
           .then( response => handleResponse(response))
           .catch( err => { console.log(err.message) })

@@ -12,7 +12,7 @@ function Availability(props){
 
     useEffect(() => {
 
-        fetch('https://w21023500.nuwebspace.co.uk/assessment/api/volunteeravailability?volunteerid=' + props.id)
+        fetch('https://w20021570.nuwebspace.co.uk/assessment/api/volunteeravailability?volunteerid=' + props.id)
         .then(response => response.json())
         .then(data => {
             // Assuming the API returns an array of objects, each with a "date" field
@@ -27,7 +27,7 @@ function Availability(props){
         formData.append('volunteerid', props.id);
         formData.append('date', props.selectedDates);
 
-        fetch('https://w21023500.nuwebspace.co.uk/assessment/api/volunteeravailability?volunteerid=' + props.id + '&date=' + props.selectedDates, 
+        fetch('https://w20021570.nuwebspace.co.uk/assessment/api/volunteeravailability?volunteerid=' + props.id + '&date=' + props.selectedDates, 
         {
             method: 'POST',
             body: formData
@@ -47,7 +47,7 @@ function Availability(props){
     }
 
     const getAvailability = () => {
-        fetch('https://w21023500.nuwebspace.co.uk/assessment/api/volunteeravailability?volunteerid=' + props.id)
+        fetch('https://w20021570.nuwebspace.co.uk/assessment/api/volunteeravailability?volunteerid=' + props.id)
         .then(response => {
             if (response.status === 401){
                 localStorage.removeItem("token")

@@ -24,7 +24,7 @@ function AdminRegister() {
             formData.append('password', hashPassword)
             formData.append('position', position)
 
-            fetch('https://w20012367.nuwebspace.co.uk/assessment/api/adminregister',
+            fetch('https://w20021570.nuwebspace.co.uk/assessment/api/adminregister',
                 {
                     method: 'POST',
                     body: formData

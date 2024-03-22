@@ -21,7 +21,7 @@ function NewEvent() {
             formData.append('location', location)
             formData.append('space', space)
 
-            fetch('https://w20012367.nuwebspace.co.uk/assessment/api/event',
+            fetch('https://w20021570.nuwebspace.co.uk/assessment/api/event',
                 {
                     method: 'POST',
                     body: formData
