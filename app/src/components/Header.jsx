@@ -11,7 +11,7 @@ import React from 'react'
 function Header() {
 
   return (
-    <header className="bg-gradient-to-r from-blue-200 to-purple-200 py-6">
+    <header className="bg-blue-100 py-6">
       <h1 className="text-black text-4xl font-bold text-center">ROSE</h1>
     </header>
 

@@ -89,11 +89,9 @@ function App() {
           setPosition={setPosition}
         />
       </div>
-
       <header>
         <Header />
       </header>
-
       <nav className="">
         <Menu roletype={roleType} 
         position={position}

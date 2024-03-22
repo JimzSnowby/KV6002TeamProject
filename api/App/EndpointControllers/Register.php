@@ -93,7 +93,7 @@ class Register extends Endpoint {
        return htmlspecialchars($ticket);
     }
 
-    private function evidence() 
+   /* private function evidence() 
     {
         if (!isset(\App\REQUEST::params()['evidence']))
         {
@@ -102,6 +102,18 @@ class Register extends Endpoint {
  
        $evidence = \App\REQUEST::params()['evidence'];
        return htmlspecialchars($evidence);
+    }
+    */
+
+    //Check if email exists
+    private function emailExists($email) 
+    {
+        $dbConn = new \App\Database(MAIN_DATABASE);
+        $sql = "SELECT COUNT(*) AS count FROM participant WHERE email = :email";
+        $sqlParams = [':email' => $email];
+        $result = $dbConn->executeSQL($sql, $sqlParams); // Execute the SQL query
+        $count = $result[0]['count']; // Get the count from the result
+        return $count > 0; // Return true if count is greater than 0
     }
     
     private function addUser()
@@ -113,23 +125,21 @@ class Register extends Endpoint {
         $password = $this->password();
         $ticket = $this->ticket();
         $dbConn = new \App\Database(MAIN_DATABASE);
-
-        // Check if file was uploaded successfully
-        if(isset($_FILES['evidence']) && $_FILES['evidence']['error'] === UPLOAD_ERR_OK) {
-            // Read the file content
-            $evidenceContent = file_get_contents($_FILES['evidence']['tmp_name']);
-        } else {
-            throw new \App\ClientError(450); // File upload error
+        
+        // Check if email already exists
+        if ($this->emailExists($email)) {
+            throw new \App\ClientError(450, "Email already exists");
         }
+
+
         // Prepare SQL query with parameters
-        $sql = "INSERT INTO participant (name, dob, email, phone, password, evidence, ticket) VALUES (:name, :dob, :email, :phone, :password, :evidence, :ticket)";
+        $sql = "INSERT INTO participant (name, dob, email, phone, password, ticket) VALUES (:name, :dob, :email, :phone, :password, :ticket)";
         $sqlParams = [
             ':name' => $name,
             ':dob' => $dob,
             ':email' => $email,
             ':phone' => $phone,
             ':password' => $password,
-            ':evidence' => $evidenceContent, // Use the content of the evidence file
             ':ticket' => $ticket
         ];
         $data = $dbConn->executeSQL($sql, $sqlParams);

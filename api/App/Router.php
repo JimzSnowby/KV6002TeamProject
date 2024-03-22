@@ -8,7 +8,6 @@ namespace App;
  * 
  * @author Team
  */
-
 abstract class Router
 {
     public static function routeRequest()
@@ -18,7 +17,6 @@ abstract class Router
         {
             switch ($requestedEndpoint) {
                 case '':
-                case '/':
                 case '/developer':
                 case '/developer/':
                     $endpoint = new EndpointControllers\Developer();
@@ -80,6 +78,15 @@ abstract class Router
                 case '/checkparticipant/':
                     $endpoint = new EndpointControllers\ParticipantApplication();
                     break;
+                case '/register':
+                case '/register/':
+                        $endpoint = new EndpointControllers\Register();
+                        break;
+                
+                case '/participant':
+                case '/participant/':
+                        $endpoint = new EndpointControllers\ParticipantProfile();
+                        break;
                 default:
                     throw new ClientError(404);
             }

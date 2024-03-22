@@ -8,6 +8,7 @@
 
 import React, { useState } from 'react'
 import bcrypt from 'bcryptjs'
+import { LuUserPlus } from "react-icons/lu";
 
 function RegistrationForm({ onRegistration }) {
     const [name, setName] = useState('')
@@ -16,7 +17,7 @@ function RegistrationForm({ onRegistration }) {
     const [email, setEmail] = useState('')
     const [phone, setPhone] = useState('')
     const [ticket, setTicket] = useState('3') // Ticket set to always be 3
-    const [evidence, setEvidence] = useState('')
+    //const [evidence, setEvidence] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
     const [token, setToken] = useState('')
     const salt = bcrypt.genSaltSync(10) // Generate salt for password hashing
@@ -83,29 +84,62 @@ function RegistrationForm({ onRegistration }) {
 
 
     // Handle evidence file input changes
-    const handleEvidenceChange = (e) => {
-        const files = e.target.files;
-        setEvidence(files);
-    };
-
+    //const handleEvidenceChange = (e) => {
+    //    const files = e.target.files;
+    //    setEvidence(files);
+    //};
 
     // Handle registration form submission
     const handleRegistration = () => {
-        console.log('Name:', name);
-        console.log('Date of Birth:', dob);
-        console.log('Email:', email);
-        console.log('Password:', password);
-        console.log('Evidence:', evidence);
-        console.log('Phone number:', phone);
-        console.log('Ticket:', ticket);
+        const currentDate = new Date()
+        const selectedDate = new Date(dob)
+        const nameRegex = /^[a-zA-Z\s]*$/
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        // Calculate age based on date of birth
+        const ageDifferenceMs = currentDate - selectedDate;
+        const ageDate = new Date(ageDifferenceMs);
+        const userAge = Math.abs(ageDate.getUTCFullYear() - 1970);
+
+        if (selectedDate > currentDate) {
+            setErrorMessage('Please enter a valid date of birth.');
+            return
+        }
+
+        // Check if name is valid
+        if (!name.match(nameRegex)) {
+            setErrorMessage('Please enter a valid name with no special characters or numbers.');
+            return
+        }
 
         if (password !== confirmPassword) {
             setErrorMessage('Passwords do not match.')
+            return
+        }
+
+
+        // Phone number validation regex for numeric format only
+        const phoneRegex = /^[0-9]+$/;
+
+
+        // Check if phone number is valid
+        if (!phone.match(phoneRegex)) {
+            setErrorMessage('Please enter a valid phone number.');
+            return;
+        }
+
+        // Check if email is valid
+        if (!email.match(emailRegex)) {
+            setErrorMessage('Please enter a valid email address.');
+            return;
+        }
+
+        if (selectedDate >= currentDate || userAge < 18) {
+            setErrorMessage('You must be at least 18 years old to register.');
             return;
         }
 
 
-        if (name.trim() !== '' && dob.trim() !== '' && email.trim() !== '' && phone.trim() !== '' && password.trim() !== '' && evidence && ticket.trim() !== '') {
+        if (name.trim() !== '' && dob.trim() !== '' && email.trim() !== '' && phone.trim() !== '' && password.trim() !== '' && ticket.trim() !== '') {
             const hashedPassword = bcrypt.hashSync(password, salt) // Hash the password
 
             let formData = new FormData()
@@ -117,150 +151,139 @@ function RegistrationForm({ onRegistration }) {
 
 
             // Append evidence files to formData
-            for (let i = 0; i < evidence.length; i++) {
-                formData.append('evidence', evidence[i]);
-            }
-    
+            //for (let i = 0; i < evidence.length; i++) {
+            //   formData.append('evidence', evidence[i]);
+            //}
+
             // Append ticket amount
             formData.append('ticket', ticket)
 
             // Send a POST request to register the user
-            fetch('https://w20037161.nuwebspace.co.uk/assessment/api/register', {
+            fetch('https://w20021570.nuwebspace.co.uk/assessment/api/register', {
                 method: 'POST',
                 body: formData,
             })
                 .then(response => {
-                    // Successful registration
+                    // Check if registration was successful
                     if (response.status === 200 || response.status === 204) {
-                        window.alert('You were registered successfully! You can log in now.')
+                        window.alert('You have successfully created an account.');
                         // Redirect to homepage
-                        window.location.href = '/project/app/home'
-                    } else {
-                        // Registration failed, handle errors
+                        window.location.href = '/project/app/home';
+                    } else if (response.status === 450) { // Check if email already exists
                         response.json().then(data => {
-                            setErrorMessage(data.error || 'Registration failed. Please try again later.')
-                        })
+                            // Show an alert to the user
+                            setErrorMessage(data.error || 'Email already exists.');
+                        });
+                    } else {
+                        // Registration failed, handle other errors
+                        response.json().then(data => {
+                            setErrorMessage(data.error || 'Registration failed. Please try again later.');
+                        });
                     }
                 })
                 .catch(error => {
-                    console.error('Error registering:', error)
-                    setErrorMessage('Registration failed. Please try again later.')
-                })
+                    console.error('Error registering:', error);
+                    setErrorMessage('Registration failed. Please try again later.');
+                });
         } else {
-            setErrorMessage('Please fill in all fields.')
+            setErrorMessage('Please fill in all fields.');
         }
-    }
-
+    };
 
     return (
-        <div className='bg-gray-100 p-6 rounded-lg shadow-lg max-w-xl mx-auto mt-12'>
-            <h2 className='text-xl mb-4 bg-gray-800 text-white py-2 rounded-t-md text-center font-semibold'>Sign up</h2>
-            {errorMessage && (
-                <div className='bg-red-500 text-white p-2 mb-4 text-center'>
-                    {errorMessage}
+        <div className="min-h-screen flex items-center justify-center bg-gray-100 py-8"> {/* Added padding top and bottom */}
+            <div className="bg-white rounded-lg shadow p-8 max-w-lg w-full">
+                <div className="flex justify-center mb-4">
+                    <LuUserPlus className="text-5xl text-gray-600" />
                 </div>
-            )}
-            <table className='w-full'>
-                <tbody>
-                    <tr className='bg-gray-200'>
-                        <td className='p-2'>Full Name</td>
-                        <td className='p-2'>
-                            <input
-                                type='text'
-                                placeholder='Please enter your full name...'
-                                value={name}
-                                onChange={e => setName(e.target.value)}
-                                className='border border-gray-300 px-3 py-2 rounded-md w-full'
-                            />
-                        </td>
-                    </tr>
-                    <tr className='bg-gray-200'>
-                        <td className='p-2'>E-mail</td>
-                        <td className='p-2'>
-                            <input
-                                type='text'
-                                placeholder='Please enter your e-mail...'
-                                value={email}
-                                onChange={e => setEmail(e.target.value)}
-                                className='border border-gray-300 px-3 py-2 rounded-md w-full'
-                            />
-                        </td>
-                    </tr>
-                    <tr className='bg-gray-200'>
-                        <td className='p-2'>Phone number</td>
-                        <td className='p-2'>
-                            <input
-                                type='tel'
-                                placeholder='Please enter your phone number...'
-                                value={phone}
-                                onChange={e => setPhone(e.target.value)}
-                                className='border border-gray-300 px-3 py-2 rounded-md w-full'
-                            />
-                        </td>
-                    </tr>
-                    <tr className='bg-gray-200'>
-                        <td className='p-2'>Date of birth</td>
-                        <td className='p-2'>
-                            <input
-                                type='date'
-                                placeholder='Date of birth'
-                                value={dob}
-                                onChange={e => setDob(e.target.value)}
-                                className='border border-gray-300 px-3 py-2 rounded-md w-full'
-                            />
-                        </td>
-                    </tr>
-                    <tr className='bg-gray-200'>
-                        <td className='p-2'>Password:</td>
-                        <td className='p-2'>
-                            <input
-                                type='password'
-                                placeholder='Password'
-                                value={password}
-                                onChange={handlePasswordChange}
-                                className='border border-gray-300 px-3 py-2 rounded-md w-full'
-                            />
-                        </td>
-                    </tr>
-                    <tr className='bg-gray-200'>
-                        <td className='p-2'>Confirm Password:</td>
-                        <td className='p-2'>
-                            <input
-                                type='password'
-                                placeholder='Confirm Password'
-                                value={confirmPassword}
-                                onChange={handleConfirmPasswordChange}
-                                className='border border-gray-300 px-3 py-2 rounded-md w-full'
-                            />
-                            <div className='font-semibold'>Password strength <span className={getPasswordStrengthTextClass()}>{passwordStrength}</span></div>
-                        </td>
-                    </tr>
-                    <tr className='bg-gray-200'>
-                        <td className='p-2'>Income evidence</td>
-                        <td className='p-2'>
-                            <input
-                                type="file"
-                                id="evidence"
-                                name="evidence"
-                                accept="image/png, image/jpeg, image/jpg, application/pdf,application/vnd.ms-excel"
-                                className="border border-gray-300 px-3 py-2 rounded-md w-full"
-                                onChange={handleEvidenceChange}
-                            />To successfully participate in the charity events you will need to attach a proof of your income which will be reviewied by the member of staff. For more information please head to our FAQ. 
-                        </td> 
-                    </tr>
-                </tbody>
-            </table>
-            <div className='mt-4 font-semibold'>
-                <button
-                    onClick={handleRegistration}
-                    className='bg-gray-800 text-white px-4 py-2 rounded-b-md hover:bg-purple-500 focus:outline-none focus:ring-2 focus:ring-blue-300 w-full'
-                >
-                    Sign up
-                </button>
+                <h2 className="text-center text-2xl font-semibold mb-4">Sign Up</h2>
+                {errorMessage && (
+                    <div className="bg-red-500 text-white p-2 mb-4 text-center">{errorMessage}</div>
+                )}
+                <div className="grid grid-cols-1 gap-4">
+                    <div>
+                        <label htmlFor="name" className="block font-semibold text-gray-700">Full Name</label>
+                        <input
+                            id="name"
+                            type="text"
+                            placeholder="Please enter your full name..."
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            className="border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:border-blue-500"
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="email" className="block font-semibold text-gray-700">E-mail</label>
+                        <input
+                            id="email"
+                            type="text"
+                            placeholder="Please enter your e-mail..."
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            className="border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:border-blue-500"
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="phone" className="block font-semibold text-gray-700">Phone number</label>
+                        <input
+                            id="phone"
+                            type="tel"
+                            placeholder="Please enter your phone number..."
+                            value={phone}
+                            onChange={(e) => setPhone(e.target.value)}
+                            className="border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:border-blue-500"
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="dob" className="block font-semibold text-gray-700">Date of birth</label>
+                        <input
+                            id="dob"
+                            type="date"
+                            placeholder="Date of birth"
+                            value={dob}
+                            onChange={(e) => setDob(e.target.value)}
+                            className="border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:border-blue-500"
+                        />
+                    </div>
+                </div>
+                <div>
+                    <label htmlFor="password" className="block font-semibold text-gray-700">Password</label>
+                    <input
+                        id="password"
+                        type="password"
+                        placeholder="Password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        className="border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:border-blue-500"
+                    />
+                </div>
+                <div>
+                    <label htmlFor="confirmPassword" className="block font-semibold text-gray-700">Confirm Password</label>
+                    <input
+                        id="confirmPassword"
+                        type="password"
+                        placeholder="Confirm Password"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        className="border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:border-blue-500"
+                    />
+                </div>
+                <div className="mt-4">
+                    <button
+                        onClick={handleRegistration}
+                        className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-300 w-full"
+                    >
+                        Sign Up
+                    </button>
+                </div>
+                <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-1 rounded-md mt-2 mb-1">
+                    <p className="text-sm">
+                        <span className="font-bold">Note:</span> Participation in our charity events requires the submission of proof of income via your profile upon logging in. This crucial step ensures that our events reach those most in need. After submission, our dedicated staff will review your eligibility to ensure fairness and transparency in our selection process.
+                    </p>
+                </div>
             </div>
         </div>
-    )
+    );
 }
-
 export default RegistrationForm
 

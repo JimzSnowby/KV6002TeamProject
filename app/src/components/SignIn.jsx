@@ -24,8 +24,6 @@ function SignIn(props) {
             return decode;
     };
 
- 
-
     useEffect(() => {
         const token = localStorage.getItem("token");
         if (token) {
@@ -54,7 +52,7 @@ function SignIn(props) {
 
     const signIn = () => {
         const encodedString = btoa(username + ':' + password)
-        fetch('https://w20012367.nuwebspace.co.uk/assessment/api/token',
+        fetch('https://w20021570.nuwebspace.co.uk/assessment/api/token',
             {
                 method: 'GET',
                 headers: new Headers({ "Authorization": "Basic " + encodedString })
@@ -82,7 +80,7 @@ function SignIn(props) {
                     }
                 }
             })
-            .catch(error => console.log(error))   
+            .catch(error => console.log(error))  
     }
 
     const signOut = () => {
@@ -95,7 +93,7 @@ function SignIn(props) {
     }
 
     return (
-        <div className="bg-blue-800 p-2 text-md text-right ">
+        <div className="bg-slate-700 shadow-lg p-2 text-md text-right">
             {!props.signedIn && <div>
                 <input
                     type="text"
@@ -114,7 +112,7 @@ function SignIn(props) {
                 <input
                     type="submit"
                     value="Sign In"
-                    className="py-1 px-2 mx-2 bg-blue-100 hover:bg-blue-500 rounded-md"
+                    className="py-1 px-2 mx-2 bg-blue-500 hover:bg-blue-800 text-white font-semibold rounded-md"
                     onClick={signIn}
                 />
             </div>
@@ -123,7 +121,7 @@ function SignIn(props) {
                 <input
                     type="submit"
                     value="Sign Out"
-                    className="py-1 px-2 mx-2 bg-blue-100 hover:bg-blue-500 rounded-md"
+                    className="py-1 px-2 mx-2 bg-orange-500 hover:bg-orange-600 font-semibold text-white rounded-md"
                     onClick={signOut}
                 />
             </div>
