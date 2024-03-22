@@ -1,13 +1,13 @@
-
 /**
  * ParticipantPage Component
  *
- * This component represents the page for managing participant profile.
+ * This component represents the page for editing the participant profile.
  * 
  * @author Maja Bosy
+ * Student ID: W20037161
  */
 import React, { useState, useEffect } from 'react';
-import { FiUser } from 'react-icons/fi'; // Importing user icon from react-icons
+import { FiUser } from 'react-icons/fi';
 
 function ParticipantPage(props) {
     const [name, setName] = useState(props.name || '');
@@ -45,17 +45,19 @@ function ParticipantPage(props) {
     const updateParticipant = (event) => {
         event.preventDefault();
 
-        // Validation
+        // Name validation
         if (!name.match(nameRegex)) {
             setErrorMessage('Please enter a valid name with no special characters or numbers.');
             return;
         }
 
+        // Email validation
         if (!email.match(emailRegex)) {
             setErrorMessage('Please enter a valid email address.');
             return;
         }
 
+        // Phone validation
         if (!phone.match(phoneRegex)) {
             setErrorMessage('Please enter a valid phone number.');
             return;
@@ -77,7 +79,7 @@ function ParticipantPage(props) {
                 if (response.status === 204) {
                     // If response status is 204, consider it successful
                     window.alert('You have updated your profile successfully!');
-                    return; // No need to parse empty response, return immediately
+                    return;
                 } else if (response.ok) {
                     return response.json();
                 } else {
@@ -148,12 +150,6 @@ function ParticipantPage(props) {
                         </div>
                         <div className="mb-4">
                             <label htmlFor="evidence" className="block text-gray-700 text-sm font-bold mb-2">Evidence</label>
-                            {/*{evidence && (
-                                <div className="mt-2 flex items-start">
-                                    <p className="block text-gray-700 text-sm font-bold mb-2">Current Evidence:</p>
-                                    <img src={`data:image/png;base64,${evidence}`} alt="Evidence" className="mx-auto w-1/2" />
-                                </div>
-                            )}*/}
                             <input
                                 id="evidence"
                                 type="file"

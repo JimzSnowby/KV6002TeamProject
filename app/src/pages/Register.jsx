@@ -4,6 +4,7 @@
  * This component represents the registration form for users to sign up.
  * 
  * @author Maja Bosy
+ * Student ID: W20037161
  */
 
 import React, { useState } from 'react'
@@ -17,8 +18,7 @@ function RegistrationForm({ onRegistration }) {
     const [dob, setDob] = useState('')
     const [email, setEmail] = useState('')
     const [phone, setPhone] = useState('')
-    const [ticket, setTicket] = useState('3') // Ticket set to always be 3
-    //const [evidence, setEvidence] = useState('')
+    const [ticket, setTicket] = useState('3') // Ticket set to always 3
     const [confirmPassword, setConfirmPassword] = useState('')
     const [token, setToken] = useState('')
     const salt = bcrypt.genSaltSync(10) // Generate salt for password hashing
@@ -54,7 +54,7 @@ function RegistrationForm({ onRegistration }) {
         }
     }
 
-    // Colours for password strength
+    // Pasword strength colours
     const getPasswordStrengthTextClass = () => {
         switch (passwordStrength) {
             case 'Weak':
@@ -83,19 +83,11 @@ function RegistrationForm({ onRegistration }) {
         setPasswordStrength(checkPasswordStrength(newPassword))
     }
 
-
     // Handle confirm password input changes
     const handleConfirmPasswordChange = (e) => {
         const newPassword = e.target.value
         setConfirmPassword(newPassword)
     }
-
-
-    // Handle evidence file input changes
-    //const handleEvidenceChange = (e) => {
-    //    const files = e.target.files;
-    //    setEvidence(files);
-    //};
 
     // Handle registration form submission
     const handleRegistration = () => {
@@ -103,6 +95,7 @@ function RegistrationForm({ onRegistration }) {
         const selectedDate = new Date(dob)
         const nameRegex = /^[a-zA-Z\s]*$/
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
         // Calculate age based on date of birth
         const ageDifferenceMs = currentDate - selectedDate;
         const ageDate = new Date(ageDifferenceMs);
@@ -113,7 +106,7 @@ function RegistrationForm({ onRegistration }) {
             return
         }
 
-        // Check if name is valid
+        // Name validation
         if (!name.match(nameRegex)) {
             setErrorMessage('Please enter a valid name with no special characters or numbers.');
             return
@@ -127,23 +120,23 @@ function RegistrationForm({ onRegistration }) {
         // Phone number validation regex for numeric format only
         const phoneRegex = /^[0-9]+$/;
 
-        // Check if phone number is valid
+        // Phone number validation
         if (!phone.match(phoneRegex)) {
             setErrorMessage('Please enter a valid phone number.');
             return;
         }
 
-        // Check if email is valid
+        // Email validation
         if (!email.match(emailRegex)) {
             setErrorMessage('Please enter a valid email address.');
             return;
         }
 
+        // Age validation, at least 18
         if (selectedDate >= currentDate || userAge < 18) {
             setErrorMessage('You must be at least 18 years old to register.');
             return;
         }
-
 
         if (name.trim() !== '' && dob.trim() !== '' && email.trim() !== '' && phone.trim() !== '' && password.trim() !== '' && ticket.trim() !== '') {
             const hashedPassword = bcrypt.hashSync(password, salt) // Hash the password
@@ -154,12 +147,6 @@ function RegistrationForm({ onRegistration }) {
             formData.append('email', email)
             formData.append('phone', phone)
             formData.append('password', hashedPassword)
-
-
-            // Append evidence files to formData
-            //for (let i = 0; i < evidence.length; i++) {
-            //   formData.append('evidence', evidence[i]);
-            //}
 
             // Append ticket amount
             formData.append('ticket', ticket)
@@ -174,7 +161,7 @@ function RegistrationForm({ onRegistration }) {
                     if (response.status === 200 || response.status === 204) {
                         window.alert('You have successfully created an account.');
                         // Redirect to homepage
-                        window.location.href = '/project/app/home';
+                        window.location.href = '/';
                     } else if (response.status === 450) { // Check if email already exists
                         response.json().then(data => {
                             // Show an alert to the user
@@ -198,7 +185,7 @@ function RegistrationForm({ onRegistration }) {
 
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-100 py-8"> {/* Added padding top and bottom */}
+        <div className="min-h-screen flex items-center justify-center bg-gray-100 py-8">
             <div className="bg-white rounded-lg shadow p-8 max-w-lg w-full">
                 <div className="flex justify-center mb-4">
                     <LuUserPlus className="text-5xl text-gray-600" />

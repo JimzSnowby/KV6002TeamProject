@@ -1,10 +1,15 @@
+/**
+ * BecomeParticipant Component
+ *
+ * This component represents the welcome message before sign up form .
+ * 
+ * @author Maja Bosy
+ * Student ID: W20037161
+ */
+
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 
-/**
- * Home page for the application.
- * 
- */
 
 function BecomeParticipant() {
     return (
