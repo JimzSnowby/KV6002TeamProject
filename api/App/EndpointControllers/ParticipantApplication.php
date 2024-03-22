@@ -1,7 +1,15 @@
 <?php
 
 namespace App\EndpointControllers;
-
+/**
+ * ParticipantApplication endpoint
+ * 
+ * This endpoint is used to get request for participant information 
+ *  and update the 'eligible' field of each pending participant record.
+ *  
+ * @author Pik Sum Siu 
+ * Student ID: w20012367
+ */
 
  class ParticipantApplication extends Endpoint {
 

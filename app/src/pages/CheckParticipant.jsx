@@ -2,8 +2,13 @@ import React, { useEffect, useState } from 'react';
 
 /**
  * Check Participant page
+ * 
+ * This page is in charge of checking the participant's eligibility based 
+ * on the evidence provided by the participant. 
+ * Only admin can access this page.
  *  
- * @author Team 
+ * @author Pik Sum Siu 
+ * Student ID: w20012367
  */
 function CheckParticipant() {
     const [participants, setParticipants] = useState([]);

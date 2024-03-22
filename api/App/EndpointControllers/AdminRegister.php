@@ -140,7 +140,7 @@ class AdminRegister extends Endpoint
         $dbConn = new \App\Database(MAIN_DATABASE);
         $sqlParams = [':name' => $name, ':dob' => $dob, ':email' => $email, ':phone'=> $phone, ':password' => $password, ':position' => $position];
         if ($this->userExists($email)) {
-            throw new \App\ClientError(409); 
+            throw new \App\ClientError(405); 
         }
         $sql = "INSERT INTO admin (name, dob, email, phone, password, position) VALUES (:name, :dob, :email, :phone, :password, :position)";
         $data = $dbConn->executeSQL($sql, $sqlParams);

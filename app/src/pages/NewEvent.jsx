@@ -1,6 +1,14 @@
 import React, { useState } from 'react'
-//import toast, { Toaster } from 'react-hot-toast'
 
+/**
+ * New Event page
+ * 
+ * This page is in charge of adding new event to the home page.
+ * Only the admin can access this page.
+ *  
+ * @author Pik Sum Siu 
+ * Student ID: w20012367
+ */
 
 function NewEvent() {
     const [name, setName] = useState('')

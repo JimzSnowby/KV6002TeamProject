@@ -1,7 +1,15 @@
 import bcrypt from 'bcryptjs'
 import React, { useState } from 'react'
-//import toast, { Toaster } from 'react-hot-toast'
 
+/**
+ * Admin Register page
+ * 
+ * This page is in charge of registering a new admin.
+ * Only the head of admin can access this page.
+ *  
+ * @author Pik Sum Siu 
+ * Student ID: w20012367
+ */
 
 function AdminRegister() {
     const [name, setName] = useState('')

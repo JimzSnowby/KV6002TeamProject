@@ -8,6 +8,7 @@ import VolunteerSignUp from "./pages/VolunteerSignUp"
 import AdminRegister from './pages/AdminRegister'
 import NewEvent from './pages/NewEvent'
 import CheckParticipant from './pages/CheckParticipant'
+import EventParticipant from './pages/EventParticipant'
 
 import Header from "./components/Header"
 import Menu from "./components/Menu"
@@ -27,6 +28,11 @@ import 'react-chatbot-kit/build/main.css'
 import ApplyWaitingList from './components/ApplyWaitingList'
 import AboutUs from './pages/AboutUs'
 
+/**
+ * App component
+ *  
+ * @author Team 
+ */
 function App() {
 
   const [signedIn, setSignedIn] = useState(false)
@@ -117,6 +123,7 @@ function App() {
           <Route path="/check-participant" element={<CheckParticipant />} />
           <Route path="*" element={<NotFound />} />
           <Route path="/becomeparticipant" element={<BecomeParticipant />} />
+          <Route path="/eventparticipant" element={<EventParticipant />} />
       </Routes>
 
       <footer className="bg-slate-700 shadow-lg p-2 text-md text-right" >
