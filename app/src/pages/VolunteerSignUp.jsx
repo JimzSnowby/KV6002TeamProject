@@ -61,114 +61,91 @@ function VolunteerSignUp() {
     }
 
     return (
-        <>
-            <div className='bg-blue-200 p-6 rounded-lg max-w-xl mx-auto mt-10 mb-5'>
-                <h2 className='p-6 text-center text-4xl'>Want to help out?</h2>
-                <p className='text-center text-xl'>
-                    We are always in need of more volunteers to help at events, sign up below to become a volunteer.
-                </p>
-                <table className='bg-blue-800 mx-auto w-full mt-5 rounded-md'>
-                    <tbody>
-                        <tr>
-                            <td className='p-2 text-white'>
-                                <label htmlFor='name'>Name:</label>
-                            </td>
-                            <td className='p-2'>
-                                <input
-                                    type='text'
-                                    id='name'
-                                    placeholder='Enter your name...'
-                                    onChange={e => setName(e.target.value)}
-                                    className='w-full p-1 rounded-md'
-                                />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className='p-2 text-white'>
-                                <label htmlFor='dob'>Date of Birth:</label>
-                            </td>
-                            <td className='p-2'>
-                                <input 
-                                    type='date' 
-                                    id='dob'
-                                    onChange={e => setDob(e.target.value)}
-                                    className='w-full p-1 rounded-md'
-                                />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className='p-2 text-white'>
-                                <label htmlFor='email'>Email:</label>
-                            </td>
-                            <td className='p-2'>
-                                <input 
-                                    type='email' 
-                                    id='email'
-                                    placeholder='Enter your email...'
-                                    onChange={e => setEmail(e.target.value)}
-                                    className='w-full p-1 rounded-md' 
-                                />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className='p-2 text-white'>
-                                <label htmlFor='password'>Password:</label>
-                            </td>
-                            <td className='p-2'>
-                                <input 
-                                    type='password' 
-                                    id='password' 
-                                    onChange={e => setPassword(e.target.value)}
-                                    placeholder='Enter your password...'
-                                    className='w-full p-1 rounded-md'
-                                />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className='p-2 text-white'>
-                                <label htmlFor='confirmPassword'>Confirm Password:</label>
-                            </td>
-                            <td className='p-2'>
-                                <input 
-                                    type='password' 
-                                    id='confirmPassword' 
-                                    placeholder='Re-enter your password...'
-                                    onChange={e => setConfirmPassword(e.target.value)}
-                                    className='w-full p-1 rounded-md'
-                                />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className='p-2 text-white'>
-                                <label htmlFor='phone'>Phone:</label>
-                            </td>
-                            <td className='p-2'>
-                                <input 
-                                    type='tel' 
-                                    id='phone'
-                                    placeholder='Enter your phone number...'
-                                    onChange={e => setPhone(e.target.value)}
-                                    className='w-full p-1 rounded-md'
-                                />
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                {error && (
-                    <div className='bg-red-500 text-white p-2 mt-3 text-center rounded-md'>
-                        {error}
-                    </div>
-                )}
-                <div className='flex flex-col items-center mt-5 font-semibold'>
-                    <button 
-                        onClick={handleRegistration}
-                        className='bg-gray-800 w-1/2 text-center text-white px-4 py-2 rounded-md hover:bg-green-500'>
-                            Sign Up
-                    </button>
+        <div className='min-h-screen flex items-center justify-center bg-gray-100 py-8'>
+        <div className='bg-white rounded-lg shadow p-8 max-w-lg w-full'>
+            <h2 className='text-center text-2xl font-semibold mb-4'>Volunteer Sign Up</h2>
+            {error && (
+                <div className='bg-red-500 text-white p-2 mb-4 text-center'>{error}</div>
+            )}
+            <div className='grid grid-cols-1 gap-4'>
+                <div>
+                    <label htmlFor='name' className='block font-semibold text-gray-700'>Name</label>
+                    <input
+                        id='name'
+                        type='text'
+                        placeholder='Please enter your name...'
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        className='border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:border-blue-500'
+                    />
+                </div>
+                <div>
+                    <label htmlFor='dob' className='block font-semibold text-gray-700'>Date of Birth</label>
+                    <input 
+                        id='dob'
+                        type='date'
+                        placeholder='Date of Birth'
+                        value={dob}
+                        onChange={(e) => setDob(e.target.value)}
+                        className='border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:border-blue-500'
+                    />
+                </div>
+                <div>
+                    <label htmlFor='email' className='block font-semibold text-gray-700'>Email</label>
+                    <input 
+                        id='email'
+                        type='email'
+                        placeholder='Please enter your email...'
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        className='border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:border-blue-500'
+                    />
+                </div>
+                <div>
+                    <label htmlFor='password' className='block font-semibold text-gray-700'>Password</label>
+                    <input 
+                        id='password'
+                        type='password'
+                        placeholder='Password'
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        className='border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:border-blue-500'
+                    />
+                </div>
+                <div>
+                    <label htmlFor='confirmPassword' className='block font-semibold text-gray-700'>Confirm Password</label>
+                    <input 
+                        id='confirmPassword'
+                        type='password'
+                        placeholder='Confirm Password'
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        className='border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:border-blue-500'
+                    />
+                </div>
+                <div>
+                    <label htmlFor='phone' className='block font-semibold text-gray-700'>Phone</label>
+                    <input 
+                        id='phone'
+                        type='tel'
+                        placeholder='Please enter your phone number...'
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                        className='border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:border-blue-500'
+                    />
                 </div>
             </div>
-        </>
-    )
+            <div className='mt-4'>
+                <button
+                    onClick={handleRegistration}
+                    className='bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-300 w-full'
+                >
+                    Sign Up
+                </button>
+            </div>
+        </div>
+    </div>
+);
 }
 
 export default VolunteerSignUp
