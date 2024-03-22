@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from "react-router-dom";
 import Event from '../components/Event'
+import Availability from '../components/Availability';
 
 /**
  * Page to manage Volunteers profile
@@ -14,6 +15,7 @@ function VolunteerPage(props) {
     const [page, setPage] = useState(1)
     const [extendEvent, setextendEvent] = useState(null)
     const [id, setID] = useState('')
+    const [selectedDates, setSelectedDates] = useState([]);
     const [refreshTrigger, setRefreshTrigger] = useState(0)
     const navigate = useNavigate()
 
@@ -67,7 +69,16 @@ function VolunteerPage(props) {
     
     const fetchDetails = () => {
         fetch('https://w21023500.nuwebspace.co.uk/assessment/api/volunteer?volunteerID=' + id)
-        .then(response => response.json())
+        .then(response => {
+            if (response.status === 401){
+                localStorage.removeItem("token")
+                props.setSignedIn(false)
+                return []
+            }
+            if (response.status === 200 || response.status === 204){
+                return response.json()
+            }
+        })
         .then(data => setDetails(data))
         .catch(error => console.error("Error fetching details: ", error))
     }
@@ -75,7 +86,7 @@ function VolunteerPage(props) {
     const fetchVolunteerEvents = () => {
         fetch('https://w21023500.nuwebspace.co.uk/assessment/api/volunteerevent?volunteerid=' + id)
         .then(response => {
-            if (!response.ok) {
+            if (response.status === 401) {
                 throw new Error('Network response was not ok');
             }
             return response.text();
@@ -110,7 +121,7 @@ function VolunteerPage(props) {
             if (response.status === 401){
                 localStorage.removeItem("token")
                 props.setSignedIn(false)
-                return
+                return []
             }
             if (response.status === 200 || response.status === 204){
                 console.log('Event signed up for')
@@ -131,7 +142,7 @@ function VolunteerPage(props) {
             if (response.status === 401){
                 localStorage.removeItem("token")
                 props.setSignedIn(false)
-                return
+                return []
             }
             if (response.status === 200 || response.status === 204){
                 console.log('Event unregistered')
@@ -144,7 +155,17 @@ function VolunteerPage(props) {
 
     const fetchEvents = () => {
         fetch('https://w20021570.nuwebspace.co.uk/assessment/api/event')
-        .then(response => response.json())
+        .then(response => {
+            if (response.status === 401){
+                localStorage.removeItem("token")
+                props.setSignedIn(false)
+                return []
+            }
+            if (response.status === 200 || response.status === 204){
+                return response.json()
+            }
+            
+        })
         .then(data => setEvent(data))
         .catch(error => console.error("Error fetching events: ", error))
     }
@@ -184,7 +205,7 @@ function VolunteerPage(props) {
     
     let volunteerEventsJSX;
     if (volunteeredEvent.length > 0) {
-    volunteerEventsJSX = volunteeredEvent.map((item) => (
+        volunteerEventsJSX = volunteeredEvent.map((item) => (
         <section key={item.eventID} className='p-4 m-2 rounded-lg border border-gray-300'>
         <Event
             event={item}
@@ -203,20 +224,24 @@ function VolunteerPage(props) {
         volunteerEventsJSX = (
             <div className="flex justify-center items-center w-full">
               <div className="bg-blue-200 text-center p-4 rounded-lg max-w-md mx-auto">
-                You have not sign up for any events.
+                You have not signed up for any events.
               </div>
             </div>
           );
     }
-
 
     return (
         <>
             <h1 className='text-4xl text-center p-2'>Profile</h1>
             <div className='p-5 flex'>
                 {detailsJSX}
-                <div className='flex-1 p-5'>
-                    <p className='text-2xl text-center'>Availability</p>
+                <div className='flex-1 flex-col p-5'>
+                    
+                    <Availability
+                        id={id}
+                        selectedDates={selectedDates}
+                        setSelectedDates={setSelectedDates}
+                    />
                 </div>
             </div>
             <div>
