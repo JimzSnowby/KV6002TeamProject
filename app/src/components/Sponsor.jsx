@@ -39,33 +39,36 @@ function Sponsor() {
   }
 
   return (
-    <div className="container">
-
-      <h1>Sponsor</h1>
-
-      <p>Sign up to sponsor our event</p>
-
+    <div className="mt-8 mb-4">
+    <div className="bg-white rounded-lg shadow p-8 max-w-lg">
+      <h1 className="text-center text-2xl font-semibold mb-4">Sponsor</h1>
+      <p className="text-center mb-4">Sign up to sponsor our event</p>
       <form>
-        <label>
-          Sign Up Here:
-          <input 
-          type="text" 
-          placeholder="Enter Your Email" 
-          value={sponsorEmail} 
-          onChange={e => setSponsorEmail(e.target.value)} 
-          maxLength="50" 
-          name="email"/>
-        </label>
-
-        <button 
-          type="submit" 
-          onClick={(e) => { e.preventDefault(); handleSubmit()} }>
+        <div className="mb-4">
+          <label htmlFor="email" className="block text-gray-700 font-semibold">Sign Up Here:</label>
+          <input
+            type="text"
+            id="email"
+            placeholder="Enter Your Email"
+            value={sponsorEmail}
+            onChange={e => setSponsorEmail(e.target.value)}
+            maxLength="50"
+            name="email"
+            className="border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:border-blue-500"
+          />
+        </div>
+        <button
+          type="submit"
+          onClick={(e) => { e.preventDefault(); handleSubmit(); }}
+          className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300 w-full"
+        >
           Submit
         </button>
       </form>
+    </div>
   </div>
-  )
-
+);
 }
+
 
 export default Sponsor

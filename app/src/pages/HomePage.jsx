@@ -79,7 +79,7 @@ function HomePage(props) {
 
     return (
         <>
-            <div className='grid grid-cols-1 px-10'>
+            <div className='grid grid-cols-1 px-10 '>
                 <div className="col-span-1 text-center">
                     <h1 className="text-4xl font-bold text-gray-900 mb-4">Welcome to ROSE</h1>
                     <h2 className="text-xl font-semibold text-gray-700 mb-8">Explore Upcoming Events</h2>
@@ -114,8 +114,14 @@ function HomePage(props) {
                     </>
                 )}
             </div >
-            <Newsletter />
-            <Sponsor />
+            <div className="flex justify-center gap-8 bg-gray-100">
+            <div className="flex flex-col justify-center">
+                    <Newsletter />
+                </div>
+                <div className="flex flex-col justify-center">
+                    <Sponsor />
+                </div>
+            </div>
         </>
     )
 }
