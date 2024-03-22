@@ -16,7 +16,7 @@ function ParticipantPage(props) {
     const [evidence, setEvidence] = useState(props.evidence || '');
 
     useEffect(() => {
-        fetch('https://w20021570.nuwebspace.co.uk/assessment/api/participant', {
+        fetch('https://w20037161.nuwebspace.co.uk/assessment/api/participant', {
             method: 'GET',
             headers: new Headers({ 'Authorization': 'Bearer ' + localStorage.getItem('token') })
         })
@@ -47,7 +47,7 @@ function ParticipantPage(props) {
         formData.append('phone', phone);
         formData.append('evidence', evidence);
 
-        fetch('https://w20021570.nuwebspace.co.uk/assessment/api/participant', {
+        fetch('https://w20037161.nuwebspace.co.uk/assessment/api/participant', {
             method: 'POST',
             headers: new Headers({ 'Authorization': 'Bearer ' + localStorage.getItem('token') }),
             body: formData,
@@ -67,8 +67,8 @@ function ParticipantPage(props) {
                 window.alert('You have updated your profile successfully!');
             })
             .catch(error => {
-                console.error('Error updating the profile:', error);
-                window.alert('Failed to update the profile. Please try again.');
+                console.error('Error updating your profile:', error);
+                window.alert('Failed to update your profile. Please try again.');
             });
     }
 
