@@ -178,7 +178,7 @@ function VolunteerPage(props) {
         .catch(error => console.error("Error fetching events: ", error))
     }
 
-    const handleUpdateProfile = () => {
+    const updateProfile = () => {
         const updatedDetails = { name, dob, email, phone };
 
         fetch(`https://w20021570.nuwebspace.co.uk/assessment/api/volunteer?volunteerid=${id}`, {
@@ -226,7 +226,7 @@ function VolunteerPage(props) {
                 placeholder="Phone"
                 type="tel"
             />
-            <button className='bg-blue-500 hover:bg-blue-700 self-center text-white font-bold py-2 px-4 rounded self-start'>Update Details</button>
+            <button onClick={updateProfile} className='bg-blue-500 hover:bg-blue-700 self-center text-white font-bold py-2 px-4 rounded self-start'>Update Details</button>
         </section>
     );
 
