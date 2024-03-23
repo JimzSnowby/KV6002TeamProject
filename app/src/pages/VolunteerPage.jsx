@@ -179,7 +179,7 @@ function VolunteerPage(props) {
     }
 
     const updateProfile = () => {
-        const formData = new FormData();
+        let formData = new FormData();
         formData.append('name', name);
         formData.append('dob', dob);
         formData.append('email', email);
@@ -190,17 +190,11 @@ function VolunteerPage(props) {
             body: formData,
         })
         .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            if (response.status === 204) {
+            if (response.status === 200 || response.status === 204) {
                 console.log('Profile updated successfully but no data returned.');
                 window.alert('Profile updated successfully!');
-                // Signal successful update without trying to read JSON
-                return null; // This prevents the next .then() from executing its JSON parsing logic
+                return
             }
-            // Only attempt to parse JSON if the response wasn't 204 No Content
-            return response.json();
         })
         .catch(error => {
             console.error('Error updating profile:', error);
