@@ -17,7 +17,6 @@ function ParticipantPage(props) {
     const [errorMessage, setErrorMessage] = useState('');
     const nameRegex = /^[a-zA-Z\s]*$/;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const phoneRegex = /^[0-9]+$/;
 
     useEffect(() => {
         fetch('https://w20021570.nuwebspace.co.uk/assessment/api/participant', {
@@ -44,7 +43,6 @@ function ParticipantPage(props) {
 
     const updateParticipant = (event) => {
         event.preventDefault();
-        console.log('Phone value:', phone); // Add this line to inspect the value of phone
 
         // Name validation
         if (!name.match(nameRegex)) {
