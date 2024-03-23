@@ -25,10 +25,7 @@ class WaitingList extends Endpoint {
                 $data = $this->getList($id);
                 break;
             case 'POST':
-                $data = $this->joinEvent($id);
-                break;
-            case 'DELETE':
-                $data = $this->cancelEvent($id);
+                $data = $this->joinWaitingList($id);
                 break;
             default:
                 throw new \App\ClientError(405);
@@ -67,19 +64,14 @@ class WaitingList extends Endpoint {
         }
     }
 
-    private function chekcParticipantEligible($id)
-    {
+    private function checkParticipantEligible($id){
         $dbConn = new \App\Database(MAIN_DATABASE);
-        $sql = "SELECT isEligible FROM participant WHERE participantID = :id";
+        $sql = "SELECT eligible FROM participant WHERE participantID = :id";
         $sqlParameters = [':id' => $id];
         $data = $dbConn->executeSQL($sql, $sqlParameters);
-        if (count($data) != 1) {
-            throw new \App\ClientError(401);
-        }
-        $eligible = $data[0]['isEligible'];
-
-        if ($eligible === 0) {
-            throw new \App\ClientError(467); // Not eligible
+        
+        if (empty($data) || $data[0]['eligible'] === null || $data[0]['eligible'] == 0) {
+            throw new \App\ClientError(472); // Not eligible
         }
     }
 
@@ -113,7 +105,7 @@ class WaitingList extends Endpoint {
 
         $space = $data[0]['space'];
     
-        if ($space <= 0) {
+        if ($space == 0) {
             
             throw new \App\ClientError(467); // No space available
         }
@@ -159,12 +151,13 @@ class WaitingList extends Endpoint {
 
     }
 
-    private function joinEvent($id) {
+    private function joinWaitingList($id) {
         $eventid = $this->event();
         if ($this->userAttends($id,$eventid)){
             throw new \App\ClientError(469);
         }
         
+        $this->checkParticipantEligible($id);
         $this->checkSpaceAvailable($eventid);
         $this->checkTicket($id); 
 
@@ -198,13 +191,4 @@ class WaitingList extends Endpoint {
             $data = $dbConn->executeSQL($sql);
             return $data;
         }
-
-    private function cancelEvent($id) {
-        $eventid = $this->eventid();
-        $dbConn = new \App\Database(MAIN_DATABASE);
-        $sql = "DELETE FROM waitingList WHERE participantID = :id AND eventID = :eventid";
-        $sqlParameters = [':id' => $id, 'eventid' => $eventid];
-        $data = $dbConn->executeSQL($sql, $sqlParameters);
-        return $data;
-    }
 }

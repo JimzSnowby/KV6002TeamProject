@@ -97,6 +97,10 @@ class ClientError extends \Exception
                 http_response_code(471);
                 $message = 'Cannot cancel';
                 break;  
+            case 472:
+                http_response_code(472);
+                $message = 'Not eligible';
+                break;  
 
             default:
                 throw new \Exception('Internal Server Error');
