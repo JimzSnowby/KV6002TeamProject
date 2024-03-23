@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import toast, { Toaster } from 'react-hot-toast'
 
 /**
  * New Event page
@@ -37,14 +38,17 @@ function NewEvent() {
             )
                 .then(handleResponse)
                 .then(handleJSON)
-                .catch(error => console.error('Error:', error));
+                .catch(error => {
+                    console.error('Error:', error);
+                    toast.error('An error occurred while posting the event.');});
         } else {
-            setErrorMessage('Please fill in all fields.')
+            toast.error('Unable to post event');
         }
     }
 
     const handleResponse = (response) => {
         if (response.status === 200 || response.status === 204) {
+            toast.success('Event added successfully');
             setName('')
             setDescription('')
             setDate('')
@@ -53,9 +57,10 @@ function NewEvent() {
             setSpace('')
             return response.json()
         } else if (response.status === 409) {
-            //toast.error('User already exists');
+            toast.error('Please check the event details and try again.');
         } else {
             throw new Error("invalid response: " + response.status)
+            
         }
     }
 
@@ -68,6 +73,7 @@ function NewEvent() {
     }
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-100 py-8">
+            <Toaster />
             <div className="bg-white rounded-lg shadow p-8 max-w-lg w-full">
                 <h2 className="text-center text-2xl font-semibold mb-8">Post Event</h2>
                 <div className="grid grid-cols-1 gap-4">

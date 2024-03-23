@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import toast, { Toaster } from 'react-hot-toast'
 
 /**
  * Check Participant page
@@ -23,10 +24,13 @@ function CheckParticipant() {
     const handleResponse = (response) => {
         if (response.status === 200) {
             return response.json();
+        } else if (response.status === 204) {
+            return {}; // Return empty object for 204 status code
         } else {
             throw new Error("Invalid response: " + response.status);
         }
     };
+    
 
     const handleJSON = (json) => {
         if (Array.isArray(json)) {
@@ -35,7 +39,7 @@ function CheckParticipant() {
                 evidence: p.evidence ? `data:image/png;base64,${p.evidence}` : null,
                 eligible: p.eligible ? String(p.eligible) : p.eligible
             }));
-            setParticipants(updatedParticipants);
+            setParticipants(updatedParticipants.filter(participant => participant.eligible === null));
             setIsLoading(false);
         } else {
             throw new Error("Invalid JSON: " + json);
@@ -47,22 +51,32 @@ function CheckParticipant() {
     };
 
     const saveEligible = () => {
-        if (eligible && participantsID) {
-            let formData = new FormData();
-            formData.append('participantid', participantsID);
-            formData.append('eligible', eligible);
-
-            fetch('https://w20021570.nuwebspace.co.uk/assessment/api/checkparticipant', {
-                method: 'POST',
-                body: formData
-            })
-            .then(handleResponse)
-            .then(handleJSON)
-            .catch(error => console.error('Error:', error));
-        } else {
-            setErrorMessage('Please fill in all fields.');
+        if (!eligible || !participantsID) {
+            toast.error('Please select eligibility status before submit.');
+            return;
         }
+    
+        let formData = new FormData();
+        formData.append('participantid', participantsID);
+        formData.append('eligible', eligible);
+    
+        fetch('https://w20021570.nuwebspace.co.uk/assessment/api/checkparticipant', {
+            method: 'POST',
+            body: formData
+        })
+        .then(handleResponse)
+        .then(() => {
+            // Filter out the submitted participant from the list
+            setParticipants(prevParticipants => prevParticipants.filter(participant => participant.participantID !== participantsID));
+            toast.success('Eligibility saved successfully');
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            setErrorMessage('An error occurred while saving eligibility.');
+        });
     };
+    
+    
 
     useEffect(() => {
         fetch('https://w20021570.nuwebspace.co.uk/assessment/api/checkparticipant')
@@ -95,6 +109,7 @@ function CheckParticipant() {
 
     return (
         <div className="bg-gray-100 min-h-screen py-12 px-4 sm:px-6 lg:px-8">
+            <Toaster />
             <div className="max-w-3xl mx-auto">
                 <h1 className="text-4xl font-bold text-center mb-8 text-gray-800">Check Participant</h1>
                 {participants.length === 0 && <p>No content found</p>}

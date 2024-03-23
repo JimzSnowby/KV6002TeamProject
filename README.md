@@ -8,3 +8,4 @@ npm install html2canvas jspdf
 npm install react-calendar
 npm install react-icons —save
 npm install react-chatbot-kit
+npm install react-hot-toast

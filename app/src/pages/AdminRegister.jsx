@@ -1,5 +1,6 @@
 import bcrypt from 'bcryptjs'
 import React, { useState } from 'react'
+import toast, { Toaster } from 'react-hot-toast'
 
 /**
  * Admin Register page
@@ -12,51 +13,54 @@ import React, { useState } from 'react'
  */
 
 function AdminRegister() {
-    const [name, setName] = useState('')
-    const [dob, setDob] = useState('')
-    const [email, setEmail] = useState('')
-    const [phone, setPhone] = useState('')
-    const [password, setPassword] = useState('')
-    const [position, setPosition] = useState('')
-    const [isLoading, setIsLoading] = useState(true)
-    const salt = bcrypt.genSaltSync(10)
+    const [name, setName] = useState('');
+    const [dob, setDob] = useState('');
+    const [email, setEmail] = useState('');
+    const [phone, setPhone] = useState('');
+    const [password, setPassword] = useState('');
+    const [position, setPosition] = useState('');
 
     const saveAdmin = () => {
         if (name && email && password) {
-            const hashPassword = bcrypt.hashSync(password, salt)
+            // Hash password using bcrypt
+            const salt = bcrypt.genSaltSync(10);
+            const hashPassword = bcrypt.hashSync(password, salt);
+
             let formData = new FormData();
-            formData.append('name', name)
-            formData.append('dob', dob)
-            formData.append('email', email)
-            formData.append('phone', phone)
-            formData.append('password', hashPassword)
-            formData.append('position', position)
+            formData.append('name', name);
+            formData.append('dob', dob);
+            formData.append('email', email);
+            formData.append('phone', phone);
+            formData.append('password', hashPassword); // Send hashed password
+            formData.append('position', position);
 
             fetch('https://w20021570.nuwebspace.co.uk/assessment/api/adminregister',
                 {
                     method: 'POST',
                     body: formData
-                }
-            )
+                })
                 .then(handleResponse)
                 .then(handleJSON)
                 .catch(error => console.error('Error:', error));
         } else {
-            setErrorMessage('Please fill in all fields.')
+            setErrorMessage('Please fill in all fields.');
         }
     }
 
+
     const handleResponse = (response) => {
+        console.log('Response status:', response.status);
         if (response.status === 200 || response.status === 204) {
-            setName('')
-            setDob('')
-            setEmail('')
-            setPhone('')
-            setPassword('')
-            setPosition('')
+            toast.success('Admin added successfully');
+            setName('');
+            setDob('');
+            setEmail('');
+            setPhone('');
+            setPassword('');
+            setPosition('');
             return response.json()
         } else if (response.status === 409) {
-            //toast.error('User already exists');
+            toast.error('User already exists');
         } else {
             throw new Error("invalid response: " + response.status)
         }
@@ -71,6 +75,7 @@ function AdminRegister() {
     }
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-100 py-8">
+            <Toaster />
             <div className="bg-white rounded-lg shadow p-8 max-w-lg w-full">
                 <h2 className="text-center text-2xl font-semibold mb-8">Add New Admin</h2>
                 <div className="grid grid-cols-1 gap-4">
