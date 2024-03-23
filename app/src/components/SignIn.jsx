@@ -28,20 +28,26 @@ function SignIn(props) {
         const token = localStorage.getItem("token");
         if (token) {
             const decodedToken = parseJwt(token);
+            props.setUserID(decodedToken.id)
             const role = decodedToken.role; // Access the role field
             const position = decodedToken.position; // Access the position field
+            const id = decodedToken.id;
             const currentTime = Date.now() / 1000;
             if (decodedToken.exp < currentTime) {
                 signOut()
             }
             props.setRoleType(decodedToken.role)
             props.setPosition(decodedToken.position)
-            props.setUserID(decodedToken.id)
+            props.setUserID(id)
+           
             if(role){
                 props.setRoleType(role)
             }
             if(position){
                 props.setPosition(position)
+            }
+            if(id){
+                props.setUserID(id)
             }
         }
         if (!props.signedIn){
@@ -76,11 +82,16 @@ function SignIn(props) {
                     const decodedToken = parseJwt(data.token);
                     const role = decodedToken.role; // Access the role field
                     const position = decodedToken.position; // Access the position field
+                    const id = decodedToken.id;
+                    
                     if(role){
                         props.setRoleType(role)
                     }
                     if(position){
                         props.setPosition(position)
+                    }
+                    if(id){
+                        props.setUserID(id)
                     }
                 }
             })

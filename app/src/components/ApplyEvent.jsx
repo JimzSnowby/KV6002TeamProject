@@ -7,15 +7,35 @@
  */
 
 import React from "react"
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom"
+
 
 function ApplyEvent(props) {
+    const [userID, setUserID] = useState ('')
     const [apply, setApply] = useState('');
+    const navigate = useNavigate()
+
+
+    const parseJwt = (token) => {
+        const decode = JSON.parse(atob(token.split('.')[1]))
+        return decode;
+    }
+
+    useEffect(() => {
+    const token = localStorage.getItem("token")
+    if (token) {
+        const decodedToken = parseJwt(token)
+        const id = decodedToken.id
+        setUserID(id)
+    }})
+
+
 
     const applyToEvent = () => {
         let formData = new FormData();
         formData.append('eventid', props.eventID);
-        formData.append('participantid', props.userID);
+        formData.append('participantid', userID);
 
         fetch('https://w20021570.nuwebspace.co.uk/assessment/api/attend', {
             method: 'POST',
@@ -23,7 +43,7 @@ function ApplyEvent(props) {
             body: formData,
         })
             .then(response => {
-                console.log(props.userID)
+                console.log(userID)
                 console.log('Response:', response);
                 console.log(props.eventID)
                 if (response.status === 200 || response.status === 204) {
@@ -35,8 +55,12 @@ function ApplyEvent(props) {
                     window.alert('Sorry, you are out of tickets. Please contact our customer service at support@rose.com for more details.')
                 } else if (response.status === 469) {
                     window.alert('You have already booked this event.')
+                } else if (response.status === 472) {
+                    window.alert('You are not eligible.')
                 }
+                navigate("/")
                 return response.json();
+                
             })
             .catch(error => {
                 console.error('Error applying to event:', error);
@@ -44,11 +68,12 @@ function ApplyEvent(props) {
     }
     
     const cancelEventAttendance = () => {
-        fetch(`https://w20021570.nuwebspace.co.uk/assessment/api/attend?participantid=${props.userID}&eventid=${props.eventID}`, {
+        fetch(`https://w20021570.nuwebspace.co.uk/assessment/api/attend?participantid=${userID}&eventid=${props.eventID}`, {
             method: 'DELETE',
             headers: new Headers({ 'Authorization': 'Bearer ' + localStorage.getItem('token') }),
         })
             .then(response => {
+                console.log(props.userID)
                 console.log(response.status)
                 if (response.status === 200 || response.status === 204) {
                     setApply('');
@@ -58,6 +83,7 @@ function ApplyEvent(props) {
                 } else {
                     window.alert('Failed to cancel attendance at the event. Please try again later.');
                 }
+                navigate("/")
             })
             .catch(error => {
                 console.error('Error cancelling event attendance:', error);

@@ -71,15 +71,12 @@ class ParticipantEvent extends Endpoint {
         $sql = "SELECT eligible FROM participant WHERE participantID = :id";
         $sqlParameters = [':id' => $id];
         $data = $dbConn->executeSQL($sql, $sqlParameters);
-        if (count($data) != 1) {
-            throw new \App\ClientError(401);
-        }
-        $eligible = $data[0]['eligible'];
-
-        if ($eligible === 0) {
-            throw new \App\ClientError(467); // Not eligible
+        
+        if (empty($data) || $data[0]['eligible'] === null || $data[0]['eligible'] == 0) {
+            throw new \App\ClientError(472); // Not eligible
         }
     }
+    
 
     private function event(){  
         if (!isset(\App\REQUEST::params()['eventid']))
@@ -96,8 +93,6 @@ class ParticipantEvent extends Endpoint {
 
     }
 
-    
-
     private function checkSpaceAvailable($eventid){
         $dbConn = new \App\Database(MAIN_DATABASE);
     
@@ -106,13 +101,9 @@ class ParticipantEvent extends Endpoint {
         $sqlParameters = ['eventid' => $eventid];
         $data = $dbConn->executeSQL($sql, $sqlParameters);
     
-        if (count($data) === 0) {
-            throw new \App\ClientError(404); // eventid not found
-        }
-    
         $space = $data[0]['space'];
     
-        if ($space <= 0) {
+        if ($space === 0) {
             $this->addToWaiting($eventid);
             throw new \App\ClientError(467); // No space available
         }
@@ -128,9 +119,8 @@ class ParticipantEvent extends Endpoint {
     
         $space = $data[0]['space'];
     
-        if ($space <= 0) {
+        if ($space === 0) {
             $this->addToWaiting($eventid);
-            throw new \App\ClientError(467); // No space available
         }
     }
     
@@ -239,7 +229,6 @@ class ParticipantEvent extends Endpoint {
         return $count > 0;
     }
 
-
     private function joinEvent($id){
         $eventid = $this->event();
 
@@ -247,7 +236,7 @@ class ParticipantEvent extends Endpoint {
 
             throw new \App\ClientError(469);
         }
-        
+        $this->checkParticipantEligible($id);
         $this->checkSpaceAvailable($eventid);
         $this->checkTicket($id); 
         
@@ -280,47 +269,74 @@ class ParticipantEvent extends Endpoint {
             $data = $dbConn->executeSQL($sql);
             return $data;
         }
-
-    private function cancelEvent($id) {
-        $eventid = $this->event();
+    
+    private function waitingListExist($eventid){
+            $dbConn = new \App\Database(MAIN_DATABASE);
+            $sql = "SELECT COUNT(*) AS count FROM waitingList WHERE eventID = :eventid ";
+            $sqlParameters = ['eventid' => $eventid];
+            $result = $dbConn->executeSQL($sql, $sqlParameters); // Execute the SQL query and fetch the result
+            $count = $result[0]['count'];
+            return $count > 0;
+        }
+    
+        private function checkSpaceAfterCancel($id, $eventid){
+            $this->addSpace($eventid);
+            $this->addTicket($id);
+            $dbConn = new \App\Database(MAIN_DATABASE);
+            $sql = "SELECT space FROM event WHERE eventID = :eventid";
+            $sqlParameters = ['eventid' => $eventid];
+            $data = $dbConn->executeSQL($sql, $sqlParameters);
         
-        $dbConn = new \App\Database(MAIN_DATABASE);
+            $space = $data[0]['space'];
         
-        if (!$this->userAttends($id, $eventid)) {
-            throw new \App\ClientError(471); // Unauthorized cancellation
+            if ($this->waitingListExist($eventid) && $space > 0) {
+                $this->getFromWaitingList($id, $eventid);
+            }
+        }
+    
+        private function getFromWaitingList($id, $eventid){
+            $dbConn = new \App\Database(MAIN_DATABASE);
+            $sql = "SELECT participantID FROM waitingList WHERE eventID = :eventid ORDER BY id ASC LIMIT 1";
+            $sqlParameters = ['eventid' => $eventid];
+            $waitingListData = $dbConn->executeSQL($sql, $sqlParameters);
+        
+            if (!empty($waitingListData)) {
+                $waitingParticipantID = $waitingListData[0]['participantID'];
+        
+                $sql = "DELETE FROM waitingList WHERE participantID = :waitingparticipant AND eventID = :eventid";
+                $sqlParameters = [':waitingparticipant' => $waitingParticipantID, 'eventid' => $eventid];
+                $dbConn->executeSQL($sql, $sqlParameters);
+        
+                $sql = "INSERT INTO participantEvent (participantID, eventID) VALUES (:waitingparticipant, :eventid)";
+                $sqlParameters = [':waitingparticipant' => $waitingParticipantID, 'eventid' => $eventid];
+                $dbConn->executeSQL($sql, $sqlParameters);
+        
+                $this->removeSpace($eventid);
+                $this->removeTicket($waitingParticipantID);
+        
+                // Optionally, notify the promoted participant about their new status
+                // You may implement a notification mechanism here
+            }
         }
 
-        $sql = "DELETE FROM participantEvent WHERE participantID = :id AND eventID = :eventid";
-        $sqlParameters = [':id' => $id, 'eventid' => $eventid];
-        $data = $dbConn->executeSQL($sql, $sqlParameters);
-
-        $this->addSpace($eventid);
-        $this->addTicket($id);
-
-           
-        $sql = "SELECT participantID FROM waitingList WHERE eventID = :eventid ORDER BY id ASC LIMIT 1";
-        $sqlParameters = ['eventid' => $eventid];
-        $waitingListData = $dbConn->executeSQL($sql, $sqlParameters);
-
-        if (!empty($waitingListData)) {
-            $waitingParticipantID = $waitingListData[0]['participantID'];
-
-            $sql = "DELETE FROM waitingList WHERE participantID = :waitingparticipant AND eventID = :eventid";
-            $sqlParameters = [':waitingparticipant' => $waitingParticipantID, 'eventid' => $eventid];
-            $dbConn->executeSQL($sql, $sqlParameters);
-
-            $sql = "INSERT INTO participantEvent (participantID, eventID) VALUES (:waitingparticipant, :eventid)";
-            $sqlParameters = [':waitingparticipant' => $waitingParticipantID, 'eventid' => $eventid];
-            $dbConn->executeSQL($sql, $sqlParameters);
-
-            $this->removeSpace($eventid);
-            $this->removeTicket($waitingParticipantID);
-
-            // Optionally, notify the promoted participant about their new status
-            // You may implement a notification mechanism here
-        }
-
+        private function cancelEvent($id) {
+            $eventid = $this->event();
+            
+            $dbConn = new \App\Database(MAIN_DATABASE);
+            
+            if (!$this->userAttends($id, $eventid)) {
+                throw new \App\ClientError(471); // Unauthorized cancellation
+            }
         
-        return $data; 
-    }
+            $sql = "DELETE FROM participantEvent WHERE participantID = :id AND eventID = :eventid";
+            $sqlParameters = [':id' => $id, 'eventid' => $eventid];
+            $data = $dbConn->executeSQL($sql, $sqlParameters);
+        
+            $this->checkSpaceAfterCancel($id, $eventid);
+        
+            
+            return []; 
+        }
+        
 }
+
