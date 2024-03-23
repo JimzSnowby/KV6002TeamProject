@@ -1,17 +1,16 @@
+/**
+ * Home Page
+ * 
+ * Home page for the application uses the Event component to fetch and display the events details.
+ * 
+ * @author Antonio Gorgan.
+ */
+
 import React, { useEffect, useState } from 'react'
 import Newsletter from '../components/Newsletter'
 import Sponsor from '../components/Sponsor'
 import Search from '../components/Search'
 import Event from '../components/Event'
-
-
-/**
- * Home Page
- * 
- * Home page for the application.
- * 
- * @author Team
- */
 
 function HomePage(props) {
     const [event, setevent] = useState([])

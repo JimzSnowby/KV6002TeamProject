@@ -1,9 +1,9 @@
 /**
  * ApplyEvent Component
  *
- * This component allows the users to apply for events.
+ * This component allows the users to join the wiating list for the event.
  * 
- * @author Maja Bosy
+ * @authors Maja Bosy & Antonio Gorgan
  */
 
 import React from "react"
@@ -17,7 +17,7 @@ function ApplyWaitingList(props) {
 
     const parseJwt = (token) => {
         const decode = JSON.parse(atob(token.split('.')[1]))
-        return decode;
+        return decode
     }
 
     useEffect(() => {
@@ -29,9 +29,9 @@ function ApplyWaitingList(props) {
     }})
 
     const applyToWaiting = () => {
-        let formData = new FormData();
-        formData.append('eventid', props.eventID);
-        formData.append('participantid', userID);
+        let formData = new FormData()
+        formData.append('eventid', props.eventID)
+        formData.append('participantid', userID)
 
         fetch('https://w20021570.nuwebspace.co.uk/assessment/api/waiting', {
             method: 'POST',
@@ -39,26 +39,32 @@ function ApplyWaitingList(props) {
             body: formData,
         })
             .then(response => {
-                console.log('Response:', response);
+                console.log('Response:', response)
                 console.log(props.eventID)
                 if (response.status === 200 || response.status === 204) {
                     setApply(apply)
                     window.alert('You placed yourself in the event waiting list successfully!')
+                    window.location.reload()
                 } else if (response.status === 467) {
                     window.alert('Sorry, this waiting list has no spaces left.')
+                    window.location.reload()
                 } else if (response.status === 468) {
                     window.alert('Sorry, you are out of tickets. Please contact our customer service at support@rose.com for more details.')
+                    window.location.reload()
                 } else if (response.status === 469) {
                     window.alert('You already are in the waiting list for this event.')
+                    window.location.reload()
                 } else if (response.status === 472) {
                     window.alert('You are not eligible.')
+                    window.location.reload()
                 }
                 navigate("/")
-                return response.json();
+                window.location.reload()
+                return response.json()
             })
             .catch(error => {
-                console.error('Error applying to event:', error);
-            });
+                console.error('Error applying to event:', error)
+            })
     }
     
     
@@ -74,9 +80,9 @@ function ApplyWaitingList(props) {
                 Join The Waiting List
             </button>
         </div>
-    );
+    )
 }
-export default ApplyWaitingList;
+export default ApplyWaitingList
 
 
 

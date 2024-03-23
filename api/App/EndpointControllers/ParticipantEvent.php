@@ -299,7 +299,8 @@ class ParticipantEvent extends Endpoint {
     
         private function getFromWaitingList($id, $eventid){
             $dbConn = new \App\Database(MAIN_DATABASE);
-            $sql = "SELECT participantID FROM waitingList WHERE eventID = :eventid ORDER BY id ASC LIMIT 1";
+            $sql = "SELECT participantID FROM waitingList WHERE eventID = :eventid AND participantID IS 
+                    NOT NULL  ORDER BY participantID ASC LIMIT 1";
             $sqlParameters = ['eventid' => $eventid];
             $waitingListData = $dbConn->executeSQL($sql, $sqlParameters);
         
