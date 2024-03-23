@@ -1,5 +1,9 @@
 import { Link } from 'react-router-dom';
-
+/**
+ * Menu component
+ *  
+ * @author Team 
+ */
 function Menu(props) {
     return (
         <ul className="flex flex-col md:flex-row justify-evenly text-lg font-semibold bg-blue-200">
@@ -33,6 +37,13 @@ function Menu(props) {
             <li>
             {props.signedIn && props.roletype === 'admin'  && <Link to="/eventparticipant" className="px-8 hover:text-blue-500 transition duration-300">Event Participant</Link>}
             </li>
+            <li>
+            {props.signedIn && props.roletype === 'admin'  && <Link to="/sponsor" className="px-8 hover:text-blue-500 transition duration-300">Sponsor</Link>}
+            </li>
+            <li>
+            {props.signedIn && props.roletype === 'admin'  && <Link to="/eventvolunteer" className="px-8 hover:text-blue-500 transition duration-300">Event Volunteer</Link>}
+            </li>
+            
 
         </ul>
     );

@@ -9,6 +9,8 @@ import AdminRegister from './pages/AdminRegister'
 import NewEvent from './pages/NewEvent'
 import CheckParticipant from './pages/CheckParticipant'
 import EventParticipant from './pages/EventParticipant'
+import DisplaySponsor from './pages/DisplaySponsor'
+import EventVolunteer from './pages/EventVolunteer'
 
 import Header from "./components/Header"
 import Menu from "./components/Menu"
@@ -124,6 +126,8 @@ function App() {
           <Route path="*" element={<NotFound />} />
           <Route path="/becomeparticipant" element={<BecomeParticipant />} />
           <Route path="/eventparticipant" element={<EventParticipant />} />
+          <Route path="/sponsor" element={<DisplaySponsor />} />
+          <Route path="/eventvolunteer" element={<EventVolunteer />} />
       </Routes>
 
       <footer className="bg-slate-700 shadow-lg p-2 text-md text-right" >
