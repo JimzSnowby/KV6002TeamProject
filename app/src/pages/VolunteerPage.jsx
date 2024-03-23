@@ -179,23 +179,35 @@ function VolunteerPage(props) {
     }
 
     const updateProfile = () => {
-        const updatedDetails = { name, dob, email, phone };
-
+        const formData = new FormData();
+        formData.append('name', name);
+        formData.append('dob', dob);
+        formData.append('email', email);
+        formData.append('phone', phone);
+    
         fetch(`https://w20021570.nuwebspace.co.uk/assessment/api/volunteer?volunteerid=${id}`, {
             method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(updatedDetails),
+            headers: new Headers({ 'Authorization': 'Bearer ' + localStorage.getItem('token') }),
+            body: formData,
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
         .then(data => {
             console.log('Profile updated:', data);
             window.alert('Profile updated successfully!');
             setRefreshTrigger(current => current + 1);
         })
-        .catch(error => console.error('Error updating profile:', error));
+        .catch(error => {
+            console.error('Error updating profile:', error);
+            window.alert('Error updating profile. Please try again later.');
+        });
     };
+    
+    
 
     const detailsJSX = (
         <section className='flex-1 p-5 bg-white shadow-md rounded-lg mr-5 flex flex-col space-y-4'>
