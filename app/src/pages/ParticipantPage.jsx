@@ -11,7 +11,7 @@ import { FiUser } from 'react-icons/fi';
 
 function ParticipantPage(props) {
     const [name, setName] = useState(props.name || '');
-    const [phone, setPhone] = useState(props.phone || '');
+    const [phone, setPhone] = useState(props.phone ? String(props.phone) : '');
     const [email, setEmail] = useState(props.email || '');
     const [evidence, setEvidence] = useState(props.evidence || '');
     const [errorMessage, setErrorMessage] = useState('');
@@ -44,6 +44,7 @@ function ParticipantPage(props) {
 
     const updateParticipant = (event) => {
         event.preventDefault();
+        console.log('Phone value:', phone); // Add this line to inspect the value of phone
 
         // Name validation
         if (!name.match(nameRegex)) {
@@ -57,8 +58,11 @@ function ParticipantPage(props) {
             return;
         }
 
-        // Phone validation
-        if (!phone.match(phoneRegex)) {
+        // Phone number validation regex for numeric format only
+        const phoneRegex = /^[0-9]+$/;
+
+        // Phone number validation
+        if (String(phone).trim() === '' || !String(phone).match(phoneRegex)) {
             setErrorMessage('Please enter a valid phone number.');
             return;
         }
