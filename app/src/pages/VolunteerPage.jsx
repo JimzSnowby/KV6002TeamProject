@@ -187,27 +187,26 @@ function VolunteerPage(props) {
     
         fetch(`https://w20021570.nuwebspace.co.uk/assessment/api/volunteer?volunteerid=${id}`, {
             method: 'PUT',
-            headers: new Headers({ 'Authorization': 'Bearer ' + localStorage.getItem('token') }),
             body: formData,
         })
         .then(response => {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
+            if (response.status === 204) {
+                console.log('Profile updated successfully but no data returned.');
+                window.alert('Profile updated successfully!');
+                // Signal successful update without trying to read JSON
+                return null; // This prevents the next .then() from executing its JSON parsing logic
+            }
+            // Only attempt to parse JSON if the response wasn't 204 No Content
             return response.json();
-        })
-        .then(data => {
-            console.log('Profile updated:', data);
-            window.alert('Profile updated successfully!');
-            setRefreshTrigger(current => current + 1);
         })
         .catch(error => {
             console.error('Error updating profile:', error);
             window.alert('Error updating profile. Please try again later.');
         });
     };
-    
-    
 
     const detailsJSX = (
         <section className='flex-1 p-5 bg-white shadow-md rounded-lg mr-5 flex flex-col space-y-4'>
@@ -237,6 +236,7 @@ function VolunteerPage(props) {
                 onChange={(e) => setPhone(e.target.value)}
                 placeholder="Phone"
                 type="tel"
+                maxLength={11}
             />
             <button onClick={updateProfile} className='bg-blue-500 hover:bg-blue-700 self-center text-white font-bold py-2 px-4 rounded self-start'>Update Details</button>
         </section>
