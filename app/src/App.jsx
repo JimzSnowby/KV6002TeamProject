@@ -19,7 +19,6 @@ import SignIn from "./components/SignIn"
 import ParticipantPage from "./pages/ParticipantPage"
 import RegistrationForm from "./pages/Register"
 import BecomeParticipant from './pages/BecomeParticipant'
-import Search from './components/Search'
 import Event from './components/Event'
 import ApplyEvent from './components/ApplyEvent'
 import Chatbot from 'react-chatbot-kit'

@@ -9,7 +9,6 @@
 import React, { useEffect, useState } from 'react'
 import Newsletter from '../components/Newsletter'
 import Sponsor from '../components/Sponsor'
-import Search from '../components/Search'
 import Event from '../components/Event'
 
 function HomePage(props) {
