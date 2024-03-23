@@ -20,7 +20,7 @@ function EventParticipant() {
     const pdfRef = React.createRef();
 
     useEffect(() => {
-        fetch('https://w20012367.nuwebspace.co.uk/assessment/api/eventlist')
+        fetch('https://w20021570.nuwebspace.co.uk/assessment/api/eventlist')
             .then(response => response.json())
             .then(data => {
                 setEvents(data);
