@@ -32,6 +32,12 @@ class Volunteer extends Endpoint
                 $dbConn = new \App\Database(MAIN_DATABASE);
                 $data = $dbConn->executeSQL($this->sql, $this->sqlParams);
                 break;
+            case 'PUT':
+                $this->checkAllowedParams();
+                $this->updateUser();
+                $dbConn = new \App\Database(MAIN_DATABASE);
+                $data = $dbConn->executeSQL($this->sql, $this->sqlParams);
+                break;
             default:
                 throw new \App\ClientError(405);
         }
@@ -73,6 +79,27 @@ class Volunteer extends Endpoint
                 ":email" => \App\Request::params()["email"],
                 ":phone" => \App\Request::params()["phone"],
                 ":password"=> \App\Request::params()["password"]
+            ];
+        }
+    }
+
+    private function updateUser()
+    {
+        if(!isset(\App\Request::params()["volunteerid"]))
+        {
+            throw new \App\ClientError(400);
+        }
+
+
+        if (isset(\App\Request::params()["volunteerid"]))
+        {
+            $this->sql = "UPDATE volunteer SET name = :name, dob = :dob, email = :email, phone = :phone WHERE volunteerID = :volunteerid";
+            $this->sqlParams = [
+                ":volunteerid" => \App\Request::params()["volunteerid"],
+                ":name" => \App\Request::params()["name"],
+                ":dob" => \App\Request::params()["dob"],
+                ":email" => \App\Request::params()["email"],
+                ":phone" => \App\Request::params()["phone"],
             ];
         }
     }

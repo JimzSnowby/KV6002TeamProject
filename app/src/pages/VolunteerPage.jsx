@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from "react-router-dom";
 import Event from '../components/Event'
+import VolunteerEvent from '../components/VolunteerEvent';
 import Availability from '../components/Availability';
 
 /**
@@ -19,19 +20,15 @@ function VolunteerPage(props) {
     const [refreshTrigger, setRefreshTrigger] = useState(0)
     const navigate = useNavigate()
 
+    // For updating profile details
+    const [name, setName] = useState('');
+    const [dob, setDob] = useState('');
+    const [email, setEmail] = useState('');
+    const [phone, setPhone] = useState('');
+
     const itemsPerPage = 10
     const startOfPage = (page - 1) * itemsPerPage
     const endOfPage = startOfPage + itemsPerPage
-
-    const [availability, setAvailability] = useState({
-        Monday: false,
-        Tuesday: false,
-        Wednesday: false,
-        Thursday: false,
-        Friday: false,
-        Saturday: false,
-        Sunday: false,
-    })
 
     const parseJwt = (token) => {
         try {
@@ -41,6 +38,16 @@ function VolunteerPage(props) {
         }
     };
 
+    useEffect(() => {
+        // When details are fetched, set the states for the editable fields
+        if (details.length > 0) {
+            const detail = details[0]; // Assuming 'details' contains the profile data
+            setName(detail.name);
+            setDob(detail.dob);
+            setEmail(detail.email);
+            setPhone(detail.phone); // Assuming 'phone' is part of your details object
+        }
+    }, [details]);
 
     useEffect(() => {
         // Effect to decode token and set ID
@@ -103,7 +110,7 @@ function VolunteerPage(props) {
             }
         })
         .then(data => {
-            setVolunteeredEvent(data); // Update state with the parsed data (or empty array)
+            setVolunteeredEvent(data)
         })
         .catch(error => console.error("Error fetching volunteered events: ", error));
     }
@@ -125,6 +132,7 @@ function VolunteerPage(props) {
             }
             if (response.status === 200 || response.status === 204){
                 console.log('Event signed up for')
+                console.log("Events: ", volunteeredEvent)
                 window.alert('Signed up successfully!')
                 setRefreshTrigger(current => current + 1)
             }
@@ -170,14 +178,57 @@ function VolunteerPage(props) {
         .catch(error => console.error("Error fetching events: ", error))
     }
 
-    const detailsJSX = details.map((details, index) => 
-        <section key = {index} className='flex-1 p-5 bg-blue-200'>
-            <p className='text-2xl text-center'>{details.name}</p>
-            <p className='text-center'>Volunteer ID: {details.volunteerID}</p>
-            <p className='text-center'>Date of Birth: {details.dob}</p>
-            <p className='text-center'>Email: {details.email}</p>
+    const handleUpdateProfile = () => {
+        const updatedDetails = { name, dob, email, phone };
+
+        fetch(`https://w20021570.nuwebspace.co.uk/assessment/api/volunteer?volunteerid=${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(updatedDetails),
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Profile updated:', data);
+            window.alert('Profile updated successfully!');
+            setRefreshTrigger(current => current + 1);
+        })
+        .catch(error => console.error('Error updating profile:', error));
+    };
+
+    const detailsJSX = (
+        <section className='flex-1 p-5 bg-white shadow-md rounded-lg mr-5 flex flex-col space-y-4'>
+            <input
+                className='text-xl p-2 border border-gray-300 rounded'
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Name"
+            />
+            <input
+                className='p-2 border border-gray-300 rounded'
+                value={dob}
+                onChange={(e) => setDob(e.target.value)}
+                placeholder="Date of Birth"
+                type="date"
+            />
+            <input
+                className='p-2 border border-gray-300 rounded'
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Email"
+                type="email"
+            />
+            <input
+                className='p-2 border border-gray-300 rounded'
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                placeholder="Phone"
+                type="tel"
+            />
+            <button className='bg-blue-500 hover:bg-blue-700 self-center text-white font-bold py-2 px-4 rounded self-start'>Update Details</button>
         </section>
-    )
+    );
 
     const eventsJSX = event.slice(startOfPage, endOfPage).map((item) =>(
         <section 
@@ -207,7 +258,7 @@ function VolunteerPage(props) {
     if (volunteeredEvent.length > 0) {
         volunteerEventsJSX = volunteeredEvent.map((item) => (
         <section key={item.eventID} className='p-4 m-2 rounded-lg border border-gray-300'>
-        <Event
+        <VolunteerEvent
             event={item}
             signedIn={props.signedIn}
             extendEvent={extendEvent}
@@ -231,12 +282,11 @@ function VolunteerPage(props) {
     }
 
     return (
-        <>
+        <div className="bg-gray-100 p-2 sm:px-6 lg:px-8">
             <h1 className='text-4xl text-center p-2'>Profile</h1>
             <div className='p-5 flex'>
                 {detailsJSX}
-                <div className='flex-1 flex-col p-5'>
-                    
+                <div className='flex-1 p-5 bg-white shadow-md rounded-lg mr-5'>
                     <Availability
                         id={id}
                         selectedDates={selectedDates}
@@ -252,7 +302,7 @@ function VolunteerPage(props) {
                     <p className='text-2xl text-center'>Upcoming Events</p>
                     {eventsJSX}
             </div>
-        </>
+        </div>
     )
 }
 

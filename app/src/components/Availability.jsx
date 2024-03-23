@@ -11,23 +11,29 @@ function Availability(props){
     const [availabilityDates, setAvailabilityDates] = useState([]);
 
     useEffect(() => {
-
-        fetch('https://w20021570.nuwebspace.co.uk/assessment/api/volunteeravailability?volunteerid=' + props.id)
-        .then(response => response.json())
-        .then(data => {
-            // Assuming the API returns an array of objects, each with a "date" field
-            const formattedDates = data.map(item => item.date);
-            props.setSelectedDates(formattedDates);
-        })
-        .catch(error => console.error('Error fetching availability data:', error));
+        // Check if props.id is truthy before making the fetch call
+        if (props.id) {
+            fetch(`https://w20021570.nuwebspace.co.uk/assessment/api/volunteeravailability?volunteerid=${props.id}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const formattedDates = data.map(item => item.date);
+                    setAvailabilityDates(formattedDates); // Update the state, not props
+                })
+                .catch(error => console.error('Error fetching availability data:', error));
+        }
     }, [props.id]);
 
     const saveAvailability = () => {
         let formData = new FormData();
         formData.append('volunteerid', props.id);
-        formData.append('date', props.selectedDates);
+        formData.append('date', availabilityDates);
 
-        fetch('https://w20021570.nuwebspace.co.uk/assessment/api/volunteeravailability?volunteerid=' + props.id + '&date=' + props.selectedDates, 
+        fetch('https://w20021570.nuwebspace.co.uk/assessment/api/volunteeravailability?volunteerid=' + props.id + '&date=' + availabilityDates, 
         {
             method: 'POST',
             body: formData
@@ -65,33 +71,29 @@ function Availability(props){
     }
 
     const tileClassName = ({ date, view }) => {
-        // Ensure we're working with the date view
         if (view === 'month') {
-            // Format the date to match the API format
             const dateString = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
-
-            // Check if the formatted date string is in the availabilityDates array
             if (availabilityDates.includes(dateString)) {
-                return 'availableDate'; // Return a class name to style this date
+                return 'availableDate'; // Make sure this CSS class is defined to style the date
             }
         }
     };
 
     return(
         <>
-            <div className='flex flex-col items-center p-5 bg-blue-200'>
+            <div className='flex flex-col items-center p-5'>
                 <p className='text-2xl text-center'>Availability</p>
+                <p className="text-center p-2">Input dates that you are available to volunteer and you will recieve a notification if there are any events made for those dates.</p>
                 <ReactCalendar
                     onChange={value => {
                         const formattedDates = Array.isArray(value) ? value.map(date => date.toISOString().split('T')[0]) : [value.toISOString().split('T')[0]];
-                        props.setSelectedDates(formattedDates);
+                        setAvailabilityDates(formattedDates);
                     }}
-                    value={props.selectedDates.map(dateString => {
+                    value={availabilityDates.map(dateString => {
                         const parsedDate = new Date(dateString);
                         return isNaN(parsedDate) ? undefined : parsedDate; // Only return valid dates
                     }).filter(date => !!date)} // Filter out undefined values
                     selectRange={false}
-                    multiple={true}
                     tileClassName={tileClassName}
                 />
                 <button onClick={saveAvailability} className="bg-gray-800 text-white px-4 py-2 rounded-b-md hover:bg-green-500">Save Availability</button>
