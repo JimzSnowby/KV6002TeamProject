@@ -1,4 +1,5 @@
 import React from 'react'
+import { IoMdRose } from "react-icons/io";
 
 /**
  * Header
@@ -9,14 +10,15 @@ import React from 'react'
  */
 
 function Header() {
-
   return (
     <header className="bg-blue-300 py-6">
-      <h1 className="text-black text-4xl font-bold mt-4 text-center">ROSE</h1>
+      <div className="flex items-center justify-center">
+        <IoMdRose className="text-black text-4xl mt-1 mr-2" />
+        <h1 className="text-black text-4xl font-bold mt-4">ROSE</h1>
+      </div>
     </header>
-
-  )
-
+  );
 }
+
 
 export default Header
