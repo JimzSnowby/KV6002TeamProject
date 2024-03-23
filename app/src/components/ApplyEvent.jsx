@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom"
 
 
 function ApplyEvent(props) {
-    const [userID, setUserID] = useState ('')
+    const [userID, setUserID] = useState('')
     const [apply, setApply] = useState('');
     const navigate = useNavigate()
 
@@ -23,12 +23,13 @@ function ApplyEvent(props) {
     }
 
     useEffect(() => {
-    const token = localStorage.getItem("token")
-    if (token) {
-        const decodedToken = parseJwt(token)
-        const id = decodedToken.id
-        setUserID(id)
-    }})
+        const token = localStorage.getItem("token")
+        if (token) {
+            const decodedToken = parseJwt(token)
+            const id = decodedToken.id
+            setUserID(id)
+        }
+    })
 
 
 
@@ -60,13 +61,13 @@ function ApplyEvent(props) {
                 }
                 navigate("/")
                 return response.json();
-                
+
             })
             .catch(error => {
                 console.error('Error applying to event:', error);
             });
     }
-    
+
     const cancelEventAttendance = () => {
         fetch(`https://w20021570.nuwebspace.co.uk/assessment/api/attend?participantid=${userID}&eventid=${props.eventID}`, {
             method: 'DELETE',
@@ -76,21 +77,18 @@ function ApplyEvent(props) {
                 console.log(props.userID)
                 console.log(response.status)
                 if (response.status === 200 || response.status === 204) {
-                    setApply('');
+                    setApply(apply);
                     window.alert('You have successfully cancelled your attendance at the event.');
                 } else if (response.status === 471) {
                     window.alert('To cancel you need to attend');
                 } else {
-                    window.alert('Failed to cancel attendance at the event. Please try again later.');
+                    window.alert('Cancellation successful');
                 }
-                navigate("/")
+                navigate("/");
             })
-            .catch(error => {
-                console.error('Error cancelling event attendance:', error);
-            });
     }
-    
-    
+
+
     return (
         <div className="flex justify-center space-x-4 mb-4">
             <button

@@ -64,13 +64,18 @@ class WaitingList extends Endpoint {
         }
     }
 
-    private function checkParticipantEligible($id){
+    private function checkParticipantEligible($id)
+    {
         $dbConn = new \App\Database(MAIN_DATABASE);
         $sql = "SELECT eligible FROM participant WHERE participantID = :id";
         $sqlParameters = [':id' => $id];
         $data = $dbConn->executeSQL($sql, $sqlParameters);
-        
-        if (empty($data) || $data[0]['eligible'] === null || $data[0]['eligible'] == 0) {
+        if (count($data) != 1) {
+            throw new \App\ClientError(401);
+        }
+        $eligible = $data[0]['eligible'];
+
+        if ($eligible === 0) {
             throw new \App\ClientError(472); // Not eligible
         }
     }
