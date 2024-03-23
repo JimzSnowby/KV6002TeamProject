@@ -1,10 +1,15 @@
+/**
+ * ParticipantEvent Component
+ *
+ * This component allow users to sign in.
+ * It sets user roles based on the user role in the databse. 
+ * It provides a token for validation. 
+ * 
+ * @author Team
+ */
+
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-
-/**
- * The SignIn component for the application.
- * @author James Sowerby
- */
 
 function SignIn(props) {
     const [username, setUserName] = useState("")
@@ -13,15 +18,15 @@ function SignIn(props) {
     const errorColour = signInError ? "bg-red-200" : "bg-slate-100"
     const navigate = useNavigate()
 
-   const parseJwt = (token) => {
-            const decode = JSON.parse(atob(token.split('.')[1]));
-            console.log(decode);
-            if (decode.exp * 1000 < new Date().getTime()) {
-                signOut();
-                console.log('Time Expired');
-                window.alert("Session Expired")
-            }
-            return decode;
+    const parseJwt = (token) => {
+        const decode = JSON.parse(atob(token.split('.')[1]));
+        console.log(decode);
+        if (decode.exp * 1000 < new Date().getTime()) {
+            signOut();
+            console.log('Time Expired');
+            window.alert("Session Expired")
+        }
+        return decode;
     };
 
     useEffect(() => {
@@ -29,32 +34,11 @@ function SignIn(props) {
         if (token) {
             const decodedToken = parseJwt(token);
             props.setUserID(decodedToken.id)
-            const role = decodedToken.role; // Access the role field
-            const position = decodedToken.position; // Access the position field
-            const id = decodedToken.id;
-            const currentTime = Date.now() / 1000;
-            if (decodedToken.exp < currentTime) {
-                signOut()
-            }
             props.setRoleType(decodedToken.role)
             props.setPosition(decodedToken.position)
-            props.setUserID(id)
-           
-            if(role){
-                props.setRoleType(role)
-            }
-            if(position){
-                props.setPosition(position)
-            }
-            if(id){
-                props.setUserID(id)
-            }
+            props.setSignedIn(true);
         }
-        if (!props.signedIn){
-            setUserName("")
-            setPassword("")
-        }
-        }, [props.signedIn]);
+    }, []);
 
     const signIn = () => {
         const encodedString = btoa(username + ':' + password)
@@ -70,29 +54,18 @@ function SignIn(props) {
                     return
                 }
                 if (response.status === 200 || response.status === 204) {
-                    props.setSignedIn(true)
-                    setSignInError(false)
-                    navigate("/")
                     return response.json()
                 }
             })
             .then(data => {
-                if (data.token) {
+                if (data && data.token) {
                     localStorage.setItem("token", data.token);
                     const decodedToken = parseJwt(data.token);
-                    const role = decodedToken.role; // Access the role field
-                    const position = decodedToken.position; // Access the position field
-                    const id = decodedToken.id;
-                    
-                    if(role){
-                        props.setRoleType(role)
-                    }
-                    if(position){
-                        props.setPosition(position)
-                    }
-                    if(id){
-                        props.setUserID(id)
-                    }
+                    props.setUserID(decodedToken.id)
+                    props.setRoleType(decodedToken.role)
+                    props.setPosition(decodedToken.position)
+                    props.setSignedIn(true);
+                    navigate("/")
                 }
             })
             .catch(error => console.log(error))  

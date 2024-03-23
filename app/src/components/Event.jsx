@@ -1,33 +1,33 @@
-import React, { useState } from 'react';
-import ParticipantEvent from './ParticipantEvent';
-import ApplyEvent from './ApplyEvent';
-import ApplyWaitingList from './ApplyWaitingList';
+import React, { useState } from 'react'
+import ParticipantEvent from './ParticipantEvent'
+import ApplyEvent from './ApplyEvent'
+import ApplyWaitingList from './ApplyWaitingList'
 
 /**
- * The SignIn component for the application.
+ * The Evnet component for the home page, it fetches and displays all events from the databse.
  * 
  * @author Antonio Gorgan
  */
 
 function Event(props) {
-    const [extendEvent, setExtendEvent] = useState(null);
+    const [extendEvent, setExtendEvent] = useState(null)
     const [eventID, setEventID] = useState('')
 
     const toggleVisibility = (eventID) => {
         if (extendEvent === eventID) {
-            setExtendEvent(null);
+            setExtendEvent(null)
         } else {
-            setExtendEvent(eventID);
-            setEventID(eventID); // Use local setEventID
+            setExtendEvent(eventID)
+            setEventID(eventID) 
         }
-    };
+    }
 
-    const expandedEventClass = "md:col-span-2";
-    const isExpanded = props.event.eventID === extendEvent;
+    const expandedEventClass = "md:col-span-2"
+    const isExpanded = props.event.eventID === extendEvent
 
-    const totalSpace = 5;
-    const availableSpace = props.event.space;
-    const spaceLeft = ((totalSpace - availableSpace) / totalSpace) * 100;
+    const totalSpace = 5
+    const availableSpace = props.event.space
+    const spaceLeft = ((totalSpace - availableSpace) / totalSpace) * 100
 
     return (
         <div className={`cursor-pointer ${isExpanded ? expandedEventClass : ""}`}>
@@ -78,7 +78,7 @@ function Event(props) {
             )}
 
         </div>
-    );
+    )
 }
 
-export default Event;
+export default Event

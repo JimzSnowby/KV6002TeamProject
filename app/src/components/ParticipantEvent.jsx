@@ -1,3 +1,11 @@
+/**
+ * ParticipantEvent Component
+ *
+ * This component shows how many users are in the list for the event.
+ * 
+ * @author Antonio Gorgan
+ */
+
 import React, { useEffect, useState } from 'react';
 
 function ParticipantEvent({ selectedEventID }) {

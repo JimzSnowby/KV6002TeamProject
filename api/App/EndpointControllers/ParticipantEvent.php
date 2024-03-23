@@ -277,6 +277,7 @@ class ParticipantEvent extends Endpoint {
             $result = $dbConn->executeSQL($sql, $sqlParameters); // Execute the SQL query and fetch the result
             $count = $result[0]['count'];
             return $count > 0;
+            http_response_code(204);
         }
     
         private function checkSpaceAfterCancel($id, $eventid){
@@ -290,13 +291,16 @@ class ParticipantEvent extends Endpoint {
             $space = $data[0]['space'];
         
             if ($this->waitingListExist($eventid) && $space > 0) {
-                $this->getFromWaitingList($id, $eventid);
+                $this->getFromWaitingList($id, $eventid); 
             }
+
+            
         }
     
         private function getFromWaitingList($id, $eventid){
             $dbConn = new \App\Database(MAIN_DATABASE);
-            $sql = "SELECT participantID FROM waitingList WHERE eventID = :eventid ORDER BY id ASC LIMIT 1";
+            $sql = "SELECT participantID FROM waitingList WHERE eventID = :eventid AND participantID IS 
+                    NOT NULL  ORDER BY participantID ASC LIMIT 1";
             $sqlParameters = ['eventid' => $eventid];
             $waitingListData = $dbConn->executeSQL($sql, $sqlParameters);
         
@@ -313,6 +317,7 @@ class ParticipantEvent extends Endpoint {
         
                 $this->removeSpace($eventid);
                 $this->removeTicket($waitingParticipantID);
+                http_response_code(204);
         
                 // Optionally, notify the promoted participant about their new status
                 // You may implement a notification mechanism here
@@ -331,8 +336,16 @@ class ParticipantEvent extends Endpoint {
             $sql = "DELETE FROM participantEvent WHERE participantID = :id AND eventID = :eventid";
             $sqlParameters = [':id' => $id, 'eventid' => $eventid];
             $data = $dbConn->executeSQL($sql, $sqlParameters);
+
+            if ($data === false || $data === 0) {
+                throw new \App\ClientError(500); // Internal Server Error
+            } else {
+                $this->checkSpaceAfterCancel($id, $eventid);
+                http_response_code(204);
         
-            $this->checkSpaceAfterCancel($id, $eventid);
+            }
+        
+            
         
             
             return []; 

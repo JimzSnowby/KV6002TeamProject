@@ -83,7 +83,7 @@ function ParticipantPage(props) {
                     window.alert('You have updated your profile successfully!');
                     return;
                 } else if (response.ok) {
-                    return response.json();
+                    return response.json()
                 } else {
                     throw new Error('Failed to update the data. Server returned status: ' + response.status);
                 }
@@ -91,7 +91,6 @@ function ParticipantPage(props) {
             .then(data => {
                 // Process data if it exists (for successful responses with content)
                 if (data) {
-                    console.log('Updated participant data:', data);
                     setName(data.name);
                     setEmail(data.email);
                     setPhone(data.phone);
@@ -99,7 +98,6 @@ function ParticipantPage(props) {
                 }
             })
             .catch(error => {
-                console.error('Error updating your profile:', error);
                 window.alert(error.message);
             });
     }

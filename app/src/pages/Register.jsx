@@ -20,7 +20,6 @@ function RegistrationForm({ onRegistration }) {
     const [phone, setPhone] = useState('')
     const [ticket, setTicket] = useState('3') // Ticket set to always 3
     const [confirmPassword, setConfirmPassword] = useState('')
-    const [token, setToken] = useState('')
     const salt = bcrypt.genSaltSync(10) // Generate salt for password hashing
     const [passwordStrength, setPasswordStrength] = useState('')
     const [errorMessage, setErrorMessage] = useState('')
