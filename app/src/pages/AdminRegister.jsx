@@ -43,7 +43,7 @@ function AdminRegister() {
                 .then(handleJSON)
                 .catch(error => console.error('Error:', error));
         } else {
-            toast.error('Please check all fields.');
+            toast.error('Invalid submission.');
         }
     }
 
