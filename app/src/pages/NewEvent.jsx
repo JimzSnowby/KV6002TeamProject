@@ -40,7 +40,7 @@ function NewEvent() {
                 .then(handleJSON)
                 .catch(error => {
                     console.error('Error:', error);
-                    toast.error('An error occurred while posting the event.');});
+                    });
         } else {
             toast.error('Unable to post event');
         }
