@@ -9,3 +9,11 @@ npm install react-calendar
 npm install react-icons —save
 npm install react-chatbot-kit
 npm install react-hot-toast
+
+Admin login details:
+        Head of admin account- 
+                email:bobby@gmail.com
+                password:bobby
+        Regular admin account-
+                email:katy@gmail.com
+                password:katy
