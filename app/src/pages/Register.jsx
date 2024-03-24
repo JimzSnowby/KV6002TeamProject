@@ -160,7 +160,7 @@ function RegistrationForm({ onRegistration }) {
                     if (response.status === 200 || response.status === 204) {
                         window.alert('You have successfully created an account.');
                         // Redirect to homepage
-                        window.location.href = '/';
+                        window.location.href = '/assessment/app/'
                     } else if (response.status === 450) { // Check if email already exists
                         response.json().then(data => {
                             // Show an alert to the user
